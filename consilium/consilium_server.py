@@ -3,7 +3,7 @@
 Returns content + tool_calls (if present). No XML/CDATA rendering.
 Guarantees tool_calls field is always present in message (empty list if none).
 Rescues inline tool calls from content (Hermes/Qwen/XML formats)."""
-import os, sys, json, time, asyncio, logging, hashlib, re
+import os, sys, json, time, asyncio, logging, hashlib, re, uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any, AsyncGenerator
@@ -435,10 +435,10 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
             # КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: безопасный парсинг JSON
             try:
                 data = resp.json()
-            usage_info = data.get("usage", {})
-            if usage_info:
-                logger.info(f"📊 usage: {usage_info}")
-            return data
+                usage_info = data.get("usage", {})
+                if usage_info:
+                    logger.info(f"📊 usage: {usage_info}")
+                return data
             except json.JSONDecodeError as e:
                 logger.error(f"❌ {provider['name']}: Invalid JSON response: {e}, text: {resp.text[:3000]}")
                 return None
@@ -688,7 +688,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     elif any(kw in user_text for kw in ["анализ", "analysis", "сравни", "compare", "статус", "status", "почем", "why", "как работает"]):
         task = "analysis"
     logger.info(f"🎯 User text: {user_text[:100]}")
-    logger.info(f"🎯 Task: {task}")
+    logger.info(f"[{request_id}] 🎯 Task: {task}")
 
     # Fallback Manager — умная цепочка
     if model == "auto":
@@ -701,7 +701,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
                     target_provider = p
                     target_model = pmodel
                     model = pmodel
-                    logger.info(f"🎯 Router: {task} → {pmodel} @ {pname} (keys={entry['keys']})")
+                    logger.info(f"[{request_id}] 🎯 Router: {task} → {pmodel} @ {pname} (keys={entry['keys']})")
                     break
             if target_provider is not None:
                 break
