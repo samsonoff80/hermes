@@ -24,6 +24,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from providers import PROVIDERS
 from rate_limiter import RateLimiter
 from circuit_breaker import circuit_breaker
+from provider_stats import provider_stats
+from dashboard import dashboard_html
 rate_limiter = RateLimiter()
 from fallback_manager import fallback
 
@@ -622,6 +624,10 @@ async def usage_today():
         return {"date": today, "total_tokens": total, "breakdown": [{"provider": r[0], "model": r[1], "prompt_tokens": r[2], "completion_tokens": r[3], "total_tokens": r[4], "requests": r[5]} for r in rows]}
     except: return {"date": datetime.now().strftime("%Y-%m-%d"), "total_tokens": 0}
 
+@app.get("/")
+async def root():
+    return await dashboard_html(PROVIDERS, rate_limiter)
+
 @app.get("/health")
 async def health():
     return {"status": "ok", "providers": {p["name"]: len(PROVIDER_KEYS.get(p["name"], [])) for p in PROVIDERS}}
@@ -872,6 +878,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         except Exception as e:
             logger.warning(f"📊 usage log failed: {e}")
         circuit_breaker.record_success(target_provider["name"])
+        provider_stats.record_success(target_provider["name"], time.time()-start_time, usage.get("total_tokens", 0) if usage else 0)
         logger.info(f"✅ {target_provider['name']}/{target_model} -> content: {len(normalized_content) if normalized_content else 0} chars, tool_calls: {len(message['tool_calls'])} in {time.time()-start_time:.2f}s")
         return JSONResponse(response)
     
