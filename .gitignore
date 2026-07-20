@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.db
+*.json
+.env
+*.key
+logs/
+sessions/
+backup_*/
