@@ -120,3 +120,35 @@ Telegram → Hermes → Consilium → Task Router → Fallback Manager → Rate 
 6. Pull Request если возможно
 
 Ответ на русском языке.
+
+## RAW ССЫЛКИ ДЛЯ ЧТЕНИЯ ФАЙЛОВ
+Если не можешь клонировать репозиторий, читай файлы напрямую:
+https://raw.githubusercontent.com/samsonoff80/hermes/main/README.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/config.yaml
+https://raw.githubusercontent.com/samsonoff80/hermes/main/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/orchestrator/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/orchestrator/SKILL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/product-analyst/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/source-scout/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/parsing-engineer/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/parser/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/optimizer/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/consilium_server.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/fallback_manager.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/rate_limiter.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/circuit_breaker.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/update_all.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/provider_stats.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/dashboard.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/key_encryption.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/alerting.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/model_catalog.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/health_checker.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/__init__.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/base.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/groq.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/openrouter.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/mistral.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/github.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/cloudflare.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/sambanova.py
