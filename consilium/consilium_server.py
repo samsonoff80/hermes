@@ -25,6 +25,7 @@ from providers import PROVIDERS
 from rate_limiter import RateLimiter
 from circuit_breaker import circuit_breaker
 from provider_stats import provider_stats
+from alerting import alert_all_providers_down, alert_circuit_breaker
 from dashboard import dashboard_html
 rate_limiter = RateLimiter()
 from fallback_manager import fallback
@@ -780,6 +781,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         provider_resp = None
 
     if provider_resp is None:
+        await alert_all_providers_down()
         raise HTTPException(503, "All providers failed")
 
     # Обновляем sticky session
