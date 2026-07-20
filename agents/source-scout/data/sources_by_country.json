@@ -1,0 +1,158 @@
+{
+  "_date": "2026-06-19",
+  "_stats": {
+    "total_checked": 97,
+    "working": 80,
+    "dead": 17
+  },
+  "Россия": {
+    "working": [
+      {"name": "ProductCenter — каталог производителей пищевой продукции", "url": "https://productcenter.ru", "type": "catalog", "quality": "A", "food_relevance": 10},
+      {"name": "Fabricators — каталог производителей (пищевое оборудование и сырьё)", "url": "https://fabricators.ru", "type": "catalog", "quality": "A", "food_relevance": 9},
+      {"name": "FoodSuppliers — портал поставщиков продуктов питания и сырья", "url": "https://foodsuppliers.ru", "type": "catalog", "quality": "A", "food_relevance": 10},
+      {"name": "Metaprom — каталог промышленных предприятий России (80 000+)", "url": "https://metaprom.ru/companies/", "type": "catalog", "quality": "A", "food_relevance": 8},
+      {"name": "B2B-RUS — единая федеральная B2B торговая система", "url": "https://b2b-rus.com", "type": "catalog", "quality": "B", "food_relevance": 7},
+      {"name": "Export.ru.com — B2B каталог поставщиков и производителей", "url": "https://export.ru.com", "type": "catalog", "quality": "B", "food_relevance": 7},
+      {"name": "Postavshikov.net — крупнейший портал оптовых поставщиков СНГ", "url": "https://postavshikov.net", "type": "catalog", "quality": "B", "food_relevance": 8},
+      {"name": "VsePostavshiki — каталог поставщиков и производителей товаров", "url": "https://vsepostavshiki.ru", "type": "catalog", "quality": "C", "food_relevance": 6},
+      {"name": "Foodretail.ru — закупки и продажи продукции АПК", "url": "https://foodretail.ru", "type": "catalog", "quality": "B", "food_relevance": 8},
+      {"name": "Wiki-Prom — список заводов и фабрик России", "url": "https://www.wiki-prom.ru", "type": "catalog", "quality": "B", "food_relevance": 7},
+      {"name": "Sfera.fm — база компаний пищевой промышленности", "url": "https://sfera.fm/companies/", "type": "catalog", "quality": "B", "food_relevance": 8},
+      {"name": "RosIndustry — федеральный промышленный портал (B2B + проверка контрагентов)", "url": "https://rosindustry.pro", "type": "catalog", "quality": "A", "food_relevance": 8},
+      {"name": "WorldFood Moscow — международная выставка продуктов питания", "url": "https://world-food.ru", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "Экспоцентр — организатор международных выставок", "url": "https://www.expocentr.ru", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "ПродЭкспо — международная выставка продуктов питания и сырья", "url": "https://www.prod-expo.ru", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "Modern Bakery Moscow — выставка хлебопекарного и кондитерского рынка", "url": "https://modern-bakery.ru", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "Confex-Expo — выставка кондитерских предприятий (шоколад, сахар)", "url": "https://confex-expo.ru", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "PIR Expo — выставка индустрии HoReCa (пищевые ингредиенты)", "url": "https://pirexpo.com", "type": "exhibition", "quality": "B", "food_relevance": 7},
+      {"name": "Gotovo-Expo — выставка оборудования, ингредиентов и полуфабрикатов", "url": "https://gotovo-expo.ru", "type": "exhibition", "quality": "B", "food_relevance": 8},
+      {"name": "Peterfood — продовольственная выставка Северо-Запада", "url": "https://peterfood.ru", "type": "exhibition", "quality": "B", "food_relevance": 7},
+      {"name": "Агропродмаш — выставка оборудования, сырья и ингредиентов для пищевой промышленности", "url": "https://www.agroprodmash-expo.ru", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "ExpoSale — календарь пищевых выставок по странам", "url": "https://exposale.net", "type": "exhibition", "quality": "B", "food_relevance": 7},
+      {"name": "ExpoNet — календарь выставок в России (агро, пищевые)", "url": "https://www.exponet.ru", "type": "exhibition", "quality": "B", "food_relevance": 7},
+      {"name": "ExpoCalendar — календарь выставок России", "url": "https://expocalendar.ru", "type": "exhibition", "quality": "C", "food_relevance": 6},
+      {"name": "TotalExpo — каталог выставок включая СНГ", "url": "https://totalexpo.ru", "type": "exhibition", "quality": "B", "food_relevance": 6},
+      {"name": "ExpoMap — каталог выставок (WorldFood, Modern Bakery и др.)", "url": "https://expomap.ru", "type": "exhibition", "quality": "A", "food_relevance": 8},
+      {"name": "FoodSMI — обзоры выставок пищевой отрасли", "url": "https://foodsmi.com", "type": "exhibition", "quality": "C", "food_relevance": 6},
+      {"name": "Зарубеж-Экспо — международные выставки включая Армению", "url": "https://zarubezhexpo.ru", "type": "exhibition", "quality": "B", "food_relevance": 5},
+      {"name": "ExpoClub — каталог выставок (ArmProd, FoodExpo, UzFood и др.)", "url": "https://expoclub.ru", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "Crocus Expo — выставочный центр (WorldFood, ProdExpo и др.)", "url": "https://www.crocus-expo.ru", "type": "exhibition", "quality": "A", "food_relevance": 8},
+      {"name": "ЕГРЮЛ.налог.ру — реестр юридических лиц (ФНС, редирект)", "url": "https://egrul.nalog.ru", "type": "register", "quality": "A", "food_relevance": 9},
+      {"name": "ФНС России — налоговый реестр (редирект)", "url": "https://nalog.gov.ru", "type": "register", "quality": "A", "food_relevance": 8},
+      {"name": "РуПрофайл — реестр компаний с финансовыми данными", "url": "https://www.rusprofile.ru", "type": "register", "quality": "A", "food_relevance": 9},
+      {"name": "ЗачестныйБизнес — проверка организаций и ИП (3 награды Правительства РФ)", "url": "https://zachestnyibiznes.ru", "type": "register", "quality": "A", "food_relevance": 9},
+      {"name": "Checko — проверка контрагентов и компаний", "url": "https://checko.ru", "type": "register", "quality": "A", "food_relevance": 9},
+      {"name": "Companies RBC — база компаний от РБК (с ОКВЭД фильтрацией)", "url": "https://companies.rbc.ru", "type": "register", "quality": "A", "food_relevance": 9},
+      {"name": "СБИС — система бухгалтерской отчётности (редирект)", "url": "https://sbis.ru", "type": "register", "quality": "B", "food_relevance": 7},
+      {"name": "List-Org — справочник организаций с ОКВЭД (редирект)", "url": "https://list-org.com", "type": "register", "quality": "B", "food_relevance": 7},
+      {"name": "АПК — Ассоциация пекарей и кондитеров России", "url": "https://apk-roshleb.ru", "type": "association", "quality": "A", "food_relevance": 10},
+      {"name": "Союз Пищевой Промышленности", "url": "https://unionfoodindustry.org", "type": "association", "quality": "A", "food_relevance": 9},
+      {"name": "РОСПиК — Российская Гильдия пекарей и кондитеров", "url": "https://www.bread-business.ru", "type": "association", "quality": "A", "food_relevance": 10},
+      {"name": "1FOODEXPO — онлайн-выставка пищевой индустрии СНГ", "url": "https://1foodexpo.com/events", "type": "exhibition", "quality": "B", "food_relevance": 7}
+    ],
+    "dead": [
+      {"name": "ЕГРЮЛ.ru (независимый)", "url": "https://egrul.ru", "type": "register", "note": "301 redirect"},
+      {"name": "Kontur Focus", "url": "https://focus.kontur.ru", "type": "register", "note": "403 forbidden"},
+      {"name": "ExpoEurope", "url": "https://expo-europe.ru", "type": "exhibition", "note": "503 service unavailable"}
+    ]
+  },
+  "Казахстан": {
+    "working": [
+      {"name": "Flagma.kz — доска объявлений B2B, пищевые производители", "url": "https://flagma.kz", "type": "catalog", "quality": "A", "food_relevance": 9},
+      {"name": "Factories.kz — каталог предприятий пищевой промышленности Казахстана", "url": "https://factories.kz/producers/pischevaya-promyshlennost", "type": "catalog", "quality": "A", "food_relevance": 10},
+      {"name": "Adata.kz — реестр юридических лиц Казахстана (поиск по ИИН/БИН)", "url": "https://pk.adata.kz", "type": "register", "quality": "A", "food_relevance": 10},
+      {"name": "FoodExpo Qazaqstan — Центрально-Азиатская выставка пищевой промышленности (редирект)", "url": "https://foodexpo.kz", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "Iteca — выставочная компания Казахстана (организатор FoodExpo)", "url": "https://iteca.kz", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "Atakent — календарь выставок Казахстана", "url": "https://atakent.kz", "type": "exhibition", "quality": "B", "food_relevance": 8},
+      {"name": "Stat.gov.kz — Комитет по статистике РК", "url": "https://stat.gov.kz", "type": "register", "quality": "A", "food_relevance": 7},
+      {"name": "eGov.kz — портал госуслуг (редирект, реестр юрлиц)", "url": "https://egov.kz", "type": "register", "quality": "A", "food_relevance": 8},
+      {"name": "Portal KGD — Комитет государственных доходов РК", "url": "https://portal.kgd.gov.kz", "type": "register", "quality": "A", "food_relevance": 8}
+    ],
+    "dead": [
+      {"name": "Eldala.kz", "url": "https://eldala.kz", "type": "catalog", "note": "403 forbidden"}
+    ]
+  },
+  "Узбекистан": {
+    "working": [
+      {"name": "MadeInUzbekistan — каталог предприятий Узбекистана", "url": "https://madeinuzbekistan.ru/enterprise-catalogue", "type": "catalog", "quality": "A", "food_relevance": 10},
+      {"name": "Flagma.uz — доска объявлений B2B, пищевые производители", "url": "https://flagma.uz", "type": "catalog", "quality": "A", "food_relevance": 9},
+      {"name": "WorldExpo.pro — каталог выставок (UzFood, FoodWeek Uzbekistan и др.)", "url": "https://worldexpo.pro", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "Iteca.uz — организатор выставок Узбекистана", "url": "https://iteca.uz", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "Foodovik — информационный портал пищевой отрасли Узбекистана", "url": "https://foodovik.com", "type": "catalog", "quality": "B", "food_relevance": 8},
+      {"name": "WorldFood Moscow раздел Узбекистан", "url": "https://world-food.ru", "type": "exhibition", "quality": "B", "food_relevance": 6}
+    ],
+    "dead": [
+      {"name": "Ondiris.uz — реестр предприятий", "url": "https://ondiris.uz", "type": "register", "note": "DNS not resolved"},
+      {"name": "UzExpoCenter.uz", "url": "https://uzexpocenter.uz", "type": "exhibition", "note": "DNS not resolved"},
+      {"name": "WorldFood.uz (выставка)", "url": "https://worldfood.uz", "type": "exhibition", "note": "301 redirect"}
+    ]
+  },
+  "Азербайджан": {
+    "working": [
+      {"name": "InterFood Azerbaijan — международная выставка пищевой промышленности (Baku Expo Center)", "url": "https://interfood.az", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "Iteca.az — организатор выставок Азербайджана (Iteca Caspian)", "url": "https://iteca.az", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "N4.Biz — каталог компаний Азербайджана (пищевая промышленность)", "url": "https://n4.biz", "type": "catalog", "quality": "B", "food_relevance": 8}
+    ],
+    "dead": [
+      {"name": "OpenInfo.az — открытые данные предприятий", "url": "https://openinfo.az", "type": "register", "note": "DNS not resolved"},
+      {"name": "Itsoft.az — каталог B2B", "url": "https://itsoft.az", "type": "catalog", "note": "DNS not resolved"},
+      {"name": "WorldFood.az (выставка)", "url": "https://worldfood.az", "type": "exhibition", "note": "301 redirect, site inactive"}
+    ]
+  },
+  "Армения": {
+    "working": [
+      {"name": "Expo.am — каталог выставок Армении (ArmProd Expo)", "url": "https://expo.am", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "WorldExpo.pro/country/armenia — каталог выставок Армении", "url": "https://worldexpo.pro/country/armenia", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "ExpoClub — ArmProd Expo каталог", "url": "https://expoclub.ru/exhibition/armprod-expo/", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "ExpoNet — Панармениан Экспо каталог", "url": "https://www.exponet.ru", "type": "exhibition", "quality": "B", "food_relevance": 7}
+    ],
+    "dead": []
+  },
+  "Кыргызстан": {
+    "working": [
+      {"name": "Reestr.kg — реестр юридических лиц Кыргызстана (167 000+ компаний)", "url": "https://reestr.kg", "type": "register", "quality": "A", "food_relevance": 10},
+      {"name": "Analyt-KG — реестр ведущих поставщиков Кыргызстана", "url": "https://analyt-kg.com/registers", "type": "catalog", "quality": "B", "food_relevance": 9},
+      {"name": "Inform.kg — справочник предприятий и организаций Кыргызстана", "url": "http://www.inform.kg/ru/business_pages/", "type": "catalog", "quality": "B", "food_relevance": 8},
+      {"name": "Economist.kg — новости и аналитика пищевой промышленности", "url": "https://economist.kg", "type": "catalog", "quality": "C", "food_relevance": 7},
+      {"name": "Osoo.kg — реестр предприятий (редирект)", "url": "https://osoo.kg", "type": "register", "quality": "B", "food_relevance": 8}
+    ],
+    "dead": [
+      {"name": "Orginfo.kg — справочник организаций", "url": "https://orginfo.kg", "type": "catalog", "note": "DNS not resolved"},
+      {"name": "Statsnet.co раздел Кыргызстан", "url": "https://statsnet.co/states/kg", "type": "register", "note": "403 forbidden"}
+    ]
+  },
+  "Таджикистан": {
+    "working": [
+      {"name": "Bozor.tj — торговая площадка Таджикистана", "url": "https://bozor.tj", "type": "catalog", "quality": "B", "food_relevance": 7}
+    ],
+    "dead": [
+      {"name": "Andoz.tj — каталог производителей", "url": "https://andoz.tj", "type": "catalog", "note": "SSL error + timeout"},
+      {"name": "Stat.gov.tj — статистический комитет", "url": "https://stat.gov.tj", "type": "register", "note": "DNS not resolved"},
+      {"name": "Trade.tj", "url": "https://trade.tj", "type": "catalog", "note": "DNS timeout"}
+    ]
+  },
+  "Туркменистан": {
+    "working": [
+      {"name": "WorldExpo.pro — каталог выставок Туркменистана (Agro Pack Turkmenistan)", "url": "https://worldexpo.pro/country/turkmenistan", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "ExpoClub — Agro Pack & Food Turkmenistan", "url": "https://expoclub.ru/exhibition/agro-pack-i-turkmen-food/", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "TDH.gov.tm — Туркмен хабарлары (новости о пищевых выставках, редирект)", "url": "https://www.tdh.gov.tm", "type": "exhibition", "quality": "B", "food_relevance": 7},
+      {"name": "Turkmenistan.gov.tm (редирект)", "url": "https://turkmenistan.gov.tm", "type": "register", "quality": "C", "food_relevance": 5}
+    ],
+    "dead": [
+      {"name": "TurkmenExpo.com — организатор выставок", "url": "https://www.turkmenexpo.com", "type": "exhibition", "note": "SSL certificate mismatch"}
+    ]
+  },
+  "Грузия": {
+    "working": [
+      {"name": "Kompass Georgia — B2B каталог производителей продуктов питания", "url": "https://ge.kompass.com", "type": "catalog", "quality": "A", "food_relevance": 10},
+      {"name": "ExpoGeorgia — выставочный центр Грузии (Agro Food Drink Tech Expo)", "url": "https://expogeorgia.ge", "type": "exhibition", "quality": "A", "food_relevance": 10},
+      {"name": "GeorgiaYP — справочник предприятий Грузии (производство, пищевая)", "url": "https://ru.georgiayp.com", "type": "catalog", "quality": "B", "food_relevance": 8},
+      {"name": "MyPard.ru — портал поставщиков и производителей Грузии", "url": "https://mypard.ru/suppliers/gruziya/", "type": "catalog", "quality": "B", "food_relevance": 8},
+      {"name": "WorldExpo.pro — каталог выставок Грузии", "url": "https://worldexpo.pro/country/georgia", "type": "exhibition", "quality": "A", "food_relevance": 9},
+      {"name": "Expo.ge — выставочный портал Грузии (редирект)", "url": "https://expo.ge", "type": "exhibition", "quality": "B", "food_relevance": 7}
+    ],
+    "dead": [
+      {"name": "FoodExpo.ge", "url": "https://foodexpo.ge", "type": "exhibition", "note": "DNS timeout"}
+    ]
+  }
+}

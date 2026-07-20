@@ -1,0 +1,229 @@
+[
+  {
+    "name": "Кондитерская фабрика (Фабрика «Кремлина»)",
+    "factory_name": "Кремлина",
+    "legal_name": "Кондитерская фабрика",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658447"
+  },
+  {
+    "name": "долгие годы занимается совершенствованием технологии производства натуральных, вкусных, ароматных и полезных шоколадных конфет. (Фабрика «Кремлина»)",
+    "factory_name": "Кремлина",
+    "legal_name": "долгие годы занимается совершенствованием технологии производства натуральных, вкусных, ароматных и полезных шоколадных конфет.",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658482"
+  },
+  {
+    "name": "Фабрика «Акконд»",
+    "factory_name": "Акконд",
+    "legal_name": "Акконд",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658495"
+  },
+  {
+    "name": "Конфаэль шоколад (Фабрика «Конфаэль»)",
+    "factory_name": "Конфаэль",
+    "legal_name": "Конфаэль шоколад",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658509"
+  },
+  {
+    "name": "Ошель (Фабрика «Oshel»)",
+    "factory_name": "Oshel",
+    "legal_name": "Ошель",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658559"
+  },
+  {
+    "name": "Фабрика «БКК и Ко»",
+    "factory_name": "БКК и Ко",
+    "legal_name": "БКК и Ко",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658574"
+  },
+  {
+    "name": "КФ (Фабрика «Фантэль»)",
+    "factory_name": "Фантэль",
+    "legal_name": "КФ",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658587"
+  },
+  {
+    "name": "ПТК (Фабрика «Колос»)",
+    "factory_name": "Колос",
+    "legal_name": "ПТК",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658607"
+  },
+  {
+    "name": "ОАО (Фабрика «Южуралкондитер»)",
+    "factory_name": "Южуралкондитер",
+    "legal_name": "ОАО",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658621"
+  },
+  {
+    "name": "ООО «Кондитерская фабрика «",
+    "legal_name": "ООО «Кондитерская фабрика «",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658633"
+  },
+  {
+    "name": "АО «Акконд»",
+    "legal_name": "АО «Акконд»",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658646"
+  },
+  {
+    "name": "ООО «Конфаэль шоколад»",
+    "legal_name": "ООО «Конфаэль шоколад»",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658658"
+  },
+  {
+    "name": "ООО «Руслада»",
+    "legal_name": "ООО «Руслада»",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658670"
+  },
+  {
+    "name": "ООО «Ошель»",
+    "legal_name": "ООО «Ошель»",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658682"
+  },
+  {
+    "name": "ООО «БКК и Ко»",
+    "legal_name": "ООО «БКК и Ко»",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658694"
+  },
+  {
+    "name": "ООО «КФ «",
+    "legal_name": "ООО «КФ «",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658706"
+  },
+  {
+    "name": "АО «Южуралкондитер»",
+    "legal_name": "АО «Южуралкондитер»",
+    "region": "2",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/2/",
+    "parsed_at": "2026-06-19T18:05:34.658719"
+  },
+  {
+    "name": "Лакомка (Фабрика «Игорь Мельник»)",
+    "factory_name": "Игорь Мельник",
+    "legal_name": "Лакомка",
+    "region": "30",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/30/",
+    "parsed_at": "2026-06-19T18:05:35.808892"
+  },
+  {
+    "name": "Давлетшина Ляйсан Искандаровна (Фабрика «Laycy Queen»)",
+    "factory_name": "Laycy Queen",
+    "legal_name": "Давлетшина Ляйсан Искандаровна",
+    "region": "30",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/30/",
+    "parsed_at": "2026-06-19T18:05:35.808932"
+  },
+  {
+    "name": "ООО «Раменский кондитерский комбинат»",
+    "legal_name": "ООО «Раменский кондитерский комбинат»",
+    "region": "30",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/30/",
+    "parsed_at": "2026-06-19T18:05:35.808948"
+  },
+  {
+    "name": "ООО «Кубанские хлебцы»",
+    "legal_name": "ООО «Кубанские хлебцы»",
+    "region": "30",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/30/",
+    "parsed_at": "2026-06-19T18:05:35.808980"
+  },
+  {
+    "name": "ООО «Торгово-коммерческое предприятие «",
+    "legal_name": "ООО «Торгово-коммерческое предприятие «",
+    "region": "30",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/30/",
+    "parsed_at": "2026-06-19T18:05:35.808996"
+  },
+  {
+    "name": "ООО «Лакомка»",
+    "legal_name": "ООО «Лакомка»",
+    "region": "30",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/30/",
+    "parsed_at": "2026-06-19T18:05:35.809010"
+  },
+  {
+    "name": "ООО «Белое Дерево»",
+    "legal_name": "ООО «Белое Дерево»",
+    "region": "30",
+    "source": "candy-factory",
+    "country": "Россия",
+    "source_url": "https://candy-factory.ru/russia/page/30/",
+    "parsed_at": "2026-06-19T18:05:35.809023"
+  }
+]
