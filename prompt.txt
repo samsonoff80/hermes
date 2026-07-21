@@ -1,39 +1,79 @@
 Ты — senior инженер. Изучи репозиторий:
 https://github.com/samsonoff80/hermes
 
-RAW ссылки для чтения:
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/consilium_server.py
+RAW ссылки на все файлы:
 https://raw.githubusercontent.com/samsonoff80/hermes/main/README.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/config.yaml
+https://raw.githubusercontent.com/samsonoff80/hermes/main/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/orchestrator/SOUL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/orchestrator/SKILL.md
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/consilium_server.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/fallback_manager.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/rate_limiter.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/circuit_breaker.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/__init__.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/base.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/groq.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/mistral.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/openrouter.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/github.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/cloudflare.py
 
-Это Consilium v7.1 — LLM прокси для Hermes Agent v0.19 на VIM4 ARM64.
+Это Consilium v7.1 — LLM прокси для Hermes Agent v0.19 на VIM4 ARM64 8GB.
 
-## ЧТО МЫ УЖЕ СДЕЛАЛИ (P0 исправления)
-- Убрали двойной вызов call_provider (было 2 вызова, теперь 1)
-- Исправили fallback (pname/pmodel инициализированы)
-- Таймауты: PROVIDER_TIMEOUT=20s, OVERALL_DEADLINE=40s
-- get_next_key возвращает кортеж (key, key_index)
+## ЧТО НУЖНО
+
+### 1. Полный аудит кода
+Проверь ВСЕ файлы на:
+- Синтаксические ошибки
+- Логические ошибки (None вместо dict, UnboundLocalError)
+- Оборванные связи (импорты которые нигде не используются)
+- Дублирование кода
+- Нарушения архитектуры
+- Мёртвый код
+- Утечки памяти
+- Потокобезопасность
+
+### 2. Найди критический баг
+Симптом: Hermes → Consilium → провайдер 200 OK → ответ валидный → но Hermes получает "Provider failed after retries".
+
+Мы уже применили:
+- Убрали двойной вызов call_provider
+- Исправили fallback (pname/pmodel)
+- get_next_key возвращает (key, key_index)
+- Таймауты: 20s/40s
 - Rate limiter временно отключён
-- Circuit breaker: threshold=5
 
-## СИМПТОМ
-1. Consilium получает запрос от Hermes
-2. Router выбирает провайдера: chat → mistral-small-2603 @ mistral
-3. call_provider возвращает 200 OK от Mistral
-4. Ответ валидный: {'id', 'created', 'model', 'usage', 'object', 'choices'}
-5. Лог: ✅ Valid response from mistral: ['id', 'created', 'model', 'usage', 'object', 'choices']
-6. НО Hermes получает "Provider failed after retries"
-7. Alert "All providers DOWN" срабатывает
+Но alert "All providers DOWN" всё равно срабатывает после успешного ответа.
 
-## ЧТО МЫ ПРОВЕРИЛИ
-- target_provider не None перед вызовом
-- call_provider возвращает dict (не None, не Response)
-- "error" ключа нет в ответе
-- stream=False принудительно
-- fallback НЕ вызывается (provider_resp не None после проверки error)
-- Но alert срабатывает — значит provider_resp становится None где-то после
+### 3. Совместимость с Hermes v0.19
+- Изучи документацию Hermes (github.com/NousResearch/hermes-agent)
+- Проверь формат ответа API
+- Проверь streaming vs non-streaming
+- Проверь config.yaml
 
-## КОНКРЕТНЫЙ ВОПРОС
-Между строкой `✅ Valid response` и `if provider_resp is None: alert` что-то меняет provider_resp на None.
-Найди что. Дай исправленный код.
+### 4. Балльная система провайдеров
+Вместо жёсткого PRIORITY — динамические баллы за успех/задержку/лимиты.
+Формула + реализация + интеграция в fallback_manager.
 
-Ответ на русском.
+### 5. Состояние агентов
+Проверь всех 6 агентов: orchestrator, optimizer, product-analyst, source-scout, parsing-engineer, parser.
+SOUL.md, SKILL.md, PROGRESS.md, протокол delegate_task.
+
+### 6. Рекомендации
+- Что улучшить в архитектуре?
+- Что оптимизировать для VIM4 8GB?
+- Как улучшить отказоустойчивость?
+- Как улучшить мониторинг?
+
+### 7. Cloudflare ключи
+Cloudflare требует и ключ и account_id. Оба с суффиксами _1, _2, _3.
+Сейчас код ищет CLOUDFLARE_ACCOUNT_ID без номера.
+Надо синхронизировать с key_index из get_next_key.
+
+## ФОРМАТ ОТВЕТА
+1. Найденные проблемы: файл, строка, описание, решение
+2. Исправленный код (diff)
+3. Балльная система: формула + реализация
+4. Рекомендации
+5. Ответ на русском
