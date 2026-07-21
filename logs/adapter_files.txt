@@ -1,0 +1,10 @@
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/gateway/platforms/api_server.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/gateway/platforms/qqbot/adapter.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/gateway/platforms/whatsapp_cloud.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/gateway/run.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/gateway/telegram_bot.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/cron/scripts/classify_items.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/plugins/model-providers/custom/__init__.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/plugins/model-providers/copilot-acp/__init__.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/plugins/model-providers/vertex/__init__.py
+/home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages/plugins/model-providers/kimi-coding/__init__.py

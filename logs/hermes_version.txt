@@ -1,0 +1,6 @@
+Hermes Agent v0.19.0 (2026.7.20) · upstream d273f46c
+Install directory: /home/khadas/.hermes/hermes-agent/venv/lib/python3.11/site-packages
+Install method: pip
+Python: 3.11.15
+OpenAI SDK: 2.24.0
+Update available: 10 commits behind — run 'uv pip install --upgrade hermes-agent'
