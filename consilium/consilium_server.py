@@ -25,6 +25,7 @@ from providers import PROVIDERS
 from rate_limiter import RateLimiter
 from circuit_breaker import circuit_breaker
 from provider_stats import provider_stats
+from provider_scoring import provider_scoring, WEIGHTS, MIN_CONTEXT, WINDOW_SECONDS
 from alerting import alert_all_providers_down, alert_circuit_breaker
 from dashboard import dashboard_html
 rate_limiter = RateLimiter()
@@ -63,18 +64,23 @@ logging.basicConfig(
 )
 logger = logging.getLogger("consilium")
 
-# ТАЙМАУТЫ: увеличен до 30с на провайдера, общий дедлайн 45 секунд
-PROVIDER_TIMEOUT = 30.0
+# ТАЙМАУТЫ: уменьшен до 20с на провайдера, общий дедлайн 40с (Hermes ждет 45с)
+PROVIDER_TIMEOUT = 20.0
 CONNECT_TIMEOUT = 5.0
-OVERALL_DEADLINE = 45.0  # Hermes ждет 45с (request_timeout в config.yaml)
+OVERALL_DEADLINE = 40.0  # Hermes ждет 45с (request_timeout в config.yaml)
 STICKY_TTL = 300.0  # 5 минут TTL для sticky sessions
 
 # ЗАГРУЗКА КЛЮЧЕЙ из импортированных провайдеров
 def load_keys(prefix: str) -> list:
+    """Загружает все ключи с префиксом PREFIX_1, PREFIX_2, ... PREFIX_N"""
     keys = []
-    for i in range(1, 4):
+    i = 1
+    while True:
         k = os.getenv(f"{prefix}_{i}", "")
-        if k: keys.append(k)
+        if not k:
+            break
+        keys.append(k)
+        i += 1
     return keys
 
 PROVIDER_KEYS = {}
@@ -85,9 +91,12 @@ for p in PROVIDERS:
     else:
         PROVIDER_KEYS[p["name"]] = load_keys(p["key_prefix"])
         logger.info(f"{p['name']}: {len(PROVIDER_KEYS[p['name']])} keys")
-    fallback.build_chains(PROVIDERS)
+
+# Строим цепочки провайдеров ОДИН РАЗ после загрузки всех ключей
+fallback.build_chains(PROVIDERS)
 
 key_indexes = defaultdict(int)
+key_indexes_lock = asyncio.Lock()
 
 def get_next_key(name: str) -> str:
     keys = PROVIDER_KEYS.get(name, [])
@@ -105,11 +114,23 @@ http_client = httpx.AsyncClient(
 # STICKY SESSIONS
 sticky_sessions: Dict[str, Tuple[str, str, float]] = {}
 
+async def cleanup_sticky_sessions():
+    """Периодическая очистка протухших sticky сессий."""
+    while True:
+        await asyncio.sleep(60)  # Проверяем каждую минуту
+        now = time.time()
+        expired = [key for key, (_, _, expiry) in sticky_sessions.items() if expiry <= now]
+        for key in expired:
+            del sticky_sessions[key]
+        if expired:
+            logger.info(f"🧹 Cleaned up {len(expired)} expired sticky sessions")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup — проверяем провайдеров
     logger.info("🏥 Health check starting...")
+    # Запускаем задачу очистки sticky сессий
+    asyncio.create_task(cleanup_sticky_sessions())
     yield
     # Shutdown
     await http_client.aclose()
@@ -446,17 +467,29 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
                 logger.error(f"❌ {provider['name']}: Invalid JSON response: {e}, text: {resp.text[:3000]}")
                 return None
     except httpx.TimeoutException:
+        circuit_breaker.record_failure(provider["name"])
+        provider_stats.record_failure(provider["name"], "timeout")
+        provider_scoring.record_failure(provider["name"], "timeout")
         logger.warning(f"⏱️ {provider['name']}: timeout after {PROVIDER_TIMEOUT}s")
         return None
     except httpx.HTTPStatusError as e:
         if e.response.status_code == 429:
             rate_limiter.mark_429(provider["name"], 0)
+            provider_stats.record_failure(provider["name"], "429")
+            provider_scoring.record_failure(provider["name"], "429")
         elif e.response.status_code in (401, 402, 403):
             rate_limiter.mark_402(provider["name"], 0)
+            provider_stats.record_failure(provider["name"], "402")
+            provider_scoring.record_failure(provider["name"], "402")
+        elif e.response.status_code >= 500:
+            provider_stats.record_failure(provider["name"], "5xx")
+            provider_scoring.record_failure(provider["name"], "5xx")
         logger.warning(f"❌ {provider['name']}: HTTP {e.response.status_code} - {e.response.text[:200]}")
         return None
     except Exception as e:
         circuit_breaker.record_failure(provider["name"])
+        provider_stats.record_failure(provider["name"], "other")
+        provider_scoring.record_failure(provider["name"], "other")
         logger.warning(f"💥 {provider['name']}: {type(e).__name__}: {e}")
         return None
 
@@ -641,6 +674,45 @@ async def list_models():
             models.append({"id": m, "object": "model", "owned_by": p["name"]})
     return {"object": "list", "data": models}
 
+@app.get("/stats/providers")
+async def get_provider_stats():
+    """Возвращает статистику и баллы для всех провайдеров."""
+    stats = []
+    for p in PROVIDERS:
+        provider_name = p["name"]
+        score = provider_scoring.get_score(provider_name)
+        pstats = provider_stats.get_stats(provider_name)
+        pscoring = provider_scoring.get_stats(provider_name)
+        
+        stats.append({
+            "name": provider_name,
+            "score": round(score, 4),
+            "success_rate": pstats.get("success", 0) / max(pstats.get("success", 0) + pstats.get("fail", 0), 1),
+            "avg_latency": pstats.get("avg_latency", 0),
+            "total_tokens": pstats.get("total_tokens", 0),
+            "keys": len(PROVIDER_KEYS.get(provider_name, [])),
+            "priority": score,
+            "last_used": pstats.get("last_used", 0) if pstats else 0,
+        })
+    
+    # Сортируем по баллам
+    stats.sort(key=lambda x: x["score"], reverse=True)
+    
+    return {
+        "providers": stats,
+        "updated": time.time()
+    }
+
+@app.get("/stats/scoring")
+async def get_scoring_details():
+    """Возвращает детальную информацию о балльной системе."""
+    return {
+        "weights": WEIGHTS,
+        "min_context": MIN_CONTEXT,
+        "window_seconds": WINDOW_SECONDS,
+        "all_scores": provider_scoring.get_all_scores()
+    }
+
 @app.post("/v1/chat/completions")
 async def chat_completions(request: Request, authorization: Optional[str] = Header(None)):
     """OpenAI-совместимый эндпоинт. Возвращает content + tool_calls (всегда поле, пустой список если нет).
@@ -652,10 +724,10 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     - tool_calls field always present (empty list if none)
     """
     start_time = time.time()
-    request_id = f"req-{int(start_time*1000)}"
+    request_id = f"req-{uuid.uuid4().hex[:12]}"
     try:
         body = await request.json()
-        logger.info(f'📥 Body: {json.dumps(body, ensure_ascii=False)[:3000]}')
+        logger.info(f'[{request_id}] 📥 Body: {json.dumps(body, ensure_ascii=False)[:3000]}')
     except Exception:
         raise HTTPException(400, "Invalid JSON")
 
@@ -664,9 +736,11 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     # Фильтр: вырезаем блоки Hermes
     for m in messages:
         if m.get("role") == "system" and isinstance(m.get("content"), str):
-            m["content"] = re.sub(r"You run on Hermes Agent.*", "", m["content"], flags=re.DOTALL).strip()
-            m["content"] = re.sub(r"# Finishing the job.*", "", m["content"], flags=re.DOTALL).strip()
-            logger.info(f"✂️ Filtered: {len(m['content'])} chars")
+            m["content"] = re.sub(r"You run on Hermes Agent.*?source of truth when the two differ\.\s*", "", m["content"], flags=re.DOTALL).strip()
+            m["content"] = re.sub(r"# Finishing the job.*?(?=\n#|\Z)", "", m["content"], flags=re.DOTALL).strip()
+            m["content"] = re.sub(r"# Parallel tool calls.*?(?=\n#|\Z)", "", m["content"], flags=re.DOTALL).strip()
+            logger.info(f"[{request_id}] ✂️ Filtered: {len(m['content'])} chars")
+    
     model = body.get("model", "auto")
     # Fix: treat empty string as auto
     if not model or model == "":
@@ -682,9 +756,6 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     if not messages:
         raise HTTPException(400, "Messages required")
 
-    target_provider = None
-    target_model = None
-    
     # === Task Router v2 (Provider-aware) ===
     task = "chat"
     user_text = ([m.get("content", "") for m in messages if m.get("role") == "user"] or [""])[-1].lower() if [m for m in messages if m.get("role") == "user"] else ""
@@ -694,54 +765,14 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         task = "code"
     elif any(kw in user_text for kw in ["анализ", "analysis", "сравни", "compare", "статус", "status", "почем", "why", "как работает"]):
         task = "analysis"
-    logger.info(f"🎯 User text: {user_text[:100]}")
+    logger.info(f"[{request_id}] 🎯 User text: {user_text[:100]}")
     logger.info(f"[{request_id}] 🎯 Task: {task}")
 
-    # Fallback Manager — умная цепочка
-    if model == "auto":
-        task_chain = fallback.get_chain(task)
-        for entry in task_chain:
-            pname = entry["provider"]
-            pmodel = entry["model"]
-            for p in PROVIDERS:
-                if p["name"] == pname:
-                    target_provider = p
-                    target_model = pmodel
-                    model = pmodel
-                    logger.info(f"[{request_id}] 🎯 Router: {task} → {pmodel} @ {pname} (keys={entry['keys']})")
-                    break
-            if target_provider is not None:
-                break
-
-    # Если router не выбрал — fallback
-    if target_provider is None:
-        target_model = None
+    # === ЕДИНЫЙ ПОТОК ВЫБОРА ПРОВАЙДЕРА ===
+    target_provider = None
+    target_model = None
     
-    stream = False  # Принудительно non-streaming для учёта токенов
-    temperature = body.get("temperature", 0.7)
-    max_tokens = body.get("max_tokens", 4096)
-    
-    # Вызов провайдера
-    provider_resp = await call_provider(target_provider, messages, target_model, stream, temperature, max_tokens)
-    if target_provider is None and model != "auto":
-        for p in PROVIDERS:
-            if model in p["models"]:
-                target_provider = p
-                target_model = model
-                break
-        if not target_provider:
-            raise HTTPException(404, f"Model {model} not found")
-    else:
-        # Auto: первый провайдер с ключами или keyless
-        for p in PROVIDERS:
-            if PROVIDER_KEYS.get(p["name"]) or p.get("keyless", False):
-                target_provider = p
-                target_model = p["models"][0]
-                break
-        if not target_provider:
-            raise HTTPException(503, "No providers available")
-
-    # Sticky session support
+    # 1. Sticky session support (проверяем сначала)
     session_key = request.headers.get("X-Session-Key")
     if session_key and session_key in sticky_sessions:
         prov_name, mod, expiry = sticky_sessions[session_key]
@@ -750,44 +781,173 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
                 if p["name"] == prov_name and mod in p["models"]:
                     target_provider = p
                     target_model = mod
+                    logger.info(f"[{request_id}] 🔒 Sticky session: {prov_name}/{mod}")
                     break
-
-    # Вызов провайдера
-    provider_resp = await call_provider(target_provider, messages, target_model, stream, temperature, max_tokens)
     
-    # Проверка на error внутри ответа (OpenRouter 200 + error)
-    if isinstance(provider_resp, dict) and "error" in provider_resp:
-        logger.warning(f"⚠️ Error in response: {str(provider_resp['error'])[:100]}")
-        provider_resp = None
-
-    if provider_resp is None:
-        # Fallback к следующему провайдеру
-        for p in PROVIDERS:
-            if pname == target_provider["name"] and pmodel == target_model:
-                continue
+    # 2. Task Router + Fallback Manager
+    if target_provider is None:
+        if model == "auto":
+            task_chain = fallback.get_chain(task)
+            for entry in task_chain:
+                for p in PROVIDERS:
+                    if p["name"] == entry["provider"] and entry["model"] in p["models"]:
+                        # Проверяем rate limiter и circuit breaker
+                        key_index = 0
+                        if PROVIDER_KEYS.get(p["name"]):
+                            ok, reason = rate_limiter.is_available(p["name"], key_index)
+                            if not ok:
+                                logger.info(f"[{request_id}] ⏭️ {p['name']}:{key_index} skipped: {reason}")
+                                continue
+                        if not circuit_breaker.is_available(p["name"]):
+                            logger.info(f"[{request_id}] 🔴 {p['name']}: circuit breaker blocked")
+                            continue
+                        target_provider = p
+                        target_model = entry["model"]
+                        model = entry["model"]
+                        logger.info(f"[{request_id}] 🎯 Router: {task} → {entry['model']} @ {p['name']} (keys={entry['keys']})")
+                        break
+                if target_provider is not None:
+                    break
+        
+        # 3. Явная модель
+        if target_provider is None and model != "auto":
             for p in PROVIDERS:
-                if p["name"] == pname and pmodel in p.get("models", []):
-                    if PROVIDER_KEYS.get(p["name"]) or p.get("keyless", False):
-                        provider_resp = await call_provider(p, messages, pmodel, stream, temperature, max_tokens)
+                if model in p["models"]:
+                    # Проверяем доступность
+                    key_index = 0
+                    if PROVIDER_KEYS.get(p["name"]):
+                        ok, reason = rate_limiter.is_available(p["name"], key_index)
+                        if not ok:
+                            continue
+                    if not circuit_breaker.is_available(p["name"]):
+                        continue
+                    target_provider = p
+                    target_model = model
+                    logger.info(f"[{request_id}] 🎯 Explicit model: {model} @ {p['name']}")
                     break
-            if provider_resp:
-                target_provider = p
-                target_model = p["models"][0]
-                break
+        
+        # 4. Fallback: первый доступный провайдер
+        if target_provider is None:
+            for p in PROVIDERS:
+                if PROVIDER_KEYS.get(p["name"]) or p.get("keyless", False):
+                    key_index = 0
+                    if PROVIDER_KEYS.get(p["name"]):
+                        ok, reason = rate_limiter.is_available(p["name"], key_index)
+                        if not ok:
+                            continue
+                    if not circuit_breaker.is_available(p["name"]):
+                        continue
+                    target_provider = p
+                    target_model = p["models"][0]
+                    model = p["models"][0]
+                    logger.info(f"[{request_id}] 🎯 Fallback: {p['models'][0]} @ {p['name']}")
+                    break
     
-    # Проверка на error внутри ответа (OpenRouter 200 + error)
-    if isinstance(provider_resp, dict) and "error" in provider_resp:
-        logger.warning(f"⚠️ Error in response: {str(provider_resp['error'])[:100]}")
-        provider_resp = None
+    if target_provider is None:
+        await alert_all_providers_down()
+        raise HTTPException(503, "No providers available")
 
+    # === ВЫЗОВ ПРОВАЙДЕРА С FALLBACK ===
+    provider_resp = None
+    used_provider = None
+    used_model = None
+    
+    # Собираем список кандидатов для fallback
+    candidates = []
+    if model == "auto":
+        task_chain = fallback.get_chain(task)
+        for entry in task_chain:
+            for p in PROVIDERS:
+                if p["name"] == entry["provider"]:
+                    candidates.append((p, entry["model"]))
+                    break
+    else:
+        # Для явной модели - все провайдеры с этой моделью
+        for p in PROVIDERS:
+            if model in p["models"]:
+                candidates.append((p, model))
+    
+    # Если candidates пуст - добавляем все доступные провайдеры
+    if not candidates:
+        for p in PROVIDERS:
+            if PROVIDER_KEYS.get(p["name"]) or p.get("keyless", False):
+                candidates.append((p, p["models"][0]))
+    
+    # Перебираем кандидатов
+    async def try_all_candidates():
+        nonlocal provider_resp, used_provider, used_model
+        for prov, mdl in candidates:
+            # Проверяем rate limiter
+            key_index = 0
+            if PROVIDER_KEYS.get(prov["name"]):
+                ok, reason = rate_limiter.is_available(prov["name"], key_index)
+                if not ok:
+                    logger.info(f"[{request_id}] ⏭️ {prov['name']}:{key_index} skipped: {reason}")
+                    continue
+            
+            # Проверяем circuit breaker
+            if not circuit_breaker.is_available(prov["name"]):
+                logger.info(f"[{request_id}] 🔴 {prov['name']}: circuit breaker blocked")
+                continue
+            
+            # Вызываем провайдер
+            resp = await call_provider(prov, messages, mdl, stream, temperature, max_tokens)
+            
+            # Проверяем на error внутри ответа (OpenRouter 200 + error)
+            if isinstance(resp, dict) and "error" in resp:
+                logger.warning(f"[{request_id}] ⚠️ {prov['name']}: error in response: {str(resp['error'])[:100]}")
+                # Обновляем статистику
+                provider_stats.record_failure(prov["name"])
+                continue
+            
+            if resp is not None:
+                provider_resp = resp
+                used_provider = prov
+                used_model = mdl
+                return
+        
+        # Если все кандидаты не сработали - пробуем все провайдеры
+        for p in PROVIDERS:
+            if p["name"] == target_provider["name"] and used_model == target_model:
+                continue
+            key_index = 0
+            if PROVIDER_KEYS.get(p["name"]):
+                ok, reason = rate_limiter.is_available(p["name"], key_index)
+                if not ok:
+                    continue
+            if not circuit_breaker.is_available(p["name"]):
+                continue
+            resp = await call_provider(p, messages, p["models"][0], stream, temperature, max_tokens)
+            if isinstance(resp, dict) and "error" in resp:
+                logger.warning(f"[{request_id}] ⚠️ {p['name']}: error in response: {str(resp['error'])[:100]}")
+                continue
+            if resp is not None:
+                provider_resp = resp
+                used_provider = p
+                used_model = p["models"][0]
+                return
+    
+    try:
+        await asyncio.wait_for(try_all_candidates(), timeout=OVERALL_DEADLINE)
+    except asyncio.TimeoutError:
+        logger.error(f"[{request_id}] ⏱️ Overall deadline {OVERALL_DEADLINE}s exceeded")
+        await alert_all_providers_down()
+        raise HTTPException(504, "Request timeout")
+    
     if provider_resp is None:
         await alert_all_providers_down()
         raise HTTPException(503, "All providers failed")
-
+    
     # Обновляем sticky session
     if session_key:
-        sticky_sessions[session_key] = (target_provider["name"], target_model, time.time() + STICKY_TTL)
-
+        sticky_sessions[session_key] = (used_provider["name"], used_model, time.time() + STICKY_TTL)
+    
+    target_provider = used_provider
+    target_model = used_model
+    
+    # Обновляем статистику
+    circuit_breaker.record_success(target_provider["name"])
+    
     provider_format = target_provider.get("format", "openai")
     
     # Обработка ответа
@@ -879,9 +1039,23 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             _log_usage(target_provider["name"], target_model, usage)
         except Exception as e:
             logger.warning(f"📊 usage log failed: {e}")
+        
+        # Обновляем статистику и баллы
+        latency = time.time() - start_time
+        prompt_tokens = (usage or {}).get("prompt_tokens", 0)
+        completion_tokens = (usage or {}).get("completion_tokens", 0)
+        total_tokens = (usage or {}).get("total_tokens", 0)
+        
         circuit_breaker.record_success(target_provider["name"])
-        provider_stats.record_success(target_provider["name"], time.time()-start_time, usage.get("total_tokens", 0) if usage else 0)
-        logger.info(f"✅ {target_provider['name']}/{target_model} -> content: {len(normalized_content) if normalized_content else 0} chars, tool_calls: {len(message['tool_calls'])} in {time.time()-start_time:.2f}s")
+        provider_stats.record_success(target_provider["name"], latency, total_tokens)
+        provider_scoring.record_success(
+            target_provider["name"], 
+            latency, 
+            prompt_tokens, 
+            completion_tokens
+        )
+        
+        logger.info(f"✅ [{request_id}] {target_provider['name']}/{target_model} -> content: {len(normalized_content) if normalized_content else 0} chars, tool_calls: {len(message['tool_calls'])} in {latency:.2f}s")
         return JSONResponse(response)
     
 # ---------- MAIN ----------

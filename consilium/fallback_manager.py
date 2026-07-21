@@ -23,16 +23,22 @@ class FallbackManager:
         """Строит цепочки из ВСЕХ провайдеров с ключами."""
         chains = {"chat": [], "code": [], "search": [], "analysis": []}
         
-        # Приоритет провайдеров по лимитам
-        PRIORITY = ["mistral", "groq", "sambanova", "deepinfra", "hf", 
-                     "cloudflare", "openrouter", "github"]
+        # Приоритет провайдеров по лимитам (из README)
+        # 1. groq (1000 RPD, 100K TPD)
+        # 2. cloudflare (100 RPD, 500K TPD)
+        # 3. github (50 RPD, 500K TPD)
+        # 4. mistral (10000 RPD, 10M TPD)
+        # 5. sambanova (500 RPD, 1M TPD)
+        # 6. openrouter (50 RPD, 2M TPD)
+        PRIORITY = ["groq", "cloudflare", "github", "mistral", "sambanova", "openrouter",
+                     "deepinfra", "hf", "siliconflow", "together", "reka", "aihorde"]
         
         # Теги моделей по ключевым словам
         TAG_RULES = {
-            "chat": ["llama", "mistral", "gpt", "gemma", "qwen", "hermes"],
-            "code": ["coder", "deepseek", "code", "hy3"],
-            "search": ["gemini", "scout", "sonnet", "gpt"],
-            "analysis": ["large", "ultra", "r1"],
+            "chat": ["llama", "mistral", "gpt", "gemma", "qwen", "hermes", "versatile", "instruct"],
+            "code": ["coder", "deepseek", "code", "hy3", "laguna", "north"],
+            "search": ["gemini", "scout", "sonnet", "gpt", "search"],
+            "analysis": ["large", "ultra", "r1", "analysis", "analyst"],
         }
         
         all_entries = []
@@ -46,7 +52,7 @@ class FallbackManager:
             if not keys and not keyless:
                 continue
             
-            # Приоритет провайдера (0 =最高)
+            # Приоритет провайдера (0 = высший)
             try:
                 priority = PRIORITY.index(name)
             except ValueError:
