@@ -667,6 +667,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     except Exception:
         raise HTTPException(400, "Invalid JSON")
 
+    session_key = request.headers.get('X-Session-Key', '')
     messages = body.get("messages", [])
 
     # Фильтр: вырезаем блоки Hermes
@@ -770,11 +771,10 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
                 break
     
     if provider_resp is None:
-        await alert_all_providers_down()
         raise HTTPException(503, "All providers failed")
 
     # Обновляем sticky session
-    if session_key:
+    if session_key and target_provider:
         sticky_sessions[session_key] = (target_provider["name"], target_model, time.time() + STICKY_TTL)
 
     provider_format = target_provider.get("format", "openai")
@@ -868,9 +868,13 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             _log_usage(target_provider["name"], target_model, usage)
         except Exception as e:
             logger.warning(f"📊 usage log failed: {e}")
-        circuit_breaker.record_success(target_provider["name"])
-        provider_stats.record_success(target_provider["name"], time.time()-start_time, usage.get("total_tokens", 0) if usage else 0)
-        logger.info(f"✅ {target_provider['name']}/{target_model} -> content: {len(normalized_content) if normalized_content else 0} chars, tool_calls: {len(message['tool_calls'])} in {time.time()-start_time:.2f}s")
+        try:
+            circuit_breaker.record_success(target_provider["name"])
+            provider_stats.record_success(target_provider["name"], time.time()-start_time, usage.get("total_tokens", 0) if usage else 0)
+        except Exception as e:
+            logger.warning(f"Stats failed: {e}")
+        if target_provider:
+            logger.info(f"✅ {target_provider['name']}/{target_model} -> content: {len(normalized_content) if normalized_content else 0} chars, tool_calls: {len(message['tool_calls'])} in {time.time()-start_time:.2f}s")
         return JSONResponse(response)
     
 # ---------- MAIN ----------
