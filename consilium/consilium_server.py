@@ -37,6 +37,7 @@ load_dotenv("/home/khadas/.hermes/skills/consilium/.env")
 USAGE_DB = Path(__file__).parent / "usage.db"
 def _init_usage():
     conn = sqlite3.connect(str(USAGE_DB))
+    conn.execute('PRAGMA journal_mode=WAL')
     conn.execute("CREATE TABLE IF NOT EXISTS usage (ts TEXT, provider TEXT, model TEXT, prompt_tokens INTEGER, completion_tokens INTEGER, total_tokens INTEGER)")
     conn.commit(); conn.close()
 def _log_usage(provider, model, usage_dict):
@@ -64,17 +65,22 @@ logging.basicConfig(
 logger = logging.getLogger("consilium")
 
 # ТАЙМАУТЫ: увеличен до 30с на провайдера, общий дедлайн 45 секунд
-PROVIDER_TIMEOUT = 30.0
+PROVIDER_TIMEOUT = 20.0
 CONNECT_TIMEOUT = 5.0
-OVERALL_DEADLINE = 45.0  # Hermes ждет 45с (request_timeout в config.yaml)
+OVERALL_DEADLINE = 40.0  # Hermes ждет 45с (request_timeout в config.yaml)
 STICKY_TTL = 300.0  # 5 минут TTL для sticky sessions
 
 # ЗАГРУЗКА КЛЮЧЕЙ из импортированных провайдеров
 def load_keys(prefix: str) -> list:
     keys = []
-    for i in range(1, 4):
+    i = 1
+    while True:
         k = os.getenv(f"{prefix}_{i}", "")
-        if k: keys.append(k)
+        if not k:
+            break
+        if "trial" not in k.lower():
+            keys.append(k)
+        i += 1
     return keys
 
 PROVIDER_KEYS = {}
@@ -89,12 +95,14 @@ for p in PROVIDERS:
 
 key_indexes = defaultdict(int)
 
-def get_next_key(name: str) -> str:
+def get_next_key(name: str):
+    """Возвращает (key, key_index) для ротации."""
     keys = PROVIDER_KEYS.get(name, [])
-    if not keys: return ""
+    if not keys:
+        return "", 0
     idx = key_indexes[name] % len(keys)
     key_indexes[name] = idx + 1
-    return keys[idx]
+    return keys[idx], idx
 
 # HTTP КЛИЕНТ с таймаутом 30с на провайдера
 http_client = httpx.AsyncClient(
@@ -355,7 +363,7 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
     if not circuit_breaker.is_available(provider["name"]):
         logger.warning(f"🔴 {provider['name']}: circuit breaker blocked")
         return None
-    key = get_next_key(provider["name"])
+    key, key_index = get_next_key(provider["name"])
     keys_exist = bool(PROVIDER_KEYS.get(provider["name"]))
     is_keyless = provider.get("keyless", False)
     
@@ -450,9 +458,9 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
         return None
     except httpx.HTTPStatusError as e:
         if e.response.status_code == 429:
-            rate_limiter.mark_429(provider["name"], 0)
+            rate_limiter.mark_429(provider["name"], key_index)
         elif e.response.status_code in (401, 402, 403):
-            rate_limiter.mark_402(provider["name"], 0)
+            rate_limiter.mark_402(provider["name"], key_index)
         logger.warning(f"❌ {provider['name']}: HTTP {e.response.status_code} - {e.response.text[:200]}")
         return None
     except Exception as e:
@@ -721,65 +729,46 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     temperature = body.get("temperature", 0.7)
     max_tokens = body.get("max_tokens", 4096)
     
-    # Вызов провайдера
-    provider_resp = await call_provider(target_provider, messages, target_model, stream, temperature, max_tokens)
-    if target_provider is None and model != "auto":
-        for p in PROVIDERS:
-            if model in p["models"]:
-                target_provider = p
-                target_model = model
-                break
-        if not target_provider:
-            raise HTTPException(404, f"Model {model} not found")
+    # Вызов провайдера — ОДИН раз
+    if target_provider is None:
+        logger.error('target_provider is None!')
+        provider_resp = None
     else:
-        # Auto: первый провайдер с ключами или keyless
-        for p in PROVIDERS:
-            if PROVIDER_KEYS.get(p["name"]) or p.get("keyless", False):
-                target_provider = p
-                target_model = p["models"][0]
-                break
-        if not target_provider:
-            raise HTTPException(503, "No providers available")
-
-    # Sticky session support
-    session_key = request.headers.get("X-Session-Key")
-    if session_key and session_key in sticky_sessions:
-        prov_name, mod, expiry = sticky_sessions[session_key]
-        if time.time() < expiry:
-            for p in PROVIDERS:
-                if p["name"] == prov_name and mod in p["models"]:
-                    target_provider = p
-                    target_model = mod
-                    break
-
-    # Вызов провайдера
-    provider_resp = await call_provider(target_provider, messages, target_model, stream, temperature, max_tokens)
+        logger.info(f'Calling {target_provider["name"]}/{target_model}')
+        try:
+            provider_resp = await call_provider(target_provider, messages, target_model, stream, temperature, max_tokens)
+        except Exception as e:
+            logger.error(f'Call failed: {e}')
+            provider_resp = None
     
+    logger.info(f'Response type: {type(provider_resp).__name__}, keys: {list(provider_resp.keys()) if isinstance(provider_resp, dict) else "N/A"}')
     # Проверка на error внутри ответа (OpenRouter 200 + error)
     if isinstance(provider_resp, dict) and "error" in provider_resp:
         logger.warning(f"⚠️ Error in response: {str(provider_resp['error'])[:100]}")
         provider_resp = None
+    elif isinstance(provider_resp, dict):
+        logger.info(f'✅ Valid response from {target_provider["name"]}: {str(list(provider_resp.keys()))}')
 
     if provider_resp is None:
-        # Fallback к следующему провайдеру
-        for p in PROVIDERS:
+        # Fallback: перебираем цепочку из fallback_manager
+        task_chain = fallback.get_chain(task)
+        for entry in task_chain:
+            pname = entry["provider"]
+            pmodel = entry["model"]
             if pname == target_provider["name"] and pmodel == target_model:
                 continue
-            for p in PROVIDERS:
-                if p["name"] == pname and pmodel in p.get("models", []):
-                    if PROVIDER_KEYS.get(p["name"]) or p.get("keyless", False):
-                        provider_resp = await call_provider(p, messages, pmodel, stream, temperature, max_tokens)
-                    break
+            for prov in PROVIDERS:
+                if prov["name"] == pname and pmodel in prov.get("models", []):
+                    if PROVIDER_KEYS.get(prov["name"]) or prov.get("keyless", False):
+                        logger.info(f"🔄 Fallback: {pmodel} @ {pname}")
+                        provider_resp = await call_provider(prov, messages, pmodel, stream, temperature, max_tokens)
+                        if provider_resp and not (isinstance(provider_resp, dict) and "error" in provider_resp):
+                            target_provider = prov
+                            target_model = pmodel
+                            break
             if provider_resp:
-                target_provider = p
-                target_model = p["models"][0]
                 break
     
-    # Проверка на error внутри ответа (OpenRouter 200 + error)
-    if isinstance(provider_resp, dict) and "error" in provider_resp:
-        logger.warning(f"⚠️ Error in response: {str(provider_resp['error'])[:100]}")
-        provider_resp = None
-
     if provider_resp is None:
         await alert_all_providers_down()
         raise HTTPException(503, "All providers failed")
