@@ -1,23 +1,39 @@
 Ты — senior инженер. Изучи репозиторий:
 https://github.com/samsonoff80/hermes
 
+RAW ссылки для чтения:
+https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/consilium_server.py
+https://raw.githubusercontent.com/samsonoff80/hermes/main/README.md
+
 Это Consilium v7.1 — LLM прокси для Hermes Agent v0.19 на VIM4 ARM64.
 
-## ТЕКУЩЕЕ СОСТОЯНИЕ (21.07.2026)
-Мы применили P0 исправления:
-- Убрали двойной вызов call_provider
-- Исправили fallback (pname/pmodel)
+## ЧТО МЫ УЖЕ СДЕЛАЛИ (P0 исправления)
+- Убрали двойной вызов call_provider (было 2 вызова, теперь 1)
+- Исправили fallback (pname/pmodel инициализированы)
 - Таймауты: PROVIDER_TIMEOUT=20s, OVERALL_DEADLINE=40s
-- get_next_key возвращает (key, key_index)
+- get_next_key возвращает кортеж (key, key_index)
 - Rate limiter временно отключён
+- Circuit breaker: threshold=5
 
-## ПРОБЛЕМА
-Consilium получает 200 OK от провайдера (Mistral), но Hermes получает "Provider failed after retries".
-Ответ валидный: {'id', 'created', 'model', 'usage', 'object', 'choices'}
-Но alert "All providers DOWN" всё равно срабатывает.
+## СИМПТОМ
+1. Consilium получает запрос от Hermes
+2. Router выбирает провайдера: chat → mistral-small-2603 @ mistral
+3. call_provider возвращает 200 OK от Mistral
+4. Ответ валидный: {'id', 'created', 'model', 'usage', 'object', 'choices'}
+5. Лог: ✅ Valid response from mistral: ['id', 'created', 'model', 'usage', 'object', 'choices']
+6. НО Hermes получает "Provider failed after retries"
+7. Alert "All providers DOWN" срабатывает
 
-## ЧТО НУЖНО
-1. Найди причину почему ответ не возвращается Hermes
-2. Проверь всю цепочку: call_provider → проверка error → fallback → return JSONResponse
-3. Дай ИСПРАВЛЕННЫЙ код
-4. Ответ на русском
+## ЧТО МЫ ПРОВЕРИЛИ
+- target_provider не None перед вызовом
+- call_provider возвращает dict (не None, не Response)
+- "error" ключа нет в ответе
+- stream=False принудительно
+- fallback НЕ вызывается (provider_resp не None после проверки error)
+- Но alert срабатывает — значит provider_resp становится None где-то после
+
+## КОНКРЕТНЫЙ ВОПРОС
+Между строкой `✅ Valid response` и `if provider_resp is None: alert` что-то меняет provider_resp на None.
+Найди что. Дай исправленный код.
+
+Ответ на русском.
