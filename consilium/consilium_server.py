@@ -680,7 +680,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     # Fix: treat empty string as auto
     if not model or model == "":
         model = "auto"
-    stream = False  # Принудительно non-streaming для учёта токенов
+    stream = body.get("stream", False)  # Поддержка streaming от клиента
     temperature = body.get("temperature", 0.7)
     max_tokens = body.get("max_tokens", 4096)
     tools = body.get("tools", [])
@@ -726,7 +726,6 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     if target_provider is None:
         target_model = None
     
-    stream = False  # Принудительно non-streaming для учёта токенов
     temperature = body.get("temperature", 0.7)
     max_tokens = body.get("max_tokens", 4096)
     
@@ -750,7 +749,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     elif isinstance(provider_resp, dict):
         logger.info(f'✅ Valid response from {target_provider["name"]}: {str(list(provider_resp.keys()))}')
 
-    if provider_resp is None:
+    if provider_resp is None and target_provider is not None:
         # Fallback: перебираем цепочку из fallback_manager
         task_chain = fallback.get_chain(task)
         for entry in task_chain:
