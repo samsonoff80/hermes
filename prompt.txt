@@ -1,79 +1,57 @@
 Ты — senior инженер. Изучи репозиторий:
 https://github.com/samsonoff80/hermes
 
-RAW ссылки на все файлы:
-https://raw.githubusercontent.com/samsonoff80/hermes/main/README.md
-https://raw.githubusercontent.com/samsonoff80/hermes/main/config.yaml
-https://raw.githubusercontent.com/samsonoff80/hermes/main/SOUL.md
-https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/orchestrator/SOUL.md
-https://raw.githubusercontent.com/samsonoff80/hermes/main/agents/orchestrator/SKILL.md
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/consilium_server.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/fallback_manager.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/rate_limiter.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/circuit_breaker.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/__init__.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/base.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/groq.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/mistral.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/openrouter.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/github.py
-https://raw.githubusercontent.com/samsonoff80/hermes/main/consilium/providers/cloudflare.py
-
 Это Consilium v7.1 — LLM прокси для Hermes Agent v0.19 на VIM4 ARM64 8GB.
 
-## ЧТО НУЖНО
+## ЗАДАЧА
+Проверь ВСЮ систему на ошибки. Если чего-то не хватает для анализа — запроси файлы или задай вопросы.
 
-### 1. Полный аудит кода
+### 1. Аудит кода
 Проверь ВСЕ файлы на:
 - Синтаксические ошибки
 - Логические ошибки (None вместо dict, UnboundLocalError)
-- Оборванные связи (импорты которые нигде не используются)
+- Несоответствие сигнатур функций
 - Дублирование кода
-- Нарушения архитектуры
 - Мёртвый код
 - Утечки памяти
 - Потокобезопасность
 
-### 2. Найди критический баг
-Симптом: Hermes → Consilium → провайдер 200 OK → ответ валидный → но Hermes получает "Provider failed after retries".
+### 2. Hermes v0.19 совместимость
+Изучи документацию:
+- https://github.com/NousResearch/hermes-agent
+- https://hermes-agent.nousresearch.com/docs/
 
-Мы уже применили:
-- Убрали двойной вызов call_provider
-- Исправили fallback (pname/pmodel)
-- get_next_key возвращает (key, key_index)
-- Таймауты: 20s/40s
-- Rate limiter временно отключён
+Найди ВСЕ требования к формату ответа API в v0.19.
+Сравни с тем что возвращает Consilium.
+Найди несоответствия.
 
-Но alert "All providers DOWN" всё равно срабатывает после успешного ответа.
+### 3. Критический баг
+Consilium получает 200 OK от провайдеров, возвращает JSONResponse с choices[0].message.content.
+НО Hermes получает "Provider failed after retries".
+Найди причину.
 
-### 3. Совместимость с Hermes v0.19
-- Изучи документацию Hermes (github.com/NousResearch/hermes-agent)
-- Проверь формат ответа API
-- Проверь streaming vs non-streaming
-- Проверь config.yaml
+### 4. Проверь цепочки
+- Telegram → Hermes → Consilium → Router → Fallback → Provider → Ответ
+- Каждый шаг должен работать
+- "Привет" → chat → ответ
+- "Напиши код" → code → ответ
+- При ошибке → fallback к следующему провайдеру
 
-### 4. Балльная система провайдеров
-Вместо жёсткого PRIORITY — динамические баллы за успех/задержку/лимиты.
-Формула + реализация + интеграция в fallback_manager.
-
-### 5. Состояние агентов
-Проверь всех 6 агентов: orchestrator, optimizer, product-analyst, source-scout, parsing-engineer, parser.
-SOUL.md, SKILL.md, PROGRESS.md, протокол delegate_task.
+### 5. Балльная система
+Вместо жёсткого PRIORITY нужна динамическая система на основе success_rate, latency, лимитов.
+Дай формулу + реализацию.
 
 ### 6. Рекомендации
-- Что улучшить в архитектуре?
-- Что оптимизировать для VIM4 8GB?
-- Как улучшить отказоустойчивость?
-- Как улучшить мониторинг?
+- Архитектура
+- Оптимизация для VIM4 8GB
+- Отказоустойчивость
+- Мониторинг
 
-### 7. Cloudflare ключи
-Cloudflare требует и ключ и account_id. Оба с суффиксами _1, _2, _3.
-Сейчас код ищет CLOUDFLARE_ACCOUNT_ID без номера.
-Надо синхронизировать с key_index из get_next_key.
+## ВАЖНО
+- Система универсальная (как FreeLLMAPI)
+- Модульные провайдеры
+- Единый OpenAI-совместимый API
+- Provider-agnostic роутинг
 
-## ФОРМАТ ОТВЕТА
-1. Найденные проблемы: файл, строка, описание, решение
-2. Исправленный код (diff)
-3. Балльная система: формула + реализация
-4. Рекомендации
-5. Ответ на русском
+Если нужны дополнительные файлы — скажи какие.
+Ответ на русском.
