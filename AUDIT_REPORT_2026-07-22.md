@@ -138,6 +138,7 @@ _GATEWAY_RAW_TEXT_PLATFORMS = frozenset({"local", "api_server", "webhook", "msgr
 | **P2-23** | `consilium_server.py` | `key_indexes` инкрементировался без блокировки | `threading.Lock` |
 | **P2-24** | `consilium_server.py` | `OVERALL_DEADLINE` объявлен, но нигде не проверялся | Применён в цикле перебора цепочки |
 | **P2-25** | `providers/base.py` | Загрузка ключей обрывалась на первой дырке в нумерации; `os.environ` игнорировался, хотя сервер читал именно его | Допуск дырок, приоритет `os.environ`, поддержка `enc:` |
+| **P2-26** | `consilium_server.py:197` | В `rescue_inline_tool_calls` паттерн `那些` («те самые») выдан за «Qwen style». Qwen размечает вызовы тегами `<tool_call>…</tool_call>` — паттерн **не мог сработать ни разу** | Заменён на реальные форматы: `<tool_call>` (Qwen/Hermes-2), `<\|tool_call_begin\|>` (GLM/Kimi), `[TOOL_CALLS]` (Mistral). Все 4 покрыты тестом |
 
 ### Проверенные факты (вывод probe-скрипта)
 
@@ -450,7 +451,8 @@ hermes doctor
 ### Тесты
 
 ```bash
-# 14 юнит-тестов: фильтр промпта, роутинг, цепочки, DPS, лимиты, circuit breaker
+# 17 юнит-тестов: фильтр промпта, роутинг, цепочки, DPS, лимиты,
+# circuit breaker, кламп max_tokens, разбор текстовых tool_calls
 python consilium/tests/test_consilium.py
 
 # Сквозной тест главного бага — поднимает фейкового провайдера
@@ -460,7 +462,7 @@ python consilium/tests/test_tools_passthrough.py
 Ожидаемый результат:
 
 ```
-🎉 Все тесты пройдены (14)
+🎉 Все тесты пройдены (17)
 🎉 Сквозная передача инструментов работает
 ```
 

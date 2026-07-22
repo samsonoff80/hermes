@@ -190,15 +190,18 @@ app.add_middleware(
 
 # ---------- INLINE TOOL CALL RESCUE (like FreeLLMAPI rescueFailedGeneration) ----------
 
-# Regex patterns for inline tool call formats
+# Форматы, в которых модели пишут вызовы инструментов текстом.
+# ВАЖНО: раньше здесь стоял паттерн из иероглифов 那些 («те самые»), выданный
+# за «Qwen style». Qwen размечает вызовы тегами <tool_call>…</tool_call>,
+# так что тот паттерн не мог сработать ни разу — мёртвый код.
 INLINE_TOOL_CALL_PATTERNS = [
     # <function=name>{...}</function>  (Hermes style)
     re.compile(r'<function=([a-zA-Z_][a-zA-Z0-9_]*)>\s*(\{.*?\})\s*</function>', re.DOTALL),
-    # 那些\n{"name": "...", "arguments": ...}\n那些  (Qwen style)
-    re.compile(r'那些\s*(\{.*?\})\s*那些', re.DOTALL),
-    # <|tool_call_begin|>...<|tool_call_end|>  (some models)
+    # <tool_call>{"name": ..., "arguments": ...}</tool_call>  (Qwen / Hermes-2)
+    re.compile(r'<tool_call>\s*(\{.*?\})\s*</tool_call>', re.DOTALL),
+    # <|tool_call_begin|>...<|tool_call_end|>  (GLM, Kimi)
     re.compile(r'<\|tool_call_begin\|>(.*?)<\|tool_call_end\|>', re.DOTALL),
-    # 那些...[/TOOL_CALLS] with JSON array inside
+    # [TOOL_CALLS][...][/TOOL_CALLS]  (Mistral) — внутри JSON-массив
     re.compile(r'\[TOOL_CALLS\]\s*(\[.*?\])\s*\[/TOOL_CALLS\]', re.DOTALL),
 ]
 
@@ -221,8 +224,8 @@ def rescue_inline_tool_calls(content: str, available_tool_names: set[str] | None
                     # Hermes: <function=name>{args}</function>
                     name = match.group(1)
                     args_str = match.group(2).strip()
-                elif pattern.pattern.startswith(r'那些'):
-                    # Qwen: 那些{json}那些
+                elif pattern.pattern.startswith(r'<tool_call>'):
+                    # Qwen / Hermes-2: <tool_call>{json}</tool_call>
                     json_str = match.group(1).strip()
                     parsed = json.loads(json_str)
                     name = parsed.get("name", "")
@@ -234,7 +237,7 @@ def rescue_inline_tool_calls(content: str, available_tool_names: set[str] | None
                     name = parsed.get("name", "")
                     args_str = json.dumps(parsed.get("arguments", {}), ensure_ascii=False)
                 elif pattern.pattern.startswith(r'\[TOOL_CALLS\]'):
-                    # CDATA wrapper: 那些[...][/TOOL_CALLS]
+                    # Mistral: [TOOL_CALLS][{...}][/TOOL_CALLS]
                     json_str = match.group(1).strip()
                     parsed = json.loads(json_str)
                     if isinstance(parsed, list):

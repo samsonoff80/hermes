@@ -281,6 +281,59 @@ def test_classify_task():
     print("  ✅ классификация задач, включая content-списком")
 
 
+# --------------------------------------------------------------------------
+# Спасение вызовов инструментов, написанных текстом
+# --------------------------------------------------------------------------
+
+def test_rescue_inline_tool_calls():
+    """Паттерн 'Qwen style' раньше состоял из иероглифов 那些 и не мог сработать."""
+    import consilium_server as cs
+    names = {"read_file", "delegate_task"}
+
+    cases = {
+        "Qwen/Hermes-2": '<tool_call>{"name": "read_file", "arguments": {"path": "SOUL.md"}}</tool_call>',
+        "Hermes inline": '<function=read_file>{"path": "SOUL.md"}</function>',
+        "GLM/Kimi": '<|tool_call_begin|>{"name": "read_file", "arguments": {}}<|tool_call_end|>',
+        "Mistral": '[TOOL_CALLS][{"name": "read_file", "arguments": {"path": "x"}}][/TOOL_CALLS]',
+    }
+    for label, text in cases.items():
+        calls = cs.rescue_inline_tool_calls(text, names)
+        assert calls, f"формат {label} не распознан"
+        assert calls[0]["function"]["name"] == "read_file", f"{label}: имя разобрано неверно"
+
+    # Инструмент не из списка доступных — игнорируется
+    assert cs.rescue_inline_tool_calls(
+        '<tool_call>{"name": "rm_rf", "arguments": {}}</tool_call>', names) == []
+    print(f"  ✅ распознаны все {len(cases)} текстовых формата tool_calls")
+
+
+def test_empty_response_detected():
+    """Пустой ответ должен считаться провалом провайдера."""
+    import consilium_server as cs
+    empty = {"choices": [{"message": {"role": "assistant", "content": "", "tool_calls": []}}]}
+    assert not cs.response_has_payload(empty), "пустой ответ принят за валидный"
+
+    with_text = {"choices": [{"message": {"role": "assistant", "content": "привет"}}]}
+    assert cs.response_has_payload(with_text)
+
+    with_tools = {"choices": [{"message": {"role": "assistant", "content": None,
+                                           "tool_calls": [{"id": "1"}]}}]}
+    assert cs.response_has_payload(with_tools), "ответ с tool_calls отброшен"
+    assert not cs.response_has_payload({"choices": []}), "ответ без choices принят"
+    print("  ✅ пустой ответ распознаётся как провал провайдера")
+
+
+def test_max_tokens_clamped():
+    """Hermes при provider=custom шлёт 65536 — модели отвечают 400."""
+    import consilium_server as cs
+    assert cs.clamp_max_tokens("llama-3.1-8b-instant", 65536) == 8192
+    assert cs.clamp_max_tokens("llama-3.3-70b-versatile", 65536) == 32768
+    assert cs.clamp_max_tokens("unknown-model", 65536) == cs.MAX_TOKENS_CAP
+    assert cs.clamp_max_tokens("unknown-model", 512) == 512, "малое значение не должно расти"
+    assert cs.clamp_max_tokens("unknown-model", None) == cs.MAX_TOKENS_CAP
+    print("  ✅ max_tokens клампится по модели")
+
+
 TESTS = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
 
 if __name__ == "__main__":
