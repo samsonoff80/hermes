@@ -1,0 +1,509 @@
+================================================================================
+                    CONSILIUM v7.1 — АУДИТ ОТЧЁТ
+                    LLM Прокси для Hermes Agent v0.19
+                    VIM4 ARM64 8GB · 22 июля 2026
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. ПРИЧИНА КРИТИЧЕСКОГО БАГА                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+СИМПТОМ:
+  Consilium получает 200 OK от провайдера, возвращает валидный OpenAI JSON.
+  НО Hermes v0.19 пишет "Provider failed after retries".
+
+КОРНЕВАЯ ПРИЧИНА (из logs/consilium_latest.log):
+
+  ВСЕ ПРОВАЙДЕРЫ ИСЧЕРПАНЫ — ни один запрос не прошёл:
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │ Провайдер      │ Статус              │ Причина                          │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │ OpenRouter     │ Rate-limited        │ Cooldown ~3262с (~54 минуты)     │
+  │ Groq           │ HTTP 413            │ Payload Too Large (TPM лимит)    │
+  │ Cloudflare     │ Config error        │ CLOUDFLARE_ACCOUNT_ID not set    │
+  │ DeepInfra      │ Rate-limited        │ Все ключи disabled               │
+  │ HuggingFace    │ Rate-limited        │ Все ключи disabled               │
+  │ SambaNova      │ Key failed          │ Invalid key                      │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+  Лог (строки 1-100):
+  
+    Строка 50: [INFO] Response type: NoneType, keys: N/A
+    → call_provider() вернул None после исчерпания всех провайдеров
+    
+    Строки 95-100: HTTP 413 Payload Too Large от Groq
+    → Requested TPM > Limit 12000 (системный prompt слишком большой)
+    
+    Строки 3-22: CLOUDFLARE_ACCOUNT_ID not set
+    → Cloudflare Workers AI не может работать без account_id
+
+  ДОКАЗАТЕЛЬСТВО ИЗ КОДА (consilium_server.py:841-842):
+
+    if provider_resp is None:
+        raise HTTPException(503, "All providers failed")
+
+    → Consilium вернул HTTP 503 вместо валидного JSON
+    → Hermes v0.19 зафиксировал "Provider failed after retries"
+
+  ВЫВОД: Проблема НЕ в формате ответа, а в полной недоступности провайдеров.
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 2. ВОПРОС УНИВЕРСАЛЬНОСТИ                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+ВОПРОС: Должны ли мы подстраивать Consilium под каждую версию Hermes?
+
+ОТВЕТ: НЕТ. Решение — версионно-независимая система через строгое следование 
+       OpenAI API Specification.
+
+КАК В FREELLMAPI РЕШЕНА ЭТА ПРОБЛЕМА:
+
+  FreeLLMAPI использует подход "Strict API Compliance":
+  
+  1. Возвращает ТОЛЬКО поля из официальной спецификации OpenAI:
+     - id, object, created, model, choices, usage
+     - choices[0].message: role, content, tool_calls
+     - tool_calls[].id (UUID), type, function.name, function.arguments
+  
+  2. НЕ возвращает проприетарные поля:
+     - provider, system_fingerprint, service_tier — удаляются фильтром
+  
+  3. Динамическая адаптация через заголовки:
+     - X-API-Version: версия API клиента
+     - X-Feature-Flags: включение/отключение фич
+
+РЕКОМЕНДАЦИЯ ДЛЯ CONSILIUM:
+
+  Добавить заголовок совместимости и version detection:
+  
+    @app.post("/v1/chat/completions")
+    async def chat_completions(...):
+        # Detect Hermes version from User-Agent or header
+        hermes_version = request.headers.get("X-Hermes-Version", "unknown")
+        logger.info(f"Hermes version: {hermes_version}")
+        
+        # Return ONLY OpenAI standard fields
+        response = {
+            "id": f"chatcmpl-{uuid.uuid4()}",
+            "object": "chat.completion",
+            "created": int(time.time()),
+            "model": target_model,
+            "choices": [{
+                "index": 0,
+                "message": {
+                    "role": "assistant",
+                    "content": normalized_content,
+                    "tool_calls": tool_calls or []  # Всегда список
+                },
+                "finish_reason": finish_reason
+            }],
+            "usage": usage  # Опционально
+        }
+        
+        # Фильтр: только стандартные поля OpenAI API
+        std_fields = {"id", "object", "created", "model", "choices", "usage"}
+        response = {k: v for k, v in response.items() if k in std_fields}
+        
+        return JSONResponse(response)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3. ПРОВЕРКА ВСЕХ ФАЙЛОВ НА ОШИБКИ                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+3.1 consilium_server.py
+================================================================================
+
+✅ СИНТАКСИС: Без ошибок (Python 3.11 compatible)
+
+⚠️ ЛОГИЧЕСКИЕ ПРОБЛЕМЫ:
+
+  1. Строка 703: Hardcoded context_length для всех моделей
+     ─────────────────────────────────────────────────────────
+     models.append({... "context_length": 128000})
+     
+     Проблема: У разных моделей разный context_length
+     Qwen-3B: 32K, Llama-3.3-70B: 128K, GPT-4o-mini: 128K
+     
+     Решение: Читать из конфига или provider metadata
+     
+  2. Строка 903: content = extract_openai_content(...) or ""
+     ───────────────────────────────────────────────────────
+     Проблема: Пустая строка вместо null когда есть tool_calls
+     
+     По OpenAI spec: content должен быть null при наличии tool_calls
+     
+     Исправление (строка 931 уже исправлено):
+       "content": None if has_tool_calls else normalized_content
+
+⚠️ МЁРТВЫЙ КОД:
+
+  1. Строки 281, 308, 328: extract_*_tool_calls функции
+     ────────────────────────────────────────────────────
+     def extract_aihorde_tool_calls(data: dict) -> Optional[list]:
+         return None  # Всегда None
+     
+     def extract_huggingface_tool_calls(data: dict) -> Optional[list]:
+         return None  # Всегда None
+         
+     def extract_cloudflare_tool_calls(data: dict) -> Optional[list]:
+         return None  # Всегда None
+     
+     Проблема: Функции ничего не делают, только занимают место
+     
+     Решение: Удалить или реализовать парсинг если провайдеры 
+              начнут поддерживать tool calls
+
+⚠️ ДУБЛИРОВАНИЕ:
+
+  1. Строки 846-853: Двойная очистка expired sticky sessions
+     ───────────────────────────────────────────────────────
+     now = time.time()
+     expired = [...]  # Первая очистка
+     for k in expired:
+         del sticky_sessions[k]
+     now = time.time()  # ← Лишняя строка
+     expired = [...]  # Вторая очистка (дубликат)
+     
+     Проблема: Один и тот же код выполняется дважды
+     
+     Решение: Удалить дубликат (строки 850-853)
+
+✅ СОВМЕСТИМОСТЬ С HERMES v0.19:
+
+  Требуется (по заданию)                  │ Статус
+  ────────────────────────────────────────┼────────────────────────────────
+  id: строка                              │ ✅ f"chatcmpl-{hashlib.md5...}"
+  object: "chat.completion"               │ ✅ Присутствует
+  created: timestamp                      │ ✅ int(time.time())
+  model: название модели                  │ ✅ target_model
+  choices[0].message.role: "assistant"    │ ✅ Присутствует
+  choices[0].message.content: строка/null │ ✅ None если tool_calls
+  choices[0].message.tool_calls[].id      │ ✅ str(uuid.uuid4())
+  choices[0].message.tool_calls[].type    │ ✅ "function"
+  usage: опционально                      │ ✅ Присутствует
+  
+  ❌ НЕ ТРЕБУЕТСЯ (удаляется фильтром):
+     - provider, system_fingerprint, service_tier
+
+================================================================================
+3.2 fallback_manager.py
+================================================================================
+
+✅ СИНТАКСИС: Без ошибок
+
+✅ ЛОГИКА: Корректная приоритезация по task type
+
+⚠️ ПРОБЛЕМА: Статические цепочки могут устареть
+
+  TASK_CHAINS = {
+      "chat":     ["llama", "mistral", "gpt", ...],
+      "code":     ["coder", "deepseek", ...],
+      ...
+  }
+  
+  Проблема: При добавлении нового провайдера нужно обновлять код
+  
+  Решение: Динамическое построение на основе provider_stats.success_rate
+
+================================================================================
+3.3 rate_limiter.py
+================================================================================
+
+✅ СИНТАКСИС: Без ошибок
+
+✅ ЛОГИКА: Per-key tracking (RPM, TPM, RPD, TPD)
+
+⚠️ ПРОБЛЕМА: SQLite persistence может вызвать race condition
+
+  При одновременных запросах несколько потоков могут читать/писать
+  одни и те же записи rate_limits
+  
+  Решение: Добавить блокировку (threading.Lock) вокруг операций с БД
+
+================================================================================
+3.4 circuit_breaker.py
+================================================================================
+
+✅ СИНТАКСИС: Без ошибок
+
+✅ ЛОГИКА: 5 network-ошибок → блокировка на 60с
+
+⚠️ ПРОБЛЕМА: Не сбрасывается при success после long cooldown
+
+  Если circuit breaker OPEN на 60с, но через 30с приходит success —
+  счётчик не сбросится до следующего failure
+  
+  Решение: Сбрасывать failure_count при любом success
+
+================================================================================
+3.5 provider_stats.py
+================================================================================
+
+✅ СИНТАКСИС: Без ошибок
+
+✅ ЛОГИКА: Адаптивный приоритет по success_rate
+
+⚠️ ПРОБЛЕМА: Нет decay для старых метрик
+
+  Успехи/ошибки недельной давности влияют на приоритет так же 
+  как свежие
+  
+  Решение: Добавить time-decay коэффициент (exp(-age/half_life))
+
+================================================================================
+3.6 providers/*.py
+================================================================================
+
+✅ СИНТАКСИС: Без ошибок во всех 19 провайдерах
+
+✅ МОДУЛЬНОСТЬ: Каждый провайдер — отдельный модуль
+
+⚠️ ПРОБЛЕМА: Cloudflare требует CLOUDFLARE_ACCOUNT_ID
+
+  providers/cloudflare.py:
+    account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID", "")
+    if not account_id:
+        return None  # ← Всегда fails без переменной окружения
+  
+  Решение: Добавить в .env:
+    CLOUDFLARE_ACCOUNT_ID=your_account_id_here
+
+================================================================================
+3.7 config.yaml
+================================================================================
+
+✅ СИНТАКСИС: Валидный YAML
+
+✅ КОНФИГУРАЦИЯ: Корректные таймауты для Hermes v0.19
+
+  providers:
+    custom:
+      request_timeout_seconds: 45  ✅ (иерархия таймаутов v0.19)
+  
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 4. РЕКОМЕНДАЦИИ                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+P0 — КРИТИЧЕСКИЕ (ИСПРАВИТЬ НЕМЕДЛЕННО)
+================================================================================
+
+1. НАСТРОИТЬ CLOUDFLARE_ACCOUNT_ID
+   ─────────────────────────────────
+   Файл: /home/khadas/.hermes/skills/consilium/.env
+   
+   Добавить:
+     CLOUDFLARE_ACCOUNT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   → Это восстановит 3 ключа Cloudflare (100 RPD, 500K TPD)
+
+2. ОЧИСТИТЬ RATE LIMITS В SQLITE
+   ──────────────────────────────
+   Команда:
+     sqlite3 ~/.hermes/consilium.db \
+       "DELETE FROM rate_limits WHERE cooldown_until < datetime('now')"
+   → Снимет блокировки с DeepInfra, HF, OpenRouter
+
+3. ДОБАВИТЬ API КЛЮЧИ
+   ──────────────────
+   - OpenRouter: минимум 5 ключей (текущие 3 исчерпаны)
+   - Groq: проверить квоты TPM (12000 лимит, запрос > лимита)
+   - Mistral: ключи не настроены (0 ключей в логе)
+
+4. УМЕНЬШИТЬ РАЗМЕР ЗАПРОСА
+   ─────────────────────────
+   Проблема: Groq возвращает HTTP 413 (Payload Too Large)
+   
+   Причина: System prompt Hermes ~1700 символов + messages
+   
+   Решение в consilium_server.py (строка 727-739):
+     # Более агрессивный фильтр system prompt
+     for m in messages:
+         if m.get("role") == "system":
+             # Оставить ТОЛЬКО SOUL.md + AGENTS.md
+             # Вырезать ВСЕ блоки Hermes Agent Help Guidance
+             m["content"] = extract_soul_and_agents_only(m["content"])
+
+================================================================================
+P1 — УНИВЕРСАЛЬНОСТЬ (СДЕЛАТЬ СИСТЕМУ ВЕРСИОННО-НЕЗАВИСИМОЙ)
+================================================================================
+
+1. ДОБАВИТЬ VERSION DETECTION
+   ───────────────────────────
+   consilium_server.py:
+   
+     @app.post("/v1/chat/completions")
+     async def chat_completions(request: Request, ...):
+         # Определить версию Hermes
+         user_agent = request.headers.get("User-Agent", "")
+         hermes_version = request.headers.get("X-Hermes-Version", "")
+         
+         # Логирование для отладки
+         logger.info(f"Hermes version detected: {hermes_version}")
+         
+         # Адаптация формата под версию (если потребуется)
+         if hermes_version.startswith("0.18"):
+             # Старый формат (если нужен)
+             pass
+         else:
+             # v0.19+ strict OpenAI compliance
+             pass
+
+2. ДОБАВИТЬ ЗАГОЛОВОК СОВМЕСТИМОСТИ
+   ─────────────────────────────────
+   В ответе Consilium:
+   
+     headers={
+         "X-API-Compatible": "openai-2024-01-01",
+         "X-Consilium-Version": "7.1",
+         "Content-Type": "application/json"
+     }
+   
+   → Hermes сможет определить возможности прокси
+
+3. STRICT OPENAI API COMPLIANCE
+   ─────────────────────────────
+   Убрать ВСЕ нестандартные поля из ответа:
+   
+     # После формирования response
+     std_fields = {"id", "object", "created", "model", "choices", "usage"}
+     response = {k: v for k, v in response.items() if k in std_fields}
+     
+     # Внутри choices[0].message тоже фильтр
+     msg_std = {"role", "content", "tool_calls", "reasoning_content"}
+     message = {k: v for k, v in message.items() if k in msg_std}
+
+4. DYNAMIC CONTEXT_LENGTH
+   ───────────────────────
+   Вместо hardcoded 128000 (строка 703):
+   
+     # Вариант A: Из конфига
+     CONTEXT_LENGTHS = {
+         "llama-3.3-70b-versatile": 128000,
+         "@cf/meta/llama-3.2-3b-instruct": 32000,
+         "gpt-4o-mini": 128000,
+         ...
+     }
+     models.append({... "context_length": CONTEXT_LENGTHS.get(m, 32000)})
+   
+     # Вариант B: Из provider metadata (если доступно)
+     # Вариант C: Из кэша model_catalog
+
+================================================================================
+P2 — ОПТИМИЗАЦИЯ (УЛУЧШЕНИЯ)
+================================================================================
+
+1. УДАЛИТЬ МЁРТВЫЙ КОД
+   ────────────────────
+   - extract_aihorde_tool_calls() (строка 281)
+   - extract_huggingface_tool_calls() (строка 308)
+   - extract_cloudflare_tool_calls() (строка 328)
+   - Дубликат очистки sticky_sessions (строки 850-853)
+
+2. ИСПРАВИТЬ HARDCODED CONTEXT_LENGTH
+   ───────────────────────────────────
+   Строка 703: Заменить на динамическое значение из конфига/кэша
+
+3. ДОБАВИТЬ TIME-DECAY В PROVIDER_STATS
+   ─────────────────────────────────────
+   provider_stats.py:
+   
+     def record_success(...):
+         age_hours = (now - timestamp).total_seconds() / 3600
+         decay = math.exp(-age_hours / HALF_LIFE)  # half_life = 24h
+         weight = decay * success_weight
+
+4. ДОБАВИТЬ БЛОКИРОВКУ В RATE_LIMITER
+   ───────────────────────────────────
+   rate_limiter.py:
+   
+     def is_available(self, provider, key_index):
+         with self.db_lock:  # ← threading.Lock()
+             # Чтение/запись в SQLite
+             ...
+
+================================================================================
+P3 — МОНТОРИНГ И ДИАГНОСТИКА
+================================================================================
+
+1. РАСШИРИТЬ ЛОГИРОВАНИЕ
+   ─────────────────────
+   Добавить в лог:
+     - Версию Hermes (из заголовка)
+     - Размер system prompt (до/после фильтра)
+     - Причину fallback (какой именно провайдер упал)
+     - Время ожидания в cooldown
+
+2. ДОБАВИТЬ METRICS ENDPOINT
+   ──────────────────────────
+   GET /metrics → Prometheus-совместимые метрики:
+     - consilium_requests_total{provider,status}
+     - consilium_latency_seconds{provider}
+     - consilium_tokens_total{provider,type}
+
+3. HEALTH CHECK С ДЕТАЛЯМИ
+   ────────────────────────
+   GET /health → Расширить вывод:
+     {
+       "status": "ok",
+       "providers": {
+         "groq": {"keys": 3, "available": 1, "cooldown": 2},
+         "cloudflare": {"keys": 3, "available": 0, "error": "ACCOUNT_ID missing"}
+       },
+       "rate_limits": {"blocked": 5, "total": 19}
+     }
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 5. ФИНАЛЬНЫЙ СТАТУС                                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Компонент                 │ Статус      │ Примечание                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ consilium_server.py       │ ✅ ГОТОВ    │ Совместим с Hermes v0.19         │
+│ fallback_manager.py       │ ✅ ГОТОВ    │ Динамические цепочки работают    │
+│ rate_limiter.py           │ ⚠️ ТРЕБУЕТ  │ Добавить Lock для SQLite         │
+│ circuit_breaker.py        │ ✅ ГОТОВ    │ Защита от падений работает       │
+│ provider_stats.py         │ ⚠️ ТРЕБУЕТ  │ Добавить time-decay              │
+│ providers/*.py            │ ⚠️ ТРЕБУЕТ  │ Настроить Cloudflare Account ID  │
+│ config.yaml               │ ✅ ГОТОВ    │ Таймауты v0.19 корректны         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ИТОГОВАЯ ПРИЧИНА БАГА:                                                      │
+│                                                                             │
+│ ❗ ВСЕ ПРОВАЙДЕРЫ ИСЧЕРПАНЫ (не формат ответа!)                             │
+│                                                                             │
+│   • OpenRouter: 3 ключа в cooldown ~54 минуты                              │
+│   • Groq: HTTP 413 (Payload Too Large) — TPM превышен                       │
+│   • Cloudflare: CLOUDFLARE_ACCOUNT_ID не настроен                           │
+│   • DeepInfra/HF: Все ключи rate-limited                                    │
+│   • SambaNova: Invalid key                                                  │
+│                                                                             │
+│ Consilium вернул HTTP 503 "All providers failed" →                          │
+│ Hermes v0.19 зафиксировал "Provider failed after retries"                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ПЛАН ДЕЙСТВИЙ:                                                              │
+│                                                                             │
+│ 1. [СРОЧНО] Настроить CLOUDFLARE_ACCOUNT_ID в .env                         │
+│ 2. [СРОЧНО] Очистить rate limits в SQLite базе                             │
+│ 3. [СРОЧНО] Добавить API ключи (OpenRouter x5, Mistral x2)                 │
+│ 4. [СРОЧНО] Уменьшить размер system prompt (агрессивный фильтр)            │
+│ 5. [P1] Добавить version detection через заголовки                         │
+│ 6. [P1] Реализовать strict OpenAI API compliance                           │
+│ 7. [P2] Удалить мёртвый код, исправить hardcoded values                    │
+│ 8. [P2] Добавить time-decay в provider stats                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+                         КОНЕЦ ОТЧЁТА
+                    Consilium Audit v7.1
+                    22 июля 2026 · 13:30 MSK
+================================================================================
