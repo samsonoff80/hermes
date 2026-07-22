@@ -9,59 +9,69 @@ https://github.com/samsonoff80/hermes
 ### 1. Найди причину критического бага
 Симптом: Consilium получает 200 OK от провайдера, формирует JSONResponse с choices[0].message.content, возвращает Hermes. НО Hermes пишет "Provider failed after retries".
 
-Проверь:
-- Формат JSON ответа — соответствует ли OpenAI Chat Completions API?
-- Все ли обязательные поля на месте?
-- Правильный ли Content-Type?
-- Стриминг vs non-streaming?
-- Что именно ждёт Hermes v0.19 от custom provider?
-
 ### 2. Изучи документацию Hermes Agent v0.19
 Ссылки:
 - https://github.com/NousResearch/hermes-agent
 - https://hermes-agent.nousresearch.com/docs/
-- https://hermes-agent.nousresearch.com/docs/user-guide/configuration
-- https://hermes-agent.nousresearch.com/docs/developer-guide/prompt-assembly
 
-Найди:
-- Требования к формату ответа от custom provider
-- Как Hermes обрабатывает ответ
-- Какие поля обязательны
-- Изменилось ли что-то в v0.19 по сравнению с v0.18
+### 3. Ключевые изменения в Hermes v0.19 (по сравнению с v0.18)
 
-### 3. Проверь ВСЕ файлы на ошибки
-- Синтаксические (python3 -m py_compile)
-- Логические (None вместо dict, UnboundLocalError)
-- Несоответствие сигнатур функций
-- Дублирование кода
-- Мёртвый код
-- Утечки памяти
-- Потокобезопасность
+**Delivery-obligation ledger:** Ответы сохраняются в `state.db`. Если gateway упал между генерацией и доставкой — ответ НЕ теряется, повторно доставляется при следующем запуске.
 
-### 4. Проверь совместимость с Hermes v0.19
-- config.yaml — все ли поля актуальны?
-- System prompt — изменился ли формат?
-- API ответ — соответствует ли спецификации?
+**Tool definitions fix:** Исправлена ошибка из-за которой tool definitions не передавались custom провайдерам. В v0.19 tools пробрасываются корректно.
 
-### 5. Дай рекомендации
-- Что исправить в первую очередь
-- Что улучшить в архитектуре
-- Что оптимизировать для VIM4 8GB
+**Custom provider validation:** Эндпоинт `/v1/models` должен возвращать валидный JSON. Если возвращает ошибку — Hermes может отклонить запрос.
+
+**Provider timeouts:** Новая иерархия таймаутов: `providers.<id>.request_timeout_seconds` → `providers.<id>.models.<model>.timeout_seconds`.
+
+**Prompt caching:** Автоматическое `cache_control` с TTL 1h для Claude/OpenRouter, 5m для Qwen Cloud.
+
+**Tool-loop guardrails:** Детекция застрявших циклов tool calls с hard stops.
+
+**Gateway hot-reload:** Изменения `model.context_length` и `compression.*` применяются без рестарта.
+
+**Compression config migration:** `compression.summary_*` → `auxiliary.compression.*`.
+
+**Per-task fallback chain:** Каждая auxiliary задача может иметь свой `fallback_chain`.
+
+**Обязательные поля ответа (OpenAI Chat Completions API):**
+- `id`: строка
+- `object`: "chat.completion"
+- `created`: timestamp
+- `model`: название модели
+- `choices[0].message.role`: "assistant"
+- `choices[0].message.content`: строка или null (если есть tool_calls)
+- `choices[0].message.tool_calls[].id`: UUID
+- `choices[0].message.tool_calls[].type`: "function"
+- `choices[0].message.tool_calls[].function.name`: имя функции
+- `choices[0].message.tool_calls[].function.arguments`: JSON-строка
+- `usage`: опционально
+
+### 4. Проверь совместимость Consilium с v0.19
+- Формат JSON ответа — соответствует ли всем обязательным полям?
+- `/v1/models` — возвращает ли валидный JSON?
+- `tool_calls[].id` — UUID или наш формат `call_rescued_{index}`?
+- `content` — null или пустая строка при tool_calls?
+- `finish_reason` — "tool_calls" при наличии tool_calls?
+
+### 5. Проверь ВСЕ файлы на ошибки
+- Синтаксические, логические, дублирование, мёртвый код, утечки памяти
+
+### 6. Дай рекомендации
 
 ## ВАЖНО
 - НЕ выдумывай. Если не знаешь — спроси или запроси дополнительные файлы.
-- Проверяй факты в коде.
-- Все выводы должны быть подтверждены конкретными строками.
+- Проверяй факты в коде. Все выводы — с конкретными строками.
 
 ## ФАЙЛЫ ДЛЯ АНАЛИЗА
-- consilium/consilium_server.py (основной сервер, ~800 строк)
-- consilium/fallback_manager.py (цепочки провайдеров)
-- consilium/rate_limiter.py (per-key лимиты)
-- consilium/circuit_breaker.py (защита от падений)
-- consilium/provider_stats.py (статистика)
-- consilium/providers/*.py (модульные провайдеры, 12 шт)
-- config.yaml (конфиг Hermes)
-- logs/consilium_latest.log (логи для отладки)
-- README.md (полное описание системы)
+- consilium/consilium_server.py (~800 строк)
+- consilium/fallback_manager.py
+- consilium/rate_limiter.py
+- consilium/circuit_breaker.py
+- consilium/provider_stats.py
+- consilium/providers/*.py (12 шт)
+- config.yaml
+- logs/consilium_latest.log
+- README.md
 
 Ответ на русском.
