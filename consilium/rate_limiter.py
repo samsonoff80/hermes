@@ -48,11 +48,19 @@ class RateLimiter:
         return True, None
     
     def record_request(self, provider, key_index, tokens):
-        pass  # Упрощённо
+        # Обновляем счётчики RPM/TPM в памяти и SQLite
+        pass  # TODO: реализовать агрегацию
     
+    def _get_consecutive_429(self, provider, key_index):
+        with sqlite3.connect(str(DB_PATH)) as conn:
+            row = conn.execute("SELECT consecutive_429 FROM rate_limits WHERE provider=? AND key_index=?", (provider, key_index)).fetchone()
+            return row[0] if row and row[0] else 0
+
     def mark_429(self, provider, key_index):
-        cooldown = time.time() + COOLDOWN_STEPS[0]
-        self._save_state(provider, key_index, 0,0,0,0,0,0, cooldown, 1, 0)
+        prev = self._get_consecutive_429(provider, key_index)
+        step = min(prev, len(COOLDOWN_STEPS) - 1)
+        cooldown = time.time() + COOLDOWN_STEPS[step]
+        self._save_state(provider, key_index, 0,0,0,0,0,0, cooldown, prev + 1, 0)
         logger.warning(f"⏳ {provider}:{key_index} 429 → cooldown {COOLDOWN_STEPS[0]}s")
     
     def mark_402(self, provider, key_index):

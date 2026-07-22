@@ -25,11 +25,12 @@ class BaseProvider:
             self.keys = []
             return
         env = {}
-        for line in open(env_file):
-            line = line.strip()
-            if line and not line.startswith('#') and '=' in line:
-                k, v = line.split('=', 1)
-                env[k.strip()] = v.strip()
+        with open(env_file) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    k, v = line.split('=', 1)
+                    env[k.strip()] = v.strip()
         
         self.keys = []
         i = 1
@@ -53,7 +54,7 @@ class BaseProvider:
             'base_url': self.base_url,
             'key_prefix': self.env_prefix,
             'models': self.models,
-            'format': 'openai',
+            'format': getattr(self, 'format', 'openai'),
             'keyless': self.keyless,
             'enabled': self.enabled,
             'keys': self.keys,

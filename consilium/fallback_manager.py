@@ -8,6 +8,7 @@ Fallback Manager — умный реестр провайдеров.
 - Обновляется при старте и раз в час
 """
 import json, time, logging
+from provider_stats import provider_stats
 from pathlib import Path
 
 logger = logging.getLogger("consilium.fallback")
@@ -24,15 +25,17 @@ class FallbackManager:
         chains = {"chat": [], "code": [], "search": [], "analysis": []}
         
         # Приоритет провайдеров по лимитам
+        # Приоритет теперь динамический через provider_stats.get_dynamic_score()
+        # Жёсткий PRIORITY используется только для новых провайдеров без статистики
         PRIORITY = ["mistral", "groq", "sambanova", "deepinfra", "hf", 
-                     "cloudflare", "openrouter", "github"]
+                            "cloudflare", "openrouter", "github"]
         
         # Теги моделей по ключевым словам
         TAG_RULES = {
-            "chat": ["llama", "mistral", "gpt", "gemma", "qwen", "hermes"],
-            "code": ["coder", "deepseek", "code", "hy3"],
-            "search": ["gemini", "scout", "sonnet", "gpt"],
-            "analysis": ["large", "ultra", "r1"],
+            "chat": ["llama", "mistral", "gpt", "gemma", "qwen", "hermes", "openai", "nemotron"],
+            "code": ["coder", "deepseek", "code", "hy3", "llama", "gpt", "mistral", "nemotron"],
+            "search": ["gemini", "scout", "sonnet", "gpt", "llama", "nemotron"],
+            "analysis": ["large", "ultra", "r1", "mistral", "gpt", "nemotron"],
         }
         
         all_entries = []
@@ -63,17 +66,19 @@ class FallbackManager:
                 if not tags:
                     tags = ["chat"]
                 
-                all_entries.append({
+                dps = provider_stats.get_dynamic_score(name) if provider_stats else 0
+            all_entries.append({
                     "provider": name,
                     "model": model,
                     "keys": len(keys),
                     "keyless": keyless,
-                    "tags": tags,
+                    "dps": dps,
+                "tags": tags,
                     "priority": priority,
                 })
         
         # Сортируем: сначала по приоритету провайдера, потом по количеству ключей
-        all_entries.sort(key=lambda x: (x["priority"], -x["keys"]))
+        all_entries.sort(key=lambda x: (-x.get("dps", 0), -x["keys"]))
         
         # Распределяем по цепочкам
         for entry in all_entries:
