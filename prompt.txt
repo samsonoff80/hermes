@@ -2,56 +2,66 @@
 https://github.com/samsonoff80/hermes
 
 Это Consilium v7.1 — LLM прокси для Hermes Agent v0.19 на VIM4 ARM64 8GB.
+ПРОЧИТАЙ README.md полностью — там архитектура, поток запроса, все фичи, статус.
 
 ## ЗАДАЧА
-Проверь ВСЮ систему на ошибки. Если чего-то не хватает для анализа — запроси файлы или задай вопросы.
 
-### 1. Аудит кода
-Проверь ВСЕ файлы на:
-- Синтаксические ошибки
-- Логические ошибки (None вместо dict, UnboundLocalError)
+### 1. Найди причину критического бага
+Симптом: Consilium получает 200 OK от провайдера, формирует JSONResponse с choices[0].message.content, возвращает Hermes. НО Hermes пишет "Provider failed after retries".
+
+Проверь:
+- Формат JSON ответа — соответствует ли OpenAI Chat Completions API?
+- Все ли обязательные поля на месте?
+- Правильный ли Content-Type?
+- Стриминг vs non-streaming?
+- Что именно ждёт Hermes v0.19 от custom provider?
+
+### 2. Изучи документацию Hermes Agent v0.19
+Ссылки:
+- https://github.com/NousResearch/hermes-agent
+- https://hermes-agent.nousresearch.com/docs/
+- https://hermes-agent.nousresearch.com/docs/user-guide/configuration
+- https://hermes-agent.nousresearch.com/docs/developer-guide/prompt-assembly
+
+Найди:
+- Требования к формату ответа от custom provider
+- Как Hermes обрабатывает ответ
+- Какие поля обязательны
+- Изменилось ли что-то в v0.19 по сравнению с v0.18
+
+### 3. Проверь ВСЕ файлы на ошибки
+- Синтаксические (python3 -m py_compile)
+- Логические (None вместо dict, UnboundLocalError)
 - Несоответствие сигнатур функций
 - Дублирование кода
 - Мёртвый код
 - Утечки памяти
 - Потокобезопасность
 
-### 2. Hermes v0.19 совместимость
-Изучи документацию:
-- https://github.com/NousResearch/hermes-agent
-- https://hermes-agent.nousresearch.com/docs/
+### 4. Проверь совместимость с Hermes v0.19
+- config.yaml — все ли поля актуальны?
+- System prompt — изменился ли формат?
+- API ответ — соответствует ли спецификации?
 
-Найди ВСЕ требования к формату ответа API в v0.19.
-Сравни с тем что возвращает Consilium.
-Найди несоответствия.
-
-### 3. Критический баг
-Consilium получает 200 OK от провайдеров, возвращает JSONResponse с choices[0].message.content.
-НО Hermes получает "Provider failed after retries".
-Найди причину.
-
-### 4. Проверь цепочки
-- Telegram → Hermes → Consilium → Router → Fallback → Provider → Ответ
-- Каждый шаг должен работать
-- "Привет" → chat → ответ
-- "Напиши код" → code → ответ
-- При ошибке → fallback к следующему провайдеру
-
-### 5. Балльная система
-Вместо жёсткого PRIORITY нужна динамическая система на основе success_rate, latency, лимитов.
-Дай формулу + реализацию.
-
-### 6. Рекомендации
-- Архитектура
-- Оптимизация для VIM4 8GB
-- Отказоустойчивость
-- Мониторинг
+### 5. Дай рекомендации
+- Что исправить в первую очередь
+- Что улучшить в архитектуре
+- Что оптимизировать для VIM4 8GB
 
 ## ВАЖНО
-- Система универсальная (как FreeLLMAPI)
-- Модульные провайдеры
-- Единый OpenAI-совместимый API
-- Provider-agnostic роутинг
+- НЕ выдумывай. Если не знаешь — спроси или запроси дополнительные файлы.
+- Проверяй факты в коде.
+- Все выводы должны быть подтверждены конкретными строками.
 
-Если нужны дополнительные файлы — скажи какие.
+## ФАЙЛЫ ДЛЯ АНАЛИЗА
+- consilium/consilium_server.py (основной сервер, ~800 строк)
+- consilium/fallback_manager.py (цепочки провайдеров)
+- consilium/rate_limiter.py (per-key лимиты)
+- consilium/circuit_breaker.py (защита от падений)
+- consilium/provider_stats.py (статистика)
+- consilium/providers/*.py (модульные провайдеры, 12 шт)
+- config.yaml (конфиг Hermes)
+- logs/consilium_latest.log (логи для отладки)
+- README.md (полное описание системы)
+
 Ответ на русском.
