@@ -17,8 +17,12 @@
 
 ## ПРОТОКОЛ ВЫЗОВА
 1. read_file(<путь>/SOUL.md) + read_file(<путь>/SKILL.md) + read_file(<путь>/PROGRESS.md)
-2. delegate_task(goal="Ты <слой>. DONE — верни итог. IN_PROGRESS — продолжай с CURRENT.", context=<склейка>, toolsets=["file","terminal"])
+2. delegate_task(goal="Ты <слой>. DONE — верни итог. IN_PROGRESS — продолжай с CURRENT.", context=<склейка>)
 3. Не пиши текст перед delegate_task. Только tool call.
+
+ВАЖНО: delegate_task НЕ принимает toolsets — субагент наследует инструменты
+родителя. Субагент стартует с пустой историей и БЕЗ SOUL.md, поэтому весь
+контекст (SOUL + SKILL + PROGRESS) обязан быть внутри параметра context.
 
 ## ЦЕПОЧКА
 product-analyst → source-scout → parsing-engineer → parser

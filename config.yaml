@@ -38,8 +38,13 @@ agent:
   
     ## ПРОТОКОЛ ВЫЗОВА
     1. read_file(<путь>/SOUL.md) + read_file(<путь>/SKILL.md) + read_file(<путь>/PROGRESS.md)
-    2. delegate_task(goal="Ты <слой>. DONE — верни итог. IN_PROGRESS — продолжай с CURRENT.", context=<склейка>, toolsets=["file","terminal"])
+    2. delegate_task(goal="Ты <слой>. DONE — верни итог. IN_PROGRESS — продолжай с CURRENT.", context=<склейка>)
     3. Не пиши текст перед delegate_task. Только tool call.
+
+    ВАЖНО: delegate_task НЕ принимает параметр toolsets — субагент наследует
+    инструменты родителя. Передача toolsets вызывает ошибку инструмента.
+    Субагент стартует с чистой историей и без SOUL.md, поэтому весь
+    необходимый контекст обязан быть внутри context.
   
     ## ЦЕПОЧКА
     product-analyst → source-scout → parsing-engineer → parser
@@ -61,21 +66,29 @@ custom_providers: []
 fallback_providers: []
 model:
   api_key: sk-consilium
-  api_mode: openai
+  # v0.19 знает только chat_completions | codex_responses | anthropic_messages.
+  # Значения "openai" в этой версии не существует.
+  api_mode: chat_completions
   base_url: http://127.0.0.1:8765/v1
   context_file_max_chars: 4000
   context_length: 128000
   default: auto
   provider: custom
-  request_timeout: 45
+  # Потолок вывода. Без него профиль custom подставляет 65536,
+  # и бесплатные модели отвечают 400.
+  max_tokens: 8192
+  # ВНИМАНИЕ: ключа model.request_timeout в v0.19 нет — таймауты
+  # задаются в секции providers ниже.
 onboarding:
   seen:
     busy_input_prompt: true
     profile_build_offered: true
 providers:
-  openai:
-    api_key: sk-consilium
+  custom:
     base_url: http://127.0.0.1:8765/v1
+    # Consilium держит собственный дедлайн 40 с и всегда отвечает раньше
+    request_timeout_seconds: 60
+    stale_timeout_seconds: 120
 sessions: {}
 display:
   tool_progress: all

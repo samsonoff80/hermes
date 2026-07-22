@@ -3,7 +3,7 @@
 Returns content + tool_calls (if present). No XML/CDATA rendering.
 Guarantees tool_calls field is always present in message (empty list if none).
 Rescues inline tool calls from content (Hermes/Qwen/XML formats)."""
-import os, sys, json, time, asyncio, logging, hashlib, re, uuid
+import os, sys, json, time, asyncio, logging, hashlib, re, uuid, threading
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any, AsyncGenerator
@@ -22,13 +22,45 @@ from dotenv import load_dotenv
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from providers import PROVIDERS
-from rate_limiter import RateLimiter
+from rate_limiter import rate_limiter
 from circuit_breaker import circuit_breaker
 from provider_stats import provider_stats
-from alerting import alert_all_providers_down, alert_circuit_breaker
+from alerting import alert_all_providers_down, alert_circuit_breaker, alert_provider_disabled
 from dashboard import dashboard_html
-rate_limiter = RateLimiter()
+from health_checker import check_all_providers
+from router import classify_task, filter_system_prompt
 from fallback_manager import fallback
+
+# Поля запроса, которые проксируются провайдеру без изменений.
+# tools/tool_choice — критично: без них агент Hermes не может вызывать инструменты.
+PASSTHROUGH_FIELDS = (
+    "tools", "tool_choice", "parallel_tool_calls", "response_format",
+    "top_p", "stop", "seed", "presence_penalty", "frequency_penalty",
+    "logit_bias", "n", "user",
+)
+
+# Hermes при provider=custom подставляет max_tokens=65536 (default_max_tokens
+# профиля custom). Большинство бесплатных моделей отвечает на это 400.
+# Ограничиваем потолком, известным для модели/провайдера.
+MAX_TOKENS_CAP = int(os.getenv("CONSILIUM_MAX_TOKENS_CAP", "8192"))
+MODEL_OUTPUT_CAPS = {
+    "llama-3.3-70b-versatile": 32768,
+    "llama-3.1-8b-instant": 8192,
+    "mistral-large-latest": 8192,
+    "codestral-2508": 8192,
+}
+
+
+def clamp_max_tokens(model: str, requested: Any) -> int:
+    """Приводит max_tokens к разумному потолку."""
+    try:
+        value = int(requested)
+    except (TypeError, ValueError):
+        value = MAX_TOKENS_CAP
+    if value <= 0:
+        value = MAX_TOKENS_CAP
+    cap = MODEL_OUTPUT_CAPS.get(model, MAX_TOKENS_CAP)
+    return min(value, cap)
 
 # Загружаем ключи для Consilium
 load_dotenv("/home/khadas/.hermes/skills/consilium/.env")
@@ -89,19 +121,32 @@ for p in PROVIDERS:
         PROVIDER_KEYS[p["name"]] = []
         logger.info(f"{p['name']}: keyless provider (no keys needed)")
     else:
-        PROVIDER_KEYS[p["name"]] = load_keys(p["key_prefix"])
-        logger.info(f"{p['name']}: {len(PROVIDER_KEYS[p['name']])} keys")
-    fallback.build_chains(PROVIDERS)
+        # Ключи уже загружены в BaseProvider (файл .env + os.environ).
+        # Читаем их оттуда, иначе получался расхождение: провайдер «включён»,
+        # но запрос уходит без Authorization.
+        keys = p.get("keys") or load_keys(p["key_prefix"])
+        PROVIDER_KEYS[p["name"]] = keys
+        logger.info(f"{p['name']}: {len(keys)} keys")
+
+# Цепочки строим ОДИН раз после цикла (раньше вызывалось на каждой итерации)
+fallback.build_chains(PROVIDERS)
+
+PROVIDER_BY_NAME = {p["name"]: p for p in PROVIDERS}
+
+# Алерт при размыкании цепи: импорт alert_circuit_breaker раньше был мёртвым
+circuit_breaker.on_open = lambda name: asyncio.create_task(alert_circuit_breaker(name))
 
 key_indexes = defaultdict(int)
+_key_lock = threading.Lock()
 
 def get_next_key(name: str):
-    """Возвращает (key, key_index) для ротации."""
+    """Возвращает (key, key_index) для ротации. Инкремент под блокировкой."""
     keys = PROVIDER_KEYS.get(name, [])
     if not keys:
         return "", 0
-    idx = key_indexes[name] % len(keys)
-    key_indexes[name] = idx + 1
+    with _key_lock:
+        idx = key_indexes[name] % len(keys)
+        key_indexes[name] = idx + 1
     return keys[idx], idx
 
 # HTTP КЛИЕНТ с таймаутом 30с на провайдера
@@ -116,10 +161,21 @@ sticky_sessions: Dict[str, Tuple[str, str, float]] = {}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup — проверяем провайдеров
+    # Startup — реально проверяем провайдеров (раньше только писали в лог)
     logger.info("🏥 Health check starting...")
+    try:
+        results = await check_all_providers(PROVIDERS)
+        for p, ok in zip(PROVIDERS, results):
+            if not ok:
+                provider_stats.record_failure(p["name"], "network")
+    except Exception as e:
+        logger.warning(f"🏥 Health check пропущен: {e}")
     yield
-    # Shutdown
+    # Shutdown — дописываем статистику, иначе баллы за последние 30с теряются
+    try:
+        provider_stats.flush(force=True)
+    except Exception as e:
+        logger.warning(f"📊 flush при остановке не удался: {e}")
     await http_client.aclose()
 
 app = FastAPI(title="Consilium LLM Gateway", version="6.17", lifespan=lifespan)
@@ -347,6 +403,32 @@ def normalize_message_content(data: dict, tool_calls: Optional[list] = None, pro
     
     return ""
 
+def response_has_payload(data: Any, provider_format: str = "openai") -> bool:
+    """Есть ли в ответе хоть что-то полезное: текст или вызовы инструментов.
+
+    Hermes считает ответ с пустым content и без tool_calls невалидным и уходит
+    в собственный цикл восстановления (nudge → prefill → empty-retry → fallback),
+    который заканчивается ошибкой. Поэтому пустой ответ провайдера — это провал
+    провайдера, и нужно брать следующего из цепочки, а не отдавать пустышку.
+    """
+    if not isinstance(data, dict):
+        return True  # httpx.Response (streaming) проверяем не здесь
+    if provider_format == "aihorde":
+        return bool((extract_aihorde_content(data) or "").strip())
+    if provider_format == "huggingface":
+        return bool((extract_huggingface_content(data) or "").strip())
+    choices = data.get("choices")
+    if not choices:
+        return False
+    msg = (choices[0] or {}).get("message") or {}
+    if msg.get("tool_calls"):
+        return True
+    for field in ("content", "reasoning_content"):
+        if str(msg.get(field) or "").strip():
+            return True
+    return False
+
+
 def ensure_tool_calls_field(message: dict) -> dict:
     """Гарантирует наличие поля tool_calls в message (пустой список если отсутствует)."""
     if "tool_calls" not in message:
@@ -357,8 +439,17 @@ def ensure_tool_calls_field(message: dict) -> dict:
 
 # ---------- ВЫЗОВ ПРОВАЙДЕРОВ ----------
 
-async def call_provider(provider: dict, messages: list, model: str, stream: bool, temperature: float, max_tokens: int) -> Optional[Any]:
-    """Вызывает провайдера. Возвращает httpx.Response (stream) или dict (non-stream/cloudflare/aihorde/huggingface)."""
+async def call_provider(provider: dict, messages: list, model: str, stream: bool,
+                        temperature: float, max_tokens: int,
+                        passthrough: Optional[dict] = None) -> Optional[Any]:
+    """Вызывает провайдера. Возвращает httpx.Response (stream) или dict (non-stream/cloudflare/aihorde/huggingface).
+
+    passthrough — поля запроса, которые обязаны дойти до провайдера без изменений
+    (tools, tool_choice, response_format, top_p, stop, seed ...). Раньше они
+    молча терялись: Hermes присылал десятки tool-определений, до модели не
+    доходило НИЧЕГО, модель физически не могла вернуть tool_calls, и агент
+    вставал. Это и был корень «Provider failed after retries».
+    """
     # Circuit breaker check
     if not circuit_breaker.is_available(provider["name"]):
         logger.warning(f"🔴 {provider['name']}: circuit breaker blocked")
@@ -433,6 +524,15 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
             "max_tokens": max_tokens,
             "stream": stream,
         }
+        # Прокидываем tools и остальные поля OpenAI-спеки как есть.
+        if passthrough:
+            payload.update(passthrough)
+
+    # Cloudflare Workers AI тоже понимает tools в OpenAI-формате
+    if provider["name"] == "cloudflare" and passthrough:
+        for _f in ("tools", "tool_choice"):
+            if _f in passthrough:
+                payload[_f] = passthrough[_f]
 
     try:
         if stream:
@@ -454,17 +554,32 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
                 logger.error(f"❌ {provider['name']}: Invalid JSON response: {e}, text: {resp.text[:3000]}")
                 return None
     except httpx.TimeoutException:
+        # Таймаут — сетевая проблема: раньше он не доходил ни до circuit breaker,
+        # ни до статистики, поэтому «залипший» провайдер выбирался снова и снова.
         logger.warning(f"⏱️ {provider['name']}: timeout after {PROVIDER_TIMEOUT}s")
+        circuit_breaker.record_failure(provider["name"])
+        provider_stats.record_failure(provider["name"], "timeout", model)
         return None
     except httpx.HTTPStatusError as e:
-        if e.response.status_code == 429:
+        code = e.response.status_code
+        if code == 429:
             rate_limiter.mark_429(provider["name"], key_index)
-        elif e.response.status_code in (401, 402, 403):
+            provider_stats.record_failure(provider["name"], "429", model)
+        elif code in (401, 402, 403):
             rate_limiter.mark_402(provider["name"], key_index)
-        logger.warning(f"❌ {provider['name']}: HTTP {e.response.status_code} - {e.response.text[:200]}")
+            provider_stats.record_failure(provider["name"], "auth", model)
+            asyncio.create_task(alert_provider_disabled(provider["name"], f"HTTP {code}"))
+        elif code >= 500:
+            # 5xx — проблема на стороне провайдера, засчитываем в circuit breaker
+            circuit_breaker.record_failure(provider["name"])
+            provider_stats.record_failure(provider["name"], "5xx", model)
+        else:
+            provider_stats.record_failure(provider["name"], "error", model)
+        logger.warning(f"❌ {provider['name']}: HTTP {code} - {e.response.text[:200]}")
         return None
     except Exception as e:
         circuit_breaker.record_failure(provider["name"])
+        provider_stats.record_failure(provider["name"], "network", model)
         logger.warning(f"💥 {provider['name']}: {type(e).__name__}: {e}")
         return None
 
@@ -641,6 +756,18 @@ async def root():
 async def health():
     return {"status": "ok", "providers": {p["name"]: len(PROVIDER_KEYS.get(p["name"], [])) for p in PROVIDERS}}
 
+@app.get("/stats/providers")
+async def stats_providers():
+    """Балльная система: срез DPS по каждой паре провайдер/модель.
+    README обещал этот эндпоинт с v7.1, фактически его не существовало."""
+    return {
+        "formula": "DPS = 40*success + 25*latency + 20*limits + 15*health",
+        "providers": provider_stats.snapshot(),
+        "chains": {task: [f"{e['provider']}/{e['model']}"
+                          for e in fallback.get_chain(task)[:5]]
+                   for task in ("chat", "code", "search", "analysis")},
+    }
+
 @app.get("/v1/models")
 async def list_models():
     models = []
@@ -670,136 +797,159 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     session_key = request.headers.get('X-Session-Key', '')
     messages = body.get("messages", [])
 
-    # Фильтр: вырезаем блоки Hermes
-    for m in messages:
-        if m.get("role") == "system" and isinstance(m.get("content"), str):
-            m["content"] = re.sub(r"You run on Hermes Agent.*", "", m["content"], flags=re.DOTALL).strip()
-            m["content"] = re.sub(r"# Finishing the job.*", "", m["content"], flags=re.DOTALL).strip()
-            logger.info(f"✂️ Filtered: {len(m['content'])} chars")
-    model = body.get("model", "auto")
-    # Fix: treat empty string as auto
-    if not model or model == "":
-        model = "auto"
-    stream = body.get("stream", False)  # Поддержка streaming от клиента
-    temperature = body.get("temperature", 0.7)
-    max_tokens = body.get("max_tokens", 4096)
-    tools = body.get("tools", [])
-    
-    # Build set of available tool names for inline rescue
-    available_tool_names = {t.get("function", {}).get("name", "") for t in tools} if tools else None
-
     if not messages:
         raise HTTPException(400, "Messages required")
 
-    target_provider = None
-    target_model = None
-    
-    # === Task Router v2 (Provider-aware) ===
-    task = "chat"
-    user_text = ([m.get("content", "") for m in messages if m.get("role") == "user"] or [""])[-1].lower() if [m for m in messages if m.get("role") == "user"] else ""
-    if any(kw in user_text for kw in ["найди", "поиск", "источник", "сайт", "спарси", "scout", "url", "http", "парсинг сайт", "парс сайт"]):
-        task = "search"
-    elif any(kw in user_text for kw in ["код", "code", "функци", "function", "скрипт", "script", "python", "ошибк", "error", "bug", "парс", "parse"]):
-        task = "code"
-    elif any(kw in user_text for kw in ["анализ", "analysis", "сравни", "compare", "статус", "status", "почем", "why", "как работает"]):
-        task = "analysis"
-    logger.info(f"🎯 User text: {user_text[:100]}")
-    logger.info(f"[{request_id}] 🎯 Task: {task}")
+    # Фильтр: вырезаем служебные блоки Hermes, СОХРАНЯЯ роль агента.
+    for m in messages:
+        if m.get("role") == "system" and isinstance(m.get("content"), str):
+            m["content"] = filter_system_prompt(m["content"], request_id)
 
-    # Fallback Manager — умная цепочка
-    if model == "auto":
-        task_chain = fallback.get_chain(task)
-        for entry in task_chain:
-            pname = entry["provider"]
-            pmodel = entry["model"]
-            for p in PROVIDERS:
-                if p["name"] == pname:
-                    target_provider = p
-                    target_model = pmodel
-                    model = pmodel
-                    logger.info(f"[{request_id}] 🎯 Router: {task} → {pmodel} @ {pname} (keys={entry['keys']})")
-                    break
-            if target_provider is not None:
-                break
-
-    # Если router не выбрал — fallback
-    if target_provider is None:
-        target_model = None
-    
+    model = body.get("model", "auto")
+    if not model or model == "":
+        model = "auto"
+    stream = body.get("stream", False)
     temperature = body.get("temperature", 0.7)
     max_tokens = body.get("max_tokens", 4096)
-    
-    # Вызов провайдера — ОДИН раз
-    if target_provider is None:
-        logger.error('target_provider is None!')
-        provider_resp = None
-    else:
-        logger.info(f'Calling {target_provider["name"]}/{target_model}')
+    tools = body.get("tools", [])
+
+    # Поля, которые обязаны дойти до провайдера без изменений.
+    # Без tools модель не знает об инструментах и не может вернуть tool_calls —
+    # именно это ломало Hermes как агента.
+    passthrough = {k: body[k] for k in PASSTHROUGH_FIELDS if k in body and body[k] is not None}
+
+    available_tool_names = {t.get("function", {}).get("name", "") for t in tools} if tools else None
+
+    # === Task Router ===
+    task = classify_task(messages)
+    user_preview = next((m.get("content", "") for m in reversed(messages)
+                         if m.get("role") == "user" and isinstance(m.get("content"), str)), "")
+    logger.info(f"[{request_id}] 🎯 Task: {task} | tools: {len(tools)} | stream: {stream} "
+                f"| user: {str(user_preview)[:80]!r}")
+
+    # Гейт доступности: провайдер отсеивается, если ключи в cooldown/disabled
+    # или сработал circuit breaker. Раньше rate_limiter не участвовал в выборе.
+    def _gate(provider_name: str) -> bool:
+        if not circuit_breaker.is_available(provider_name):
+            return False
+        ok, _reason = rate_limiter.is_available(provider_name, 0)
+        return ok
+
+    # Явно запрошенная модель имеет приоритет над роутером.
+    # Раньше при model != "auto" провайдер не выбирался ВООБЩЕ -> HTTP 503,
+    # хотя /v1/models честно отдавал список этих моделей.
+    chain: List[dict] = []
+    if model != "auto":
+        chain = fallback.resolve_model(model, _gate)
+        if chain:
+            logger.info(f"[{request_id}] 📌 Явная модель {model} → {chain[0]['provider']}")
+        else:
+            logger.warning(f"[{request_id}] ⚠️ Модель {model!r} неизвестна — падаю на роутинг")
+    if not chain:
+        chain = fallback.get_chain(task, _gate)
+
+    if not chain:
+        logger.error(f"[{request_id}] ❌ Нет доступных провайдеров")
+        asyncio.create_task(alert_all_providers_down())
+        raise HTTPException(503, "No providers available")
+
+    # === Перебор цепочки с общим дедлайном ===
+    provider_resp = None
+    target_provider = None
+    target_model = None
+    attempts: List[str] = []
+
+    for entry in chain:
+        if time.time() - start_time > OVERALL_DEADLINE:
+            logger.warning(f"[{request_id}] ⏰ Общий дедлайн {OVERALL_DEADLINE}s исчерпан")
+            break
+        prov = PROVIDER_BY_NAME.get(entry["provider"])
+        if prov is None:
+            continue
+        pmodel = entry["model"]
+        attempts.append(f"{entry['provider']}/{pmodel}")
+        pmax = clamp_max_tokens(pmodel, max_tokens)
+        if pmax != max_tokens:
+            logger.info(f"[{request_id}] ✂️ max_tokens {max_tokens} → {pmax} для {pmodel}")
+        logger.info(f"[{request_id}] → {entry['provider']}/{pmodel}")
         try:
-            provider_resp = await call_provider(target_provider, messages, target_model, stream, temperature, max_tokens)
+            resp = await call_provider(prov, messages, pmodel, stream,
+                                       temperature, pmax, passthrough)
         except Exception as e:
-            logger.error(f'Call failed: {e}')
-            provider_resp = None
-    
-    logger.info(f'Response type: {type(provider_resp).__name__}, keys: {list(provider_resp.keys()) if isinstance(provider_resp, dict) else "N/A"}')
-    # Проверка на error внутри ответа (OpenRouter 200 + error)
-    if isinstance(provider_resp, dict) and "error" in provider_resp:
-        logger.warning(f"⚠️ Error in response: {str(provider_resp['error'])[:100]}")
-        provider_resp = None
-    elif isinstance(provider_resp, dict):
-        logger.info(f'✅ Valid response from {target_provider["name"]}: {str(list(provider_resp.keys()))}')
+            logger.error(f"[{request_id}] 💥 {entry['provider']}: {type(e).__name__}: {e}")
+            provider_stats.record_failure(entry["provider"], "network", pmodel)
+            continue
 
-    if provider_resp is None and target_provider is not None:
-        # Fallback: перебираем цепочку из fallback_manager
-        task_chain = fallback.get_chain(task)
-        for entry in task_chain:
-            pname = entry["provider"]
-            pmodel = entry["model"]
-            if pname == target_provider["name"] and pmodel == target_model:
-                continue
-            for prov in PROVIDERS:
-                if prov["name"] == pname and pmodel in prov.get("models", []):
-                    if PROVIDER_KEYS.get(prov["name"]) or prov.get("keyless", False):
-                        logger.info(f"🔄 Fallback: {pmodel} @ {pname}")
-                        provider_resp = await call_provider(prov, messages, pmodel, stream, temperature, max_tokens)
-                        if provider_resp and not (isinstance(provider_resp, dict) and "error" in provider_resp):
-                            target_provider = prov
-                            target_model = pmodel
-                            break
-            if provider_resp:
-                break
-    
+        # OpenRouter умеет отдавать 200 с телом-ошибкой
+        if isinstance(resp, dict) and "error" in resp:
+            logger.warning(f"[{request_id}] ⚠️ error в теле от {entry['provider']}: "
+                           f"{str(resp['error'])[:150]}")
+            provider_stats.record_failure(entry["provider"], "error", pmodel)
+            continue
+        if resp is None:
+            continue
+
+        # Пустой ответ = провал провайдера, а не валидный результат
+        if not stream and not response_has_payload(resp, prov.get("format", "openai")):
+            logger.warning(f"[{request_id}] 🕳️ {entry['provider']}/{pmodel}: пустой ответ, "
+                           f"беру следующего")
+            provider_stats.record_failure(entry["provider"], "empty", pmodel)
+            continue
+
+        provider_resp = resp
+        target_provider = prov
+        target_model = pmodel
+        break
+
     if provider_resp is None:
-        raise HTTPException(503, "All providers failed")
+        logger.error(f"[{request_id}] ❌ Все провайдеры отказали. Попытки: {attempts}")
+        asyncio.create_task(alert_all_providers_down())
+        # Тело в OpenAI-формате ошибки: SDK на стороне Hermes ждёт именно его
+        return JSONResponse(status_code=503, content={"error": {
+            "message": f"All providers failed after {len(attempts)} attempts",
+            "type": "service_unavailable",
+            "code": "all_providers_failed",
+            "attempts": attempts,
+        }})
 
-    # Обновляем sticky session
-    if session_key and target_provider:
-        sticky_sessions[session_key] = (target_provider["name"], target_model, time.time() + STICKY_TTL)
+    # Sticky session с очисткой протухших (раньше словарь рос без границ)
+    if session_key:
+        now = time.time()
+        if len(sticky_sessions) > 512:
+            for k in [k for k, v in sticky_sessions.items() if v[2] < now]:
+                sticky_sessions.pop(k, None)
+        sticky_sessions[session_key] = (target_provider["name"], target_model, now + STICKY_TTL)
 
     provider_format = target_provider.get("format", "openai")
     
     # Обработка ответа
     if stream:
+        # Статистика для стриминга: раньше здесь не было ни record_success,
+        # ни сброса circuit breaker — успешные стриминговые запросы вообще
+        # не влияли на рейтинг провайдера.
+        try:
+            _log_usage(target_provider["name"], target_model, None)
+            circuit_breaker.record_success(target_provider["name"])
+            rate_limiter.mark_success(target_provider["name"], 0)
+            provider_stats.record_success(target_provider["name"],
+                                          time.time() - start_time, 0, target_model)
+        except Exception as e:
+            logger.warning(f"Stats failed (stream): {e}")
+
+        sse_headers = {
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Request-ID": request_id,
+            "X-Consilium-Provider": target_provider["name"],
+            "X-Consilium-Model": str(target_model),
+        }
         if isinstance(provider_resp, httpx.Response):
-            # Логируем usage для стриминга (приблизительно)
-            try:
-                _log_usage(target_provider["name"], target_model, None)
-            except: pass
             return StreamingResponse(
                 stream_provider_response(provider_resp, target_model, available_tool_names),
-                media_type="text/event-stream",
-                headers={"Cache-Control": "no-cache", "Connection": "keep-alive"}
-            )
-        else:
-            # Логируем usage для стриминга (приблизительно)
-            try:
-                _log_usage(target_provider["name"], target_model, None)
-            except: pass
-            return StreamingResponse(
-                generate_fake_stream(provider_resp, target_model, available_tool_names, provider_format),
-                media_type="text/event-stream",
-                headers={"Cache-Control": "no-cache", "Connection": "keep-alive"}
-            )
+                media_type="text/event-stream", headers=sse_headers)
+        return StreamingResponse(
+            generate_fake_stream(provider_resp, target_model, available_tool_names, provider_format),
+            media_type="text/event-stream", headers=sse_headers)
     else:
         # Non-streaming: возвращаем content + tool_calls (всегда поле)
         if provider_format == "aihorde":
@@ -848,6 +998,14 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         # Гарантируем наличие tool_calls поля (пустой список если нет)
         message["tool_calls"] = tool_calls if tool_calls else []
         
+        # finish_reason не может быть null: OpenAI-клиенты ожидают строку.
+        # Провайдер может прислать ключ со значением None — .get(..., "stop")
+        # в таком случае вернёт именно None, а не дефолт.
+        if has_tool_calls:
+            finish_reason = "tool_calls"
+        elif not finish_reason:
+            finish_reason = "stop"
+
         response = {
             "id": f"chatcmpl-{hashlib.md5(str(time.time()).encode()).hexdigest()[:12]}",
             "object": "chat.completion",
@@ -856,25 +1014,37 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             "choices": [{
                 "index": 0,
                 "message": message,
-                "finish_reason": finish_reason if not has_tool_calls else "tool_calls"
+                "finish_reason": finish_reason
             }]
         }
         if usage:
             response["usage"] = usage
-        
-        logger.info(f'📊 usage data: {usage}')
+
         try:
             _log_usage(target_provider["name"], target_model, usage)
         except Exception as e:
             logger.warning(f"📊 usage log failed: {e}")
         try:
             circuit_breaker.record_success(target_provider["name"])
-            provider_stats.record_success(target_provider["name"], time.time()-start_time, usage.get("total_tokens", 0) if usage else 0)
+            rate_limiter.mark_success(target_provider["name"], 0)
+            provider_stats.record_success(
+                target_provider["name"], time.time() - start_time,
+                usage.get("total_tokens", 0) if usage else 0, target_model)
         except Exception as e:
             logger.warning(f"Stats failed: {e}")
-        if target_provider:
-            logger.info(f"✅ {target_provider['name']}/{target_model} -> content: {len(normalized_content) if normalized_content else 0} chars, tool_calls: {len(message['tool_calls'])} in {time.time()-start_time:.2f}s")
-        return JSONResponse(response)
+
+        logger.info(
+            f"[{request_id}] ✅ {target_provider['name']}/{target_model} → "
+            f"content: {len(normalized_content) if normalized_content else 0} chars, "
+            f"tool_calls: {len(message['tool_calls'])}, finish: {finish_reason} "
+            f"in {time.time()-start_time:.2f}s"
+        )
+        # Трассировка сквозь всю цепочку — README обещал эти заголовки
+        return JSONResponse(response, headers={
+            "X-Request-ID": request_id,
+            "X-Consilium-Provider": target_provider["name"],
+            "X-Consilium-Model": str(target_model),
+        })
     
 # ---------- MAIN ----------
 

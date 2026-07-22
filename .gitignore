@@ -1,4 +1,3 @@
-```
 # Python cache
 __pycache__/
 *.pyc
@@ -12,6 +11,15 @@ __pycache__/
 
 # Logs
 *.log
+
+# Состояние Consilium (создаётся в рантайме рядом с модулями)
+consilium/*.db
+consilium/*.db-wal
+consilium/*.db-shm
+consilium/fallback_chain.json
+
+# Кэш дедупликации парсера
+agents/parser/dedup_cache.db
 
 # Coverage reports
 .coverage
@@ -28,4 +36,3 @@ htmlcov/
 dist/
 build/
 *.egg-info/
-```

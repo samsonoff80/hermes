@@ -1,39 +1,92 @@
 #!/usr/bin/env python3
-"""Consilium Router — логика маршрутизации и формирования ответа."""
-import re, json, time, hashlib, logging
-from typing import Optional
+"""Consilium Router — классификация задач и фильтрация системного промпта.
+
+Раньше модуль существовал, но нигде не импортировался, а его логика была
+продублирована инлайном в consilium_server.py. Теперь сервер использует именно
+эти функции — дубля больше нет.
+"""
+import re
+import logging
+from typing import List, Dict
 
 logger = logging.getLogger('consilium.router')
 
-def classify_task(messages: list) -> str:
-    user_text = ([m.get('content', '') for m in messages if m.get('role') == 'user'] or [''])[-1].lower()
-    if any(kw in user_text for kw in ['найди', 'поиск', 'спарси', 'url', 'http']):
-        return 'search'
-    elif any(kw in user_text for kw in ['код', 'code', 'python', 'функци', 'script']):
-        return 'code'
-    elif any(kw in user_text for kw in ['анализ', 'сравни', 'статус', 'почем']):
-        return 'analysis'
-    return 'chat'
+TASK_KEYWORDS = {
+    "search": ["найди", "поиск", "источник", "сайт", "спарси", "scout",
+               "url", "http", "парсинг сайт", "парс сайт"],
+    "code": ["код", "code", "функци", "function", "скрипт", "script",
+             "python", "ошибк", "error", "bug", "парс", "parse"],
+    "analysis": ["анализ", "analysis", "сравни", "compare", "статус",
+                 "status", "почем", "why", "как работает"],
+}
 
-def build_response(provider_resp: dict, target_provider: dict, target_model: str, start_time: float) -> dict:
-    content = None
-    tool_calls = []
-    usage = provider_resp.get('usage', {})
-    finish_reason = 'stop'
-    
-    if 'choices' in provider_resp and provider_resp['choices']:
-        msg = provider_resp['choices'][0].get('message', {})
-        content = msg.get('content')
-        tool_calls = msg.get('tool_calls', [])
-        finish_reason = provider_resp['choices'][0].get('finish_reason', 'stop')
-    
-    message = {'role': 'assistant', 'content': content, 'tool_calls': tool_calls}
-    
-    return {
-        'id': f"chatcmpl-{hashlib.md5(str(time.time()).encode()).hexdigest()[:12]}",
-        'object': 'chat.completion',
-        'created': int(time.time()),
-        'model': target_model,
-        'choices': [{'index': 0, 'message': message, 'finish_reason': finish_reason}],
-        'usage': usage
-    }
+
+def classify_task(messages: List[Dict]) -> str:
+    """Тип задачи по последнему пользовательскому сообщению."""
+    user_text = ""
+    for m in reversed(messages or []):
+        if m.get("role") == "user":
+            c = m.get("content")
+            if isinstance(c, str):
+                user_text = c.lower()
+            elif isinstance(c, list):
+                # v0.19 умеет слать content частями: [{"type":"text","text":...}]
+                user_text = " ".join(
+                    part.get("text", "") for part in c if isinstance(part, dict)
+                ).lower()
+            break
+    if not user_text:
+        return "chat"
+    for task in ("search", "code", "analysis"):
+        if any(kw in user_text for kw in TASK_KEYWORDS[task]):
+            return task
+    return "chat"
+
+
+# Служебные блоки Hermes, которые не несут смысла для модели.
+# ВАЖНО: у каждого паттерна есть якорь конца — иначе вырезается весь
+# остаток промпта, включая роль агента и протокол вызова слоёв.
+# Прежние регулярки были жадными до конца строки: из 631 символов реального
+# промпта оставалось 119, а инструкции оркестратора исчезали целиком.
+_HERMES_BLOCKS = [
+    # Блок «You run on Hermes Agent …»
+    re.compile(r"You run on Hermes Agent\b[\s\S]*?(?=\n\s*\n|\n#|\Z)"),
+    # Секции Hermes. Граница — пустая строка ИЛИ следующий заголовок любого
+    # уровня. Раньше lookahead был '^#\s', который не срабатывает на '## СЛОИ'
+    # (там после # идёт #, а не пробел), поэтому блок съедал весь остаток
+    # промпта вместе с ролью оркестратора.
+    re.compile(r"^#\s*Finishing the job\b[\s\S]*?(?=\n\s*\n|\n#|\Z)", re.MULTILINE),
+    re.compile(r"^#\s*Parallel tool calls\b[\s\S]*?(?=\n\s*\n|\n#|\Z)", re.MULTILINE),
+    # Блок про persistent memory
+    re.compile(r"You have persistent memory across sessions\.[\s\S]*?(?=\n\s*\n|\n#|\Z)"),
+]
+
+# Если после фильтрации осталось меньше — считаем, что фильтр съел лишнее,
+# и возвращаем исходный промпт. Лучше лишние токены, чем агент без роли.
+MIN_KEPT_CHARS = 40
+
+
+def filter_system_prompt(content: str, request_id: str = "") -> str:
+    """Убирает служебные блоки Hermes, сохраняя роль агента и протокол.
+
+    Возвращает исходный текст, если результат подозрительно короткий.
+    """
+    if not content or not isinstance(content, str):
+        return content
+
+    original = content
+    filtered = content
+    for pattern in _HERMES_BLOCKS:
+        filtered = pattern.sub("", filtered)
+    filtered = re.sub(r"\n{3,}", "\n\n", filtered).strip()
+
+    if len(filtered) < MIN_KEPT_CHARS < len(original):
+        logger.warning(
+            f"[{request_id}] ✂️ Фильтр удалил бы почти всё "
+            f"({len(original)}→{len(filtered)}) — оставляю промпт как есть"
+        )
+        return original
+
+    if len(filtered) != len(original):
+        logger.info(f"[{request_id}] ✂️ Фильтр: {len(original)}→{len(filtered)} символов")
+    return filtered

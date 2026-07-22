@@ -2,5 +2,8 @@ fastapi>=0.100.0
 uvicorn>=0.23.0
 httpx>=0.25.0
 python-dotenv>=1.0.0
-sqlite3
 cryptography>=41.0.0
+# update_all.py использует requests
+requests>=2.31.0
+# ВНИМАНИЕ: sqlite3 — модуль стандартной библиотеки, на PyPI его нет.
+# Строка "sqlite3" в этом файле раньше валила `pip install -r requirements.txt` целиком.
