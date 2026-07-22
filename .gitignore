@@ -21,6 +21,9 @@ consilium/fallback_chain.json
 # Кэш дедупликации парсера
 agents/parser/dedup_cache.db
 
+# Documentation
+CONSILIUM_FIX_REPORT.md
+
 # Coverage reports
 .coverage
 coverage/

@@ -1,7 +1,10 @@
 """Consilium Providers — модульная архитектура FreeLLMAPI-style.
-Каждый провайдер в отдельном файле. Вкл/выкл через enabled.
-Триал-ключи исключены. Только вечно-бесплатные."""
+Каждый провайдер в отдельном файле. Вкл/выкл через enabled."""
 import logging
+from dotenv import load_dotenv
+from pathlib import Path
+load_dotenv(Path(__file__).parent.parent / ".env")
+
 logger = logging.getLogger("consilium.providers")
 
 from .openrouter import OpenRouterProvider
@@ -25,9 +28,9 @@ ALL_PROVIDERS = [
     SambaNovaProvider(),
     HFProvider(),
     CloudflareProvider(),
-                    SiliconFlowProvider(),
+    SiliconFlowProvider(),
     RekaProvider(),
-                AIHordeProvider(),
+    AIHordeProvider(),
     DeepInfraProvider(),
     TogetherProvider(),
 ]
