@@ -1,1 +1,4 @@
-Nothing needs to be added to .gitignore since only a markdown file (CONSILIUM_AUDIT_REPORT.md) was added, which is a source/config file and should not be ignored.
+```
+# Documentation
+CONSILIUM_FIX_REPORT.md
+```
