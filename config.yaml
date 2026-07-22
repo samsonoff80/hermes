@@ -61,7 +61,7 @@ custom_providers: []
 fallback_providers: []
 model:
   api_key: sk-consilium
-  api_mode: openai
+  api_mode: chat_completions
   base_url: http://127.0.0.1:8765/v1
   context_file_max_chars: 4000
   context_length: 128000

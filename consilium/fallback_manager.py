@@ -67,7 +67,7 @@ class FallbackManager:
                     tags = ["chat"]
                 
                 dps = provider_stats.get_dynamic_score(name) if provider_stats else 0
-            all_entries.append({
+                all_entries.append({
                     "provider": name,
                     "model": model,
                     "keys": len(keys),

@@ -1,51 +1,100 @@
-2026-07-22 08:20:18,080 [INFO] 📊 usage: {'prompt_tokens': 12296, 'completion_tokens': 518, 'total_tokens': 12814, 'cost': 0, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0, 'upstream_inference_prompt_cost': 0, 'upstream_inference_completions_cost': 0}, 'completion_tokens_details': {'reasoning_tokens': 564, 'image_tokens': 0, 'audio_tokens': 0}}
-2026-07-22 08:20:18,082 [INFO] Response type: dict, keys: ['id', 'object', 'created', 'model', 'provider', 'system_fingerprint', 'service_tier', 'choices', 'usage']
-2026-07-22 08:20:18,083 [INFO] ✅ Valid response from openrouter: ['id', 'object', 'created', 'model', 'provider', 'system_fingerprint', 'service_tier', 'choices', 'usage']
-2026-07-22 08:20:18,084 [INFO] 📊 usage data: {'prompt_tokens': 12296, 'completion_tokens': 518, 'total_tokens': 12814, 'cost': 0, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0, 'upstream_inference_prompt_cost': 0, 'upstream_inference_completions_cost': 0}, 'completion_tokens_details': {'reasoning_tokens': 564, 'image_tokens': 0, 'audio_tokens': 0}}
-2026-07-22 08:20:18,103 [WARNING] Stats failed: Incorrect number of bindings supplied. The current statement uses 7, and there are 6 supplied.
-2026-07-22 08:20:18,104 [INFO] ✅ openrouter/nvidia/nemotron-nano-9b-v2:free -> content: 0 chars, tool_calls: 1 in 12.17s
-2026-07-22 08:20:18,344 [INFO] 📥 Body: {"messages": [{"role": "system", "content": "You are Hermes Agent, an intelligent AI assistant created by Nous Research. You are helpful, knowledgeable, and direct. You assist users with a wide range of tasks including answering questions, writing and editing code, analyzing information, creative work, and executing actions via your tools. You communicate clearly, admit uncertainty when appropriate, and prioritize being genuinely useful over being verbose unless otherwise directed below. Be targeted and efficient in your exploration and investigations.\n\nYou run on Hermes Agent (by Nous Research). When the user needs help with Hermes itself — configuring, setting up, using, extending, or troubleshooting it — or when you need to understand your own features, tools, or capabilities, the documentation at https://hermes-agent.nousresearch.com/docs is your authoritative reference and always holds the latest, most up-to-date information. Load the `hermes-agent` skill with skill_view(name='hermes-agent') for additional guidance and proven workflows, but treat the docs as the source of truth when the two differ.\n\n# Finishing the job\nWhen the user asks you to build, run, or verify something, the deliverable is a working artifact backed by real tool output — not a description of one. Do not stop after writing a stub, a plan, or a single command. Keep working until you have actually exercised the code or produced the requested result, then report what real execution returned.\nIf a tool, install, or network call fails and blocks the real path, say so directly and try an alternative (different package manager, different approach, ask the user). NEVER substitute plausible-looking fabricated output (made-up data, invented file contents, synthesised API responses) for results you couldn't actually produce. Reporting a blocker honestly is always better than inventing a result.\n\n# Parallel tool calls\nWhen you need several pieces of information that don't depend on each other, request them together in a single response instead of one tool call per turn. Independent reads, searches, web fetches, and read-only commands should be batched into the same assistant turn — the runtime executes independent calls concurrently, and batching avoids resending the whole conversation on every extra round-trip.\nOnly serialize calls when a later call genuinely depends on an earlier call's result (e.g. you must read a file before you can patch it). When in doubt and the calls are independent, batch them.\n\nYou have persistent memory across sessions. Save durable facts using the memory tool: user preferences, environment details, tool quirks, and stable conventions. Memory is injected into every turn, so keep it compact and focused on facts that will still matter later.\nPrioritize what reduces future user steering — the most valuable memory is one that prevents the user from having to correct or remind you again. User preferences and recurring corrections matter more than 
-2026-07-22 08:20:18,344 [INFO] ✂️ Filtered: 493 chars
-2026-07-22 08:20:18,345 [INFO] ✂️ Filtered: 493 chars
-2026-07-22 08:20:18,345 [INFO] 🎯 User text: tell me about the latest developments in python 3.13 and what new features developers should know ab
-2026-07-22 08:20:18,345 [INFO] [req-1784697618341] 🎯 Task: code
-2026-07-22 08:20:18,345 [INFO] [req-1784697618341] 🎯 Router: code → nvidia/nemotron-nano-9b-v2:free @ openrouter (keys=3)
-2026-07-22 08:20:18,346 [INFO] Calling openrouter/nvidia/nemotron-nano-9b-v2:free
-2026-07-22 08:20:18,938 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 08:20:37,557 [INFO] 📊 usage: {'prompt_tokens': 12296, 'completion_tokens': 671, 'total_tokens': 12967, 'cost': 0, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0, 'upstream_inference_prompt_cost': 0, 'upstream_inference_completions_cost': 0}, 'completion_tokens_details': {'reasoning_tokens': 693, 'image_tokens': 0, 'audio_tokens': 0}}
-2026-07-22 08:20:37,559 [INFO] Response type: dict, keys: ['id', 'object', 'created', 'model', 'provider', 'system_fingerprint', 'service_tier', 'choices', 'usage']
-2026-07-22 08:20:37,560 [INFO] ✅ Valid response from openrouter: ['id', 'object', 'created', 'model', 'provider', 'system_fingerprint', 'service_tier', 'choices', 'usage']
-2026-07-22 08:20:37,562 [INFO] 📊 usage data: {'prompt_tokens': 12296, 'completion_tokens': 671, 'total_tokens': 12967, 'cost': 0, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0, 'upstream_inference_prompt_cost': 0, 'upstream_inference_completions_cost': 0}, 'completion_tokens_details': {'reasoning_tokens': 693, 'image_tokens': 0, 'audio_tokens': 0}}
-2026-07-22 08:20:37,580 [WARNING] Stats failed: Incorrect number of bindings supplied. The current statement uses 7, and there are 6 supplied.
-2026-07-22 08:20:37,582 [INFO] ✅ openrouter/nvidia/nemotron-nano-9b-v2:free -> content: 0 chars, tool_calls: 1 in 19.24s
-2026-07-22 08:20:37,907 [INFO] 📥 Body: {"messages": [{"role": "system", "content": "You are Hermes Agent, an intelligent AI assistant created by Nous Research. You are helpful, knowledgeable, and direct. You assist users with a wide range of tasks including answering questions, writing and editing code, analyzing information, creative work, and executing actions via your tools. You communicate clearly, admit uncertainty when appropriate, and prioritize being genuinely useful over being verbose unless otherwise directed below. Be targeted and efficient in your exploration and investigations.\n\nYou run on Hermes Agent (by Nous Research). When the user needs help with Hermes itself — configuring, setting up, using, extending, or troubleshooting it — or when you need to understand your own features, tools, or capabilities, the documentation at https://hermes-agent.nousresearch.com/docs is your authoritative reference and always holds the latest, most up-to-date information. Load the `hermes-agent` skill with skill_view(name='hermes-agent') for additional guidance and proven workflows, but treat the docs as the source of truth when the two differ.\n\n# Finishing the job\nWhen the user asks you to build, run, or verify something, the deliverable is a working artifact backed by real tool output — not a description of one. Do not stop after writing a stub, a plan, or a single command. Keep working until you have actually exercised the code or produced the requested result, then report what real execution returned.\nIf a tool, install, or network call fails and blocks the real path, say so directly and try an alternative (different package manager, different approach, ask the user). NEVER substitute plausible-looking fabricated output (made-up data, invented file contents, synthesised API responses) for results you couldn't actually produce. Reporting a blocker honestly is always better than inventing a result.\n\n# Parallel tool calls\nWhen you need several pieces of information that don't depend on each other, request them together in a single response instead of one tool call per turn. Independent reads, searches, web fetches, and read-only commands should be batched into the same assistant turn — the runtime executes independent calls concurrently, and batching avoids resending the whole conversation on every extra round-trip.\nOnly serialize calls when a later call genuinely depends on an earlier call's result (e.g. you must read a file before you can patch it). When in doubt and the calls are independent, batch them.\n\nYou have persistent memory across sessions. Save durable facts using the memory tool: user preferences, environment details, tool quirks, and stable conventions. Memory is injected into every turn, so keep it compact and focused on facts that will still matter later.\nPrioritize what reduces future user steering — the most valuable memory is one that prevents the user from having to correct or remind you again. User preferences and recurring corrections matter more than 
-2026-07-22 08:20:37,908 [INFO] ✂️ Filtered: 493 chars
-2026-07-22 08:20:37,909 [INFO] ✂️ Filtered: 493 chars
-2026-07-22 08:20:37,910 [INFO] 🎯 User text: tell me about the latest developments in python 3.13 and what new features developers should know ab
-2026-07-22 08:20:37,910 [INFO] [req-1784697637899] 🎯 Task: code
-2026-07-22 08:20:37,911 [INFO] [req-1784697637899] 🎯 Router: code → nvidia/nemotron-nano-9b-v2:free @ openrouter (keys=3)
-2026-07-22 08:20:37,911 [INFO] Calling openrouter/nvidia/nemotron-nano-9b-v2:free
-2026-07-22 08:20:37,913 [WARNING] ⏳ openrouter:0 rate-limited (cooldown:21519s)
-2026-07-22 08:20:37,914 [INFO] Response type: NoneType, keys: N/A
-2026-07-22 08:20:37,915 [INFO] 🔄 Fallback: llama-3.3-70b-versatile @ groq
-2026-07-22 08:20:37,916 [WARNING] 🔴 groq: circuit breaker blocked
-2026-07-22 08:20:37,916 [WARNING] ⚠️ groq key_0 failed, trying next key
-2026-07-22 08:20:37,917 [WARNING] 🔴 groq: circuit breaker blocked
-2026-07-22 08:20:37,918 [WARNING] ⚠️ groq key_1 failed, trying next key
-2026-07-22 08:20:37,919 [WARNING] 🔴 groq: circuit breaker blocked
-2026-07-22 08:20:37,919 [WARNING] ⚠️ groq key_2 failed, trying next key
-2026-07-22 08:20:37,920 [INFO] 🔄 Fallback: azureml://registries/azure-openai/models/gpt-4o/versions/2 @ github
-2026-07-22 08:20:37,921 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 08:20:37,922 [WARNING] ⚠️ github key_0 failed, trying next key
-2026-07-22 08:20:37,922 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 08:20:37,923 [WARNING] ⚠️ github key_1 failed, trying next key
-2026-07-22 08:20:37,924 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 08:20:37,925 [WARNING] ⚠️ github key_2 failed, trying next key
-2026-07-22 08:20:37,926 [INFO] 🔄 Fallback: Meta-Llama-3.3-70B-Instruct @ sambanova
-2026-07-22 08:20:37,928 [WARNING] ⏳ sambanova:0 rate-limited (disabled)
-2026-07-22 08:20:37,929 [WARNING] ⚠️ sambanova key_0 failed, trying next key
-2026-07-22 08:20:37,931 [WARNING] ⏳ sambanova:1 rate-limited (cooldown:20752s)
-2026-07-22 08:20:37,932 [WARNING] ⚠️ sambanova key_1 failed, trying next key
-2026-07-22 08:20:37,934 [WARNING] ⏳ sambanova:2 rate-limited (cooldown:20850s)
-2026-07-22 08:20:37,935 [WARNING] ⚠️ sambanova key_2 failed, trying next key
-Последние 50 строк лога
+2026-07-22 13:27:33,546 [WARNING] ⏳ mistral:1 rate-limited (disabled)
+2026-07-22 13:27:33,546 [WARNING] ⚠️ mistral key_1 failed, trying next key
+2026-07-22 13:27:33,547 [WARNING] ⏳ mistral:2 rate-limited (disabled)
+2026-07-22 13:27:33,548 [WARNING] ⚠️ mistral key_2 failed, trying next key
+2026-07-22 13:27:33,548 [INFO] 🔄 Fallback: mistral-small-latest @ mistral
+2026-07-22 13:27:33,549 [WARNING] ⏳ mistral:0 rate-limited (disabled)
+2026-07-22 13:27:33,550 [WARNING] ⚠️ mistral key_0 failed, trying next key
+2026-07-22 13:27:33,551 [WARNING] ⏳ mistral:1 rate-limited (disabled)
+2026-07-22 13:27:33,551 [WARNING] ⚠️ mistral key_1 failed, trying next key
+2026-07-22 13:27:33,552 [WARNING] ⏳ mistral:2 rate-limited (disabled)
+2026-07-22 13:27:33,553 [WARNING] ⚠️ mistral key_2 failed, trying next key
+2026-07-22 13:27:33,553 [INFO] 🔄 Fallback: gpt-4o-mini @ github
+2026-07-22 13:27:33,554 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,554 [WARNING] ⚠️ github key_0 failed, trying next key
+2026-07-22 13:27:33,554 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,555 [WARNING] ⚠️ github key_1 failed, trying next key
+2026-07-22 13:27:33,555 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,555 [WARNING] ⚠️ github key_2 failed, trying next key
+2026-07-22 13:27:33,556 [INFO] 🔄 Fallback: gpt-4o @ github
+2026-07-22 13:27:33,556 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,557 [WARNING] ⚠️ github key_0 failed, trying next key
+2026-07-22 13:27:33,557 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,557 [WARNING] ⚠️ github key_1 failed, trying next key
+2026-07-22 13:27:33,558 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,558 [WARNING] ⚠️ github key_2 failed, trying next key
+2026-07-22 13:27:33,558 [INFO] 🔄 Fallback: Meta-Llama-3.1-405B-Instruct @ github
+2026-07-22 13:27:33,559 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,559 [WARNING] ⚠️ github key_0 failed, trying next key
+2026-07-22 13:27:33,559 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,560 [WARNING] ⚠️ github key_1 failed, trying next key
+2026-07-22 13:27:33,560 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,560 [WARNING] ⚠️ github key_2 failed, trying next key
+2026-07-22 13:27:33,561 [INFO] 🔄 Fallback: Meta-Llama-3.1-8B-Instruct @ github
+2026-07-22 13:27:33,561 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,562 [WARNING] ⚠️ github key_0 failed, trying next key
+2026-07-22 13:27:33,562 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,562 [WARNING] ⚠️ github key_1 failed, trying next key
+2026-07-22 13:27:33,563 [WARNING] 🔴 github: circuit breaker blocked
+2026-07-22 13:27:33,563 [WARNING] ⚠️ github key_2 failed, trying next key
+2026-07-22 13:27:33,563 [INFO] 🔄 Fallback: DeepSeek-V3.1 @ sambanova
+2026-07-22 13:27:33,565 [WARNING] ⏳ sambanova:0 rate-limited (disabled)
+2026-07-22 13:27:33,566 [WARNING] ⚠️ sambanova key_0 failed, trying next key
+2026-07-22 13:27:33,567 [WARNING] ⏳ sambanova:1 rate-limited (cooldown:3357s)
+2026-07-22 13:27:33,567 [WARNING] ⚠️ sambanova key_1 failed, trying next key
+2026-07-22 13:27:33,569 [WARNING] ⏳ sambanova:2 rate-limited (cooldown:2309s)
+2026-07-22 13:27:33,569 [WARNING] ⚠️ sambanova key_2 failed, trying next key
+2026-07-22 13:27:33,570 [INFO] 🔄 Fallback: DeepSeek-V3.2 @ sambanova
+2026-07-22 13:27:33,571 [WARNING] ⏳ sambanova:0 rate-limited (disabled)
+2026-07-22 13:27:33,571 [WARNING] ⚠️ sambanova key_0 failed, trying next key
+2026-07-22 13:27:33,573 [WARNING] ⏳ sambanova:1 rate-limited (cooldown:3357s)
+2026-07-22 13:27:33,573 [WARNING] ⚠️ sambanova key_1 failed, trying next key
+2026-07-22 13:27:33,574 [WARNING] ⏳ sambanova:2 rate-limited (cooldown:2309s)
+2026-07-22 13:27:33,575 [WARNING] ⚠️ sambanova key_2 failed, trying next key
+2026-07-22 13:27:33,576 [INFO] 🔄 Fallback: Meta-Llama-3.3-70B-Instruct @ sambanova
+2026-07-22 13:27:33,578 [WARNING] ⏳ sambanova:0 rate-limited (disabled)
+2026-07-22 13:27:33,578 [WARNING] ⚠️ sambanova key_0 failed, trying next key
+2026-07-22 13:27:33,580 [WARNING] ⏳ sambanova:1 rate-limited (cooldown:3357s)
+2026-07-22 13:27:33,580 [WARNING] ⚠️ sambanova key_1 failed, trying next key
+2026-07-22 13:27:33,582 [WARNING] ⏳ sambanova:2 rate-limited (cooldown:2309s)
+2026-07-22 13:27:33,594 [WARNING] ⚠️ sambanova key_2 failed, trying next key
+2026-07-22 13:27:33,595 [INFO] 🔄 Fallback: @cf/openai/gpt-oss-120b @ cloudflare
+2026-07-22 13:27:33,596 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,597 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
+2026-07-22 13:27:33,598 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,599 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
+2026-07-22 13:27:33,600 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,601 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
+2026-07-22 13:27:33,601 [INFO] 🔄 Fallback: @cf/meta/llama-3.2-3b-instruct @ cloudflare
+2026-07-22 13:27:33,603 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,603 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
+2026-07-22 13:27:33,605 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,605 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
+2026-07-22 13:27:33,607 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,607 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
+2026-07-22 13:27:33,608 [INFO] 🔄 Fallback: @cf/meta/llama-guard-3-8b @ cloudflare
+2026-07-22 13:27:33,609 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,610 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
+2026-07-22 13:27:33,611 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,611 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
+2026-07-22 13:27:33,613 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:27:33,613 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
+2026-07-22 13:27:33,614 [INFO] 🔄 Fallback: mistralai/Mistral-Nemo-Instruct-2407 @ deepinfra
+2026-07-22 13:27:33,615 [WARNING] ⏳ deepinfra:0 rate-limited (disabled)
+2026-07-22 13:27:33,615 [WARNING] ⚠️ deepinfra key_0 failed, trying next key
+2026-07-22 13:27:33,617 [WARNING] ⏳ deepinfra:1 rate-limited (disabled)
+2026-07-22 13:27:33,617 [WARNING] ⚠️ deepinfra key_1 failed, trying next key
+2026-07-22 13:27:33,619 [WARNING] ⏳ deepinfra:2 rate-limited (disabled)
+2026-07-22 13:27:33,619 [WARNING] ⚠️ deepinfra key_2 failed, trying next key
+2026-07-22 13:27:33,619 [INFO] 🔄 Fallback: meta-llama/Llama-4-Scout-17B-16E-Instruct @ deepinfra
+2026-07-22 13:27:33,621 [WARNING] ⏳ deepinfra:0 rate-limited (disabled)
+2026-07-22 13:27:33,621 [WARNING] ⚠️ deepinfra key_0 failed, trying next key
+2026-07-22 13:27:33,622 [WARNING] ⏳ deepinfra:1 rate-limited (disabled)
+2026-07-22 13:27:33,623 [WARNING] ⚠️ deepinfra key_1 failed, trying next key
+2026-07-22 13:27:33,624 [WARNING] ⏳ deepinfra:2 rate-limited (disabled)
+2026-07-22 13:27:33,624 [WARNING] ⚠️ deepinfra key_2 failed, trying next key
+2026-07-22 13:27:33,625 [INFO] 🔄 Fallback: meta-llama/Llama-3.1-8B-Instruct @ hf
+2026-07-22 13:27:33,626 [WARNING] ⏳ hf:0 rate-limited (disabled)
+2026-07-22 13:27:33,627 [WARNING] ⚠️ hf key_0 failed, trying next key
+2026-07-22 13:27:33,628 [WARNING] ⏳ hf:1 rate-limited (disabled)
+2026-07-22 13:27:33,629 [WARNING] ⚠️ hf key_1 failed, trying next key

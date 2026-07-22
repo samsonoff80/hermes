@@ -5,7 +5,7 @@ import time, threading, logging
 logger = logging.getLogger("consilium.circuit_breaker")
 
 class CircuitBreaker:
-    def __init__(self, threshold=10, cooldown=60):
+    def __init__(self, threshold=5, cooldown=60):
         self.threshold = threshold
         self.cooldown = cooldown
         self.failures = {}

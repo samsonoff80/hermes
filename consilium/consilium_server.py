@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 from logging.handlers import RotatingFileHandler
 
 import sqlite3
+import threading
 import httpx
 from fastapi import FastAPI, Request, HTTPException, Header
 from fastapi.responses import JSONResponse, StreamingResponse, PlainTextResponse
@@ -47,7 +48,7 @@ def _log_usage(provider, model, usage_dict):
         conn = sqlite3.connect(str(USAGE_DB))
         conn.execute("INSERT INTO usage VALUES (?,?,?,?,?,?)", (datetime.now().isoformat(), provider, model, p, c, p+c))
         conn.commit(); conn.close()
-    except: pass
+    except Exception: pass
 _init_usage()
 
 
@@ -94,15 +95,17 @@ for p in PROVIDERS:
     fallback.build_chains(PROVIDERS)
 
 key_indexes = defaultdict(int)
+key_lock = threading.Lock()
 
 def get_next_key(name: str):
     """Возвращает (key, key_index) для ротации."""
     keys = PROVIDER_KEYS.get(name, [])
     if not keys:
         return "", 0
-    idx = key_indexes[name] % len(keys)
-    key_indexes[name] = idx + 1
-    return keys[idx], idx
+    with key_lock:
+        idx = key_indexes[name] % len(keys)
+        key_indexes[name] = idx + 1
+        return keys[idx], idx
 
 # HTTP КЛИЕНТ с таймаутом 30с на провайдера
 http_client = httpx.AsyncClient(
@@ -189,7 +192,7 @@ def rescue_inline_tool_calls(content: str, available_tool_names: set[str] | None
                             args_str = json.dumps(args, ensure_ascii=False)
                             if name and (not available_tool_names or name in available_tool_names):
                                 calls.append({
-                                    "id": f"call_rescued_{call_index}",
+                                    "id": str(uuid.uuid4()),
                                     "type": "function",
                                     "function": {"name": name, "arguments": args_str}
                                 })
@@ -202,7 +205,7 @@ def rescue_inline_tool_calls(content: str, available_tool_names: set[str] | None
                 
                 if name and (not available_tool_names or name in available_tool_names):
                     calls.append({
-                        "id": f"call_rescued_{call_index}",
+                        "id": str(uuid.uuid4()),
                         "type": "function",
                         "function": {"name": name, "arguments": args_str}
                     })
@@ -311,6 +314,35 @@ def extract_huggingface_usage(data: dict) -> Optional[dict]:
 def extract_huggingface_reasoning_content(data: dict) -> Optional[str]:
     return None
 
+# Cloudflare Workers AI specific extractors (raw /ai/run/{model} shape)
+def extract_cloudflare_content(data: dict) -> Optional[str]:
+    """Cloudflare Workers AI returns: {"result": {"response": "..."}, "success": true}."""
+    try:
+        return data.get("result", {}).get("response")
+    except Exception:
+        return None
+
+def extract_cloudflare_finish_reason(data: dict) -> str:
+    return "stop"
+
+def extract_cloudflare_tool_calls(data: dict) -> Optional[list]:
+    return None
+
+def extract_cloudflare_usage(data: dict) -> Optional[dict]:
+    try:
+        usage = data.get("result", {}).get("usage", {})
+        if usage:
+            return {"prompt_tokens": usage.get("prompt_tokens", 0),
+                    "completion_tokens": usage.get("completion_tokens", 0),
+                    "total_tokens": usage.get("total_tokens", 0)}
+    except Exception:
+        pass
+    return None
+
+def extract_cloudflare_reasoning_content(data: dict) -> Optional[str]:
+    return None
+
+
 def normalize_message_content(data: dict, tool_calls: Optional[list] = None, provider_format: str = "openai") -> Optional[str]:
     """FreeLLMAPI-style normalize: content -> reasoning_content -> null (if tool_calls).
     
@@ -321,6 +353,8 @@ def normalize_message_content(data: dict, tool_calls: Optional[list] = None, pro
         content = extract_aihorde_content(data)
     elif provider_format == "huggingface":
         content = extract_huggingface_content(data)
+    elif provider_format == "cloudflare":
+        content = extract_cloudflare_content(data)
     else:
         content = extract_openai_content(data)
     
@@ -357,13 +391,18 @@ def ensure_tool_calls_field(message: dict) -> dict:
 
 # ---------- ВЫЗОВ ПРОВАЙДЕРОВ ----------
 
-async def call_provider(provider: dict, messages: list, model: str, stream: bool, temperature: float, max_tokens: int) -> Optional[Any]:
+async def call_provider(provider: dict, messages: list, model: str, stream: bool, temperature: float, max_tokens: int, tools: list = None, tool_choice: str = None) -> Optional[Any]:
     """Вызывает провайдера. Возвращает httpx.Response (stream) или dict (non-stream/cloudflare/aihorde/huggingface)."""
     # Circuit breaker check
     if not circuit_breaker.is_available(provider["name"]):
         logger.warning(f"🔴 {provider['name']}: circuit breaker blocked")
         return None
     key, key_index = get_next_key(provider["name"])
+    if key:
+        rl_available, rl_reason = rate_limiter.is_available(provider["name"], key_index)
+        if not rl_available:
+            logger.warning(f"⏳ {provider['name']}:{key_index} rate-limited ({rl_reason})")
+            return None
     keys_exist = bool(PROVIDER_KEYS.get(provider["name"]))
     is_keyless = provider.get("keyless", False)
     
@@ -409,6 +448,10 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
             "max_tokens": max_tokens,
             "stream": stream,
         }
+        if tools:
+            payload["tools"] = tools
+        if tool_choice:
+            payload["tool_choice"] = tool_choice
     elif provider_format == "huggingface":
         # HuggingFace Inference API format
         # Convert messages to a single prompt
@@ -433,6 +476,10 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
             "max_tokens": max_tokens,
             "stream": stream,
         }
+        if tools:
+            payload["tools"] = tools
+        if tool_choice:
+            payload["tool_choice"] = tool_choice
 
     try:
         if stream:
@@ -461,6 +508,8 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
             rate_limiter.mark_429(provider["name"], key_index)
         elif e.response.status_code in (401, 402, 403):
             rate_limiter.mark_402(provider["name"], key_index)
+        else:
+            circuit_breaker.record_failure(provider["name"])
         logger.warning(f"❌ {provider['name']}: HTTP {e.response.status_code} - {e.response.text[:200]}")
         return None
     except Exception as e:
@@ -558,6 +607,11 @@ async def generate_fake_stream(response_data: dict, model: str, available_tool_n
         content = extract_huggingface_content(response_data) or ""
         reasoning = extract_huggingface_reasoning_content(response_data)
         finish_reason = extract_huggingface_finish_reason(response_data)
+    elif provider_format == "cloudflare":
+        tool_calls = extract_cloudflare_tool_calls(response_data)
+        content = extract_cloudflare_content(response_data) or ""
+        reasoning = extract_cloudflare_reasoning_content(response_data)
+        finish_reason = extract_cloudflare_finish_reason(response_data)
     else:
         tool_calls = extract_tool_calls(response_data)
         content = extract_openai_content(response_data) or ""
@@ -631,7 +685,7 @@ async def usage_today():
         conn.close()
         total = sum(r[4] for r in rows)
         return {"date": today, "total_tokens": total, "breakdown": [{"provider": r[0], "model": r[1], "prompt_tokens": r[2], "completion_tokens": r[3], "total_tokens": r[4], "requests": r[5]} for r in rows]}
-    except: return {"date": datetime.now().strftime("%Y-%m-%d"), "total_tokens": 0}
+    except Exception: return {"date": datetime.now().strftime("%Y-%m-%d"), "total_tokens": 0}
 
 @app.get("/")
 async def root():
@@ -646,7 +700,7 @@ async def list_models():
     models = []
     for p in PROVIDERS:
         for m in p["models"]:
-            models.append({"id": m, "object": "model", "owned_by": p["name"]})
+            models.append({"id": m, "object": "model", "owned_by": p["name"], "context_length": 128000})
     return {"object": "list", "data": models}
 
 @app.post("/v1/chat/completions")
@@ -673,14 +727,21 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     # Фильтр: вырезаем блоки Hermes
     for m in messages:
         if m.get("role") == "system" and isinstance(m.get("content"), str):
-            m["content"] = re.sub(r"You run on Hermes Agent.*", "", m["content"], flags=re.DOTALL).strip()
-            m["content"] = re.sub(r"# Finishing the job.*", "", m["content"], flags=re.DOTALL).strip()
+            # Универсальный фильтр для любой версии Hermes
+            # Оставляем только наш SOUL.md + AGENTS.md (после служебных блоков Hermes)
+            parts = m["content"].split("You are Hermes Agent")
+            if len(parts) > 1:
+                m["content"] = parts[1]
+            m["content"] = m["content"].split("You run on Hermes Agent")[0].strip()
+            logger.info(f"✂️ Filtered: {len(m['content'])} chars")
+            m["content"] = re.sub(r"# Finishing the job.*?(?=\n#|\Z)", "", m["content"], flags=re.DOTALL).strip()
+            m["content"] = re.sub(r"# Parallel tool calls.*?(?=\n#|\Z)", "", m["content"], flags=re.DOTALL).strip()
             logger.info(f"✂️ Filtered: {len(m['content'])} chars")
     model = body.get("model", "auto")
     # Fix: treat empty string as auto
     if not model or model == "":
         model = "auto"
-    stream = body.get("stream", False)  # Поддержка streaming от клиента
+    stream = False  # Принудительно non-streaming для учёта токенов
     temperature = body.get("temperature", 0.7)
     max_tokens = body.get("max_tokens", 4096)
     tools = body.get("tools", [])
@@ -726,9 +787,6 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     if target_provider is None:
         target_model = None
     
-    temperature = body.get("temperature", 0.7)
-    max_tokens = body.get("max_tokens", 4096)
-    
     # Вызов провайдера — ОДИН раз
     if target_provider is None:
         logger.error('target_provider is None!')
@@ -736,7 +794,13 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     else:
         logger.info(f'Calling {target_provider["name"]}/{target_model}')
         try:
-            provider_resp = await call_provider(target_provider, messages, target_model, stream, temperature, max_tokens)
+            provider_resp = await asyncio.wait_for(
+                call_provider(target_provider, messages, target_model, stream, temperature, max_tokens, tools=tools),
+                timeout=min(PROVIDER_TIMEOUT, OVERALL_DEADLINE - (time.time() - start_time))
+            )
+        except asyncio.TimeoutError:
+            logger.warning(f"⏱️ {target_provider['name']}: overall deadline")
+            provider_resp = None
         except Exception as e:
             logger.error(f'Call failed: {e}')
             provider_resp = None
@@ -749,19 +813,24 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     elif isinstance(provider_resp, dict):
         logger.info(f'✅ Valid response from {target_provider["name"]}: {str(list(provider_resp.keys()))}')
 
-    if provider_resp is None and target_provider is not None:
+    if provider_resp is None:
         # Fallback: перебираем цепочку из fallback_manager
         task_chain = fallback.get_chain(task)
         for entry in task_chain:
             pname = entry["provider"]
             pmodel = entry["model"]
-            if pname == target_provider["name"] and pmodel == target_model:
+            if target_provider is not None and pname == target_provider["name"] and pmodel == target_model:
                 continue
             for prov in PROVIDERS:
                 if prov["name"] == pname and pmodel in prov.get("models", []):
                     if PROVIDER_KEYS.get(prov["name"]) or prov.get("keyless", False):
                         logger.info(f"🔄 Fallback: {pmodel} @ {pname}")
-                        provider_resp = await call_provider(prov, messages, pmodel, stream, temperature, max_tokens)
+                        # Перебираем все ключи провайдера
+                        for key_idx in range(len(PROVIDER_KEYS.get(prov["name"], [])) or 1):
+                            provider_resp = await call_provider(prov, messages, pmodel, stream, temperature, max_tokens, tools=tools)
+                            if provider_resp and not (isinstance(provider_resp, dict) and "error" in provider_resp):
+                                break
+                            logger.warning(f"⚠️ {prov['name']} key_{key_idx} failed, trying next key")
                         if provider_resp and not (isinstance(provider_resp, dict) and "error" in provider_resp):
                             target_provider = prov
                             target_model = pmodel
@@ -773,8 +842,17 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         raise HTTPException(503, "All providers failed")
 
     # Обновляем sticky session
-    if session_key and target_provider:
-        sticky_sessions[session_key] = (target_provider["name"], target_model, time.time() + STICKY_TTL)
+    # Очистка истёкших sticky sessions
+        now = time.time()
+        expired = [k for k, (_, _, exp) in sticky_sessions.items() if exp < now]
+        for k in expired:
+            del sticky_sessions[k]
+        now = time.time()
+        expired = [k for k, (_, _, exp) in sticky_sessions.items() if exp < now]
+        for k in expired:
+            del sticky_sessions[k]
+        if session_key and target_provider:
+            sticky_sessions[session_key] = (target_provider["name"], target_model, time.time() + STICKY_TTL)
 
     provider_format = target_provider.get("format", "openai")
     
@@ -784,7 +862,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             # Логируем usage для стриминга (приблизительно)
             try:
                 _log_usage(target_provider["name"], target_model, None)
-            except: pass
+            except Exception: pass
             return StreamingResponse(
                 stream_provider_response(provider_resp, target_model, available_tool_names),
                 media_type="text/event-stream",
@@ -794,7 +872,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             # Логируем usage для стриминга (приблизительно)
             try:
                 _log_usage(target_provider["name"], target_model, None)
-            except: pass
+            except Exception: pass
             return StreamingResponse(
                 generate_fake_stream(provider_resp, target_model, available_tool_names, provider_format),
                 media_type="text/event-stream",
@@ -814,10 +892,19 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             reasoning = extract_huggingface_reasoning_content(provider_resp)
             usage = extract_huggingface_usage(provider_resp)
             finish_reason = extract_huggingface_finish_reason(provider_resp)
+        elif provider_format == "cloudflare":
+            tool_calls = extract_cloudflare_tool_calls(provider_resp)
+            content = extract_cloudflare_content(provider_resp)
+            reasoning = extract_cloudflare_reasoning_content(provider_resp)
+            usage = extract_cloudflare_usage(provider_resp)
+            finish_reason = extract_cloudflare_finish_reason(provider_resp)
         else:
             tool_calls = extract_tool_calls(provider_resp)
-            content = extract_openai_content(provider_resp)
+            content = extract_openai_content(provider_resp) or ""
             reasoning = extract_reasoning_content(provider_resp)
+            # Fallback: Nemotron models return content in reasoning
+            if not content and reasoning:
+                content = reasoning
             usage = extract_usage(provider_resp)
             finish_reason = extract_finish_reason(provider_resp)
         
@@ -841,7 +928,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         
         message = {
             "role": "assistant",
-            "content": normalized_content,
+            "content": None if has_tool_calls else normalized_content,
         }
         if reasoning and not has_tool_calls:
             message["reasoning_content"] = reasoning
@@ -874,6 +961,11 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             logger.warning(f"Stats failed: {e}")
         if target_provider:
             logger.info(f"✅ {target_provider['name']}/{target_model} -> content: {len(normalized_content) if normalized_content else 0} chars, tool_calls: {len(message['tool_calls'])} in {time.time()-start_time:.2f}s")
+        # Фильтр: только стандартные поля OpenAI API
+        if isinstance(response, dict):
+            std_fields = {"id", "object", "created", "model", "choices", "usage"}
+            response = {k: v for k, v in response.items() if k in std_fields}
+        logger.info(f'📤 Response: model={response.get("model")}, content_len={len(str(response.get("choices",[{}])[0].get("message",{}).get("content","")))} chars, finish={response.get("choices",[{}])[0].get("finish_reason")}, tool_calls={len(response.get("choices",[{}])[0].get("message",{}).get("tool_calls",[]))}')
         return JSONResponse(response)
     
 # ---------- MAIN ----------

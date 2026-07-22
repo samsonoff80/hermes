@@ -11,7 +11,9 @@ COOLDOWN_STEPS = [90, 300, 900, 3600, 21600]
 class RateLimiter:
     def __init__(self):
         self.lock = threading.Lock()
+        self._cache = {}
         self._init_db()
+        self._load_state()
         self._load_state()
     
     def _init_db(self):
@@ -27,7 +29,7 @@ class RateLimiter:
         with sqlite3.connect(str(DB_PATH)) as conn:
             for row in conn.execute("SELECT * FROM rate_limits"):
                 provider, ki, rpm, tpm, rpd, tpd, ws, ds, co, c429, dis = row
-                # Загружаем в память
+                self._cache[(provider, ki)] = {"cooldown_until": co, "disabled": dis, "consecutive_429": c429}
     
     def _save_state(self, provider, key_index, rpm, tpm, rpd, tpd, ws, ds, co, c429, dis):
         with self.lock:
