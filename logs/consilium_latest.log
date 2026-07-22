@@ -1,100 +1,100 @@
-2026-07-22 13:27:33,546 [WARNING] ⏳ mistral:1 rate-limited (disabled)
-2026-07-22 13:27:33,546 [WARNING] ⚠️ mistral key_1 failed, trying next key
-2026-07-22 13:27:33,547 [WARNING] ⏳ mistral:2 rate-limited (disabled)
-2026-07-22 13:27:33,548 [WARNING] ⚠️ mistral key_2 failed, trying next key
-2026-07-22 13:27:33,548 [INFO] 🔄 Fallback: mistral-small-latest @ mistral
-2026-07-22 13:27:33,549 [WARNING] ⏳ mistral:0 rate-limited (disabled)
-2026-07-22 13:27:33,550 [WARNING] ⚠️ mistral key_0 failed, trying next key
-2026-07-22 13:27:33,551 [WARNING] ⏳ mistral:1 rate-limited (disabled)
-2026-07-22 13:27:33,551 [WARNING] ⚠️ mistral key_1 failed, trying next key
-2026-07-22 13:27:33,552 [WARNING] ⏳ mistral:2 rate-limited (disabled)
-2026-07-22 13:27:33,553 [WARNING] ⚠️ mistral key_2 failed, trying next key
-2026-07-22 13:27:33,553 [INFO] 🔄 Fallback: gpt-4o-mini @ github
-2026-07-22 13:27:33,554 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,554 [WARNING] ⚠️ github key_0 failed, trying next key
-2026-07-22 13:27:33,554 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,555 [WARNING] ⚠️ github key_1 failed, trying next key
-2026-07-22 13:27:33,555 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,555 [WARNING] ⚠️ github key_2 failed, trying next key
-2026-07-22 13:27:33,556 [INFO] 🔄 Fallback: gpt-4o @ github
-2026-07-22 13:27:33,556 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,557 [WARNING] ⚠️ github key_0 failed, trying next key
-2026-07-22 13:27:33,557 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,557 [WARNING] ⚠️ github key_1 failed, trying next key
-2026-07-22 13:27:33,558 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,558 [WARNING] ⚠️ github key_2 failed, trying next key
-2026-07-22 13:27:33,558 [INFO] 🔄 Fallback: Meta-Llama-3.1-405B-Instruct @ github
-2026-07-22 13:27:33,559 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,559 [WARNING] ⚠️ github key_0 failed, trying next key
-2026-07-22 13:27:33,559 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,560 [WARNING] ⚠️ github key_1 failed, trying next key
-2026-07-22 13:27:33,560 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,560 [WARNING] ⚠️ github key_2 failed, trying next key
-2026-07-22 13:27:33,561 [INFO] 🔄 Fallback: Meta-Llama-3.1-8B-Instruct @ github
-2026-07-22 13:27:33,561 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,562 [WARNING] ⚠️ github key_0 failed, trying next key
-2026-07-22 13:27:33,562 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,562 [WARNING] ⚠️ github key_1 failed, trying next key
-2026-07-22 13:27:33,563 [WARNING] 🔴 github: circuit breaker blocked
-2026-07-22 13:27:33,563 [WARNING] ⚠️ github key_2 failed, trying next key
-2026-07-22 13:27:33,563 [INFO] 🔄 Fallback: DeepSeek-V3.1 @ sambanova
-2026-07-22 13:27:33,565 [WARNING] ⏳ sambanova:0 rate-limited (disabled)
-2026-07-22 13:27:33,566 [WARNING] ⚠️ sambanova key_0 failed, trying next key
-2026-07-22 13:27:33,567 [WARNING] ⏳ sambanova:1 rate-limited (cooldown:3357s)
-2026-07-22 13:27:33,567 [WARNING] ⚠️ sambanova key_1 failed, trying next key
-2026-07-22 13:27:33,569 [WARNING] ⏳ sambanova:2 rate-limited (cooldown:2309s)
-2026-07-22 13:27:33,569 [WARNING] ⚠️ sambanova key_2 failed, trying next key
-2026-07-22 13:27:33,570 [INFO] 🔄 Fallback: DeepSeek-V3.2 @ sambanova
-2026-07-22 13:27:33,571 [WARNING] ⏳ sambanova:0 rate-limited (disabled)
-2026-07-22 13:27:33,571 [WARNING] ⚠️ sambanova key_0 failed, trying next key
-2026-07-22 13:27:33,573 [WARNING] ⏳ sambanova:1 rate-limited (cooldown:3357s)
-2026-07-22 13:27:33,573 [WARNING] ⚠️ sambanova key_1 failed, trying next key
-2026-07-22 13:27:33,574 [WARNING] ⏳ sambanova:2 rate-limited (cooldown:2309s)
-2026-07-22 13:27:33,575 [WARNING] ⚠️ sambanova key_2 failed, trying next key
-2026-07-22 13:27:33,576 [INFO] 🔄 Fallback: Meta-Llama-3.3-70B-Instruct @ sambanova
-2026-07-22 13:27:33,578 [WARNING] ⏳ sambanova:0 rate-limited (disabled)
-2026-07-22 13:27:33,578 [WARNING] ⚠️ sambanova key_0 failed, trying next key
-2026-07-22 13:27:33,580 [WARNING] ⏳ sambanova:1 rate-limited (cooldown:3357s)
-2026-07-22 13:27:33,580 [WARNING] ⚠️ sambanova key_1 failed, trying next key
-2026-07-22 13:27:33,582 [WARNING] ⏳ sambanova:2 rate-limited (cooldown:2309s)
-2026-07-22 13:27:33,594 [WARNING] ⚠️ sambanova key_2 failed, trying next key
-2026-07-22 13:27:33,595 [INFO] 🔄 Fallback: @cf/openai/gpt-oss-120b @ cloudflare
-2026-07-22 13:27:33,596 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,597 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
-2026-07-22 13:27:33,598 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,599 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
-2026-07-22 13:27:33,600 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,601 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
-2026-07-22 13:27:33,601 [INFO] 🔄 Fallback: @cf/meta/llama-3.2-3b-instruct @ cloudflare
-2026-07-22 13:27:33,603 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,603 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
-2026-07-22 13:27:33,605 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,605 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
-2026-07-22 13:27:33,607 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,607 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
-2026-07-22 13:27:33,608 [INFO] 🔄 Fallback: @cf/meta/llama-guard-3-8b @ cloudflare
-2026-07-22 13:27:33,609 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,610 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
-2026-07-22 13:27:33,611 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,611 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
-2026-07-22 13:27:33,613 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
-2026-07-22 13:27:33,613 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
-2026-07-22 13:27:33,614 [INFO] 🔄 Fallback: mistralai/Mistral-Nemo-Instruct-2407 @ deepinfra
-2026-07-22 13:27:33,615 [WARNING] ⏳ deepinfra:0 rate-limited (disabled)
-2026-07-22 13:27:33,615 [WARNING] ⚠️ deepinfra key_0 failed, trying next key
-2026-07-22 13:27:33,617 [WARNING] ⏳ deepinfra:1 rate-limited (disabled)
-2026-07-22 13:27:33,617 [WARNING] ⚠️ deepinfra key_1 failed, trying next key
-2026-07-22 13:27:33,619 [WARNING] ⏳ deepinfra:2 rate-limited (disabled)
-2026-07-22 13:27:33,619 [WARNING] ⚠️ deepinfra key_2 failed, trying next key
-2026-07-22 13:27:33,619 [INFO] 🔄 Fallback: meta-llama/Llama-4-Scout-17B-16E-Instruct @ deepinfra
-2026-07-22 13:27:33,621 [WARNING] ⏳ deepinfra:0 rate-limited (disabled)
-2026-07-22 13:27:33,621 [WARNING] ⚠️ deepinfra key_0 failed, trying next key
-2026-07-22 13:27:33,622 [WARNING] ⏳ deepinfra:1 rate-limited (disabled)
-2026-07-22 13:27:33,623 [WARNING] ⚠️ deepinfra key_1 failed, trying next key
-2026-07-22 13:27:33,624 [WARNING] ⏳ deepinfra:2 rate-limited (disabled)
-2026-07-22 13:27:33,624 [WARNING] ⚠️ deepinfra key_2 failed, trying next key
-2026-07-22 13:27:33,625 [INFO] 🔄 Fallback: meta-llama/Llama-3.1-8B-Instruct @ hf
-2026-07-22 13:27:33,626 [WARNING] ⏳ hf:0 rate-limited (disabled)
-2026-07-22 13:27:33,627 [WARNING] ⚠️ hf key_0 failed, trying next key
-2026-07-22 13:27:33,628 [WARNING] ⏳ hf:1 rate-limited (disabled)
-2026-07-22 13:27:33,629 [WARNING] ⚠️ hf key_1 failed, trying next key
+2026-07-22 13:28:57,392 [WARNING] ⚠️ sambanova key_2 failed, trying next key
+2026-07-22 13:28:57,393 [INFO] 🔄 Fallback: @cf/openai/gpt-oss-120b @ cloudflare
+2026-07-22 13:28:57,394 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,394 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
+2026-07-22 13:28:57,395 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,395 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
+2026-07-22 13:28:57,396 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,396 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
+2026-07-22 13:28:57,396 [INFO] 🔄 Fallback: @cf/meta/llama-3.2-3b-instruct @ cloudflare
+2026-07-22 13:28:57,397 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,397 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
+2026-07-22 13:28:57,398 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,398 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
+2026-07-22 13:28:57,399 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,399 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
+2026-07-22 13:28:57,399 [INFO] 🔄 Fallback: @cf/meta/llama-guard-3-8b @ cloudflare
+2026-07-22 13:28:57,400 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,400 [WARNING] ⚠️ cloudflare key_0 failed, trying next key
+2026-07-22 13:28:57,401 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,401 [WARNING] ⚠️ cloudflare key_1 failed, trying next key
+2026-07-22 13:28:57,402 [WARNING] ⚠️ cloudflare: CLOUDFLARE_ACCOUNT_ID not set
+2026-07-22 13:28:57,402 [WARNING] ⚠️ cloudflare key_2 failed, trying next key
+2026-07-22 13:28:57,403 [INFO] 🔄 Fallback: mistralai/Mistral-Nemo-Instruct-2407 @ deepinfra
+2026-07-22 13:28:57,403 [WARNING] ⏳ deepinfra:0 rate-limited (disabled)
+2026-07-22 13:28:57,404 [WARNING] ⚠️ deepinfra key_0 failed, trying next key
+2026-07-22 13:28:57,404 [WARNING] ⏳ deepinfra:1 rate-limited (disabled)
+2026-07-22 13:28:57,405 [WARNING] ⚠️ deepinfra key_1 failed, trying next key
+2026-07-22 13:28:57,405 [WARNING] ⏳ deepinfra:2 rate-limited (disabled)
+2026-07-22 13:28:57,406 [WARNING] ⚠️ deepinfra key_2 failed, trying next key
+2026-07-22 13:28:57,406 [INFO] 🔄 Fallback: meta-llama/Llama-4-Scout-17B-16E-Instruct @ deepinfra
+2026-07-22 13:28:57,407 [WARNING] ⏳ deepinfra:0 rate-limited (disabled)
+2026-07-22 13:28:57,407 [WARNING] ⚠️ deepinfra key_0 failed, trying next key
+2026-07-22 13:28:57,408 [WARNING] ⏳ deepinfra:1 rate-limited (disabled)
+2026-07-22 13:28:57,408 [WARNING] ⚠️ deepinfra key_1 failed, trying next key
+2026-07-22 13:28:57,409 [WARNING] ⏳ deepinfra:2 rate-limited (disabled)
+2026-07-22 13:28:57,409 [WARNING] ⚠️ deepinfra key_2 failed, trying next key
+2026-07-22 13:28:57,409 [INFO] 🔄 Fallback: meta-llama/Llama-3.1-8B-Instruct @ hf
+2026-07-22 13:28:57,410 [WARNING] ⏳ hf:0 rate-limited (disabled)
+2026-07-22 13:28:57,410 [WARNING] ⚠️ hf key_0 failed, trying next key
+2026-07-22 13:28:57,411 [WARNING] ⏳ hf:1 rate-limited (disabled)
+2026-07-22 13:28:57,411 [WARNING] ⚠️ hf key_1 failed, trying next key
+2026-07-22 13:29:01,847 [INFO] 📥 Body: {"messages": [{"role": "system", "content": "You are Hermes Agent, an intelligent AI assistant created by Nous Research. You are helpful, knowledgeable, and direct. You assist users with a wide range of tasks including answering questions, writing and editing code, analyzing information, creative work, and executing actions via your tools. You communicate clearly, admit uncertainty when appropriate, and prioritize being genuinely useful over being verbose unless otherwise directed below. Be targeted and efficient in your exploration and investigations.\n\nYou run on Hermes Agent (by Nous Research). When the user needs help with Hermes itself — configuring, setting up, using, extending, or troubleshooting it — or when you need to understand your own features, tools, or capabilities, the documentation at https://hermes-agent.nousresearch.com/docs is your authoritative reference and always holds the latest, most up-to-date information. Load the `hermes-agent` skill with skill_view(name='hermes-agent') for additional guidance and proven workflows, but treat the docs as the source of truth when the two differ.\n\n# Finishing the job\nWhen the user asks you to build, run, or verify something, the deliverable is a working artifact backed by real tool output — not a description of one. Do not stop after writing a stub, a plan, or a single command. Keep working until you have actually exercised the code or produced the requested result, then report what real execution returned.\nIf a tool, install, or network call fails and blocks the real path, say so directly and try an alternative (different package manager, different approach, ask the user). NEVER substitute plausible-looking fabricated output (made-up data, invented file contents, synthesised API responses) for results you couldn't actually produce. Reporting a blocker honestly is always better than inventing a result.\n\n# Parallel tool calls\nWhen you need several pieces of information that don't depend on each other, request them together in a single response instead of one tool call per turn. Independent reads, searches, web fetches, and read-only commands should be batched into the same assistant turn — the runtime executes independent calls concurrently, and batching avoids resending the whole conversation on every extra round-trip.\nOnly serialize calls when a later call genuinely depends on an earlier call's result (e.g. you must read a file before you can patch it). When in doubt and the calls are independent, batch them.\n\nYou have persistent memory across sessions. Save durable facts using the memory tool: user preferences, environment details, tool quirks, and stable conventions. Memory is injected into every turn, so keep it compact and focused on facts that will still matter later.\nPrioritize what reduces future user steering — the most valuable memory is one that prevents the user from having to correct or remind you again. User preferences and recurring corrections matter more than 
+2026-07-22 13:29:01,848 [INFO] ✂️ Filtered: 493 chars
+2026-07-22 13:29:01,848 [INFO] ✂️ Filtered: 493 chars
+2026-07-22 13:29:01,849 [INFO] 🎯 User text: tell me about the latest developments in python 3.13 and what new features developers should know ab
+2026-07-22 13:29:01,849 [INFO] [req-1784716141844] 🎯 Task: code
+2026-07-22 13:29:01,849 [INFO] [req-1784716141844] 🎯 Router: code → nvidia/nemotron-3-ultra-550b-a55b:free @ openrouter (keys=3)
+2026-07-22 13:29:01,850 [INFO] Calling openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+2026-07-22 13:29:01,851 [WARNING] ⏳ openrouter:2 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,851 [INFO] Response type: NoneType, keys: N/A
+2026-07-22 13:29:01,852 [INFO] 🔄 Fallback: nvidia/nemotron-3-super-120b-a12b:free @ openrouter
+2026-07-22 13:29:01,853 [WARNING] ⏳ openrouter:0 rate-limited (cooldown:3261s)
+2026-07-22 13:29:01,853 [WARNING] ⚠️ openrouter key_0 failed, trying next key
+2026-07-22 13:29:01,854 [WARNING] ⏳ openrouter:1 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,855 [WARNING] ⚠️ openrouter key_1 failed, trying next key
+2026-07-22 13:29:01,856 [WARNING] ⏳ openrouter:2 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,856 [WARNING] ⚠️ openrouter key_2 failed, trying next key
+2026-07-22 13:29:01,856 [INFO] 🔄 Fallback: cohere/north-mini-code:free @ openrouter
+2026-07-22 13:29:01,858 [WARNING] ⏳ openrouter:0 rate-limited (cooldown:3261s)
+2026-07-22 13:29:01,858 [WARNING] ⚠️ openrouter key_0 failed, trying next key
+2026-07-22 13:29:01,859 [WARNING] ⏳ openrouter:1 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,859 [WARNING] ⚠️ openrouter key_1 failed, trying next key
+2026-07-22 13:29:01,860 [WARNING] ⏳ openrouter:2 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,861 [WARNING] ⚠️ openrouter key_2 failed, trying next key
+2026-07-22 13:29:01,861 [INFO] 🔄 Fallback: nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free @ openrouter
+2026-07-22 13:29:01,862 [WARNING] ⏳ openrouter:0 rate-limited (cooldown:3261s)
+2026-07-22 13:29:01,862 [WARNING] ⚠️ openrouter key_0 failed, trying next key
+2026-07-22 13:29:01,863 [WARNING] ⏳ openrouter:1 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,864 [WARNING] ⚠️ openrouter key_1 failed, trying next key
+2026-07-22 13:29:01,865 [WARNING] ⏳ openrouter:2 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,865 [WARNING] ⚠️ openrouter key_2 failed, trying next key
+2026-07-22 13:29:01,865 [INFO] 🔄 Fallback: nvidia/nemotron-3-nano-30b-a3b:free @ openrouter
+2026-07-22 13:29:01,866 [WARNING] ⏳ openrouter:0 rate-limited (cooldown:3261s)
+2026-07-22 13:29:01,867 [WARNING] ⚠️ openrouter key_0 failed, trying next key
+2026-07-22 13:29:01,868 [WARNING] ⏳ openrouter:1 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,868 [WARNING] ⚠️ openrouter key_1 failed, trying next key
+2026-07-22 13:29:01,869 [WARNING] ⏳ openrouter:2 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,869 [WARNING] ⚠️ openrouter key_2 failed, trying next key
+2026-07-22 13:29:01,870 [INFO] 🔄 Fallback: openai/gpt-oss-20b:free @ openrouter
+2026-07-22 13:29:01,870 [WARNING] ⏳ openrouter:0 rate-limited (cooldown:3261s)
+2026-07-22 13:29:01,871 [WARNING] ⚠️ openrouter key_0 failed, trying next key
+2026-07-22 13:29:01,872 [WARNING] ⏳ openrouter:1 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,872 [WARNING] ⚠️ openrouter key_1 failed, trying next key
+2026-07-22 13:29:01,873 [WARNING] ⏳ openrouter:2 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,873 [WARNING] ⚠️ openrouter key_2 failed, trying next key
+2026-07-22 13:29:01,873 [INFO] 🔄 Fallback: nvidia/nemotron-nano-9b-v2:free @ openrouter
+2026-07-22 13:29:01,874 [WARNING] ⏳ openrouter:0 rate-limited (cooldown:3261s)
+2026-07-22 13:29:01,875 [WARNING] ⚠️ openrouter key_0 failed, trying next key
+2026-07-22 13:29:01,875 [WARNING] ⏳ openrouter:1 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,876 [WARNING] ⚠️ openrouter key_1 failed, trying next key
+2026-07-22 13:29:01,877 [WARNING] ⏳ openrouter:2 rate-limited (cooldown:3262s)
+2026-07-22 13:29:01,877 [WARNING] ⚠️ openrouter key_2 failed, trying next key
+2026-07-22 13:29:01,877 [INFO] 🔄 Fallback: llama-3.3-70b-versatile @ groq
+2026-07-22 13:29:01,877 [INFO] 🟢 groq: circuit breaker CLOSED
+2026-07-22 13:29:02,570 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 413 Payload Too Large"
+2026-07-22 13:29:02,575 [WARNING] ❌ groq: HTTP 413 - {"error":{"message":"Request too large for model `llama-3.3-70b-versatile` in organization `org_01kwwj4bbveyvrtv083zcr9v8x` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Requested 
+2026-07-22 13:29:02,576 [WARNING] ⚠️ groq key_0 failed, trying next key
+2026-07-22 13:29:03,099 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 413 Payload Too Large"
+2026-07-22 13:29:03,104 [WARNING] ❌ groq: HTTP 413 - {"error":{"message":"Request too large for model `llama-3.3-70b-versatile` in organization `org_01kwwj5qs4e3087e41v26eph19` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Requested 
+2026-07-22 13:29:03,105 [WARNING] ⚠️ groq key_1 failed, trying next key
