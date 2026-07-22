@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk ls *)",
+      "Bash(rtk git *)",
+      "Bash(rtk read *)",
+      "Bash(rtk wc *)",
+      "WebFetch(domain:hermes-agent.nousresearch.com)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "Bash(rtk grep *)",
+      "Bash(rtk curl *)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(python -c \"import json;d=json.load\\(open\\('rel019.json'\\)\\);print\\(d['name']\\);print\\(len\\(d['body']\\)\\);open\\('rel019.md','w',encoding='utf-8'\\).write\\(d['body']\\)\")",
+      "Bash(python -m py_compile consilium/*.py consilium/providers/*.py agents/parser/*.py agents/parser/*/*.py)",
+      "Bash(awk 'NR>=12000 && NR<=13040 && /^ *\\(async \\)?def /{print NR\": \"$0}' hermes_code_run.py)",
+      "Bash(awk 'NR>=19900 && NR<=21055 && /^ *\\(async \\)?def /{print NR\": \"$0}' hermes_code_run.py)",
+      "Bash(awk 'NR>=19000 && NR<=19870 && /^ *\\(async \\)?def /{print NR\": \"$0}' hermes_code_run.py)",
+      "Bash(awk 'NR<=21060 && /^class /{print NR\": \"$0}' hermes_code_run.py)",
+      "Bash(python -c ' *)",
+      "Bash(python probe.py)",
+      "Bash(awk 'NR>=11000 && NR<=13036 && /def /{print NR\": \"$0}' hermes_code_run.py)",
+      "Bash(PYTHONIOENCODING=utf-8 PYTHONUTF8=1 python probe.py)",
+      "Bash(awk 'NR>=20700 && NR<=21051 && /def /{print NR\": \"$0}' hermes_code_run.py)",
+      "Bash(awk 'NR>=11956 && NR<=13036 && /except .*as |response = |agent_result = /{print NR\": \"$0}' hermes_code_run.py)",
+      "Bash(git checkout *)",
+      "Bash(grep -vE \"^\\\\-\\\\-$\")",
+      "Bash(python -m py_compile consilium/*.py consilium/providers/*.py)",
+      "Bash(PYTHONIOENCODING=utf-8 PYTHONUTF8=1 python -c ' *)",
+      "Bash(PYTHONIOENCODING=utf-8 PYTHONUTF8=1 python consilium/tests/test_consilium.py)",
+      "Bash(python -c \"import fastapi, httpx, dotenv; print\\('fastapi', fastapi.__version__\\); print\\('httpx', httpx.__version__\\)\")",
+      "Bash(rtk pip *)",
+      "Bash(PYTHONIOENCODING=utf-8 PYTHONUTF8=1 python tests/test_tools_passthrough.py)",
+      "Bash(python -c \"import yaml,sys; d=yaml.safe_load\\(open\\('../config.yaml',encoding='utf-8'\\)\\); print\\('config.yaml валиден'\\); print\\('api_mode:', d['model']['api_mode']\\); print\\('max_tokens:', d['model'].get\\('max_tokens'\\)\\); print\\('providers:', list\\(d.get\\('providers',{}\\).keys\\(\\)\\)\\)\")",
+      "Bash(cd \"C:/AndroidStudioProjects/hermes\" && rm -f consilium/*.db consilium/fallback_chain.json && rm -rf consilium/__pycache__ consilium/providers/__pycache__ consilium/tests/__pycache__ && rtk git status --short)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
