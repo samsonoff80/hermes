@@ -74,6 +74,48 @@ _GATEWAY_RAW_TEXT_PLATFORMS = frozenset({"local", "api_server", "webhook", "msgr
 `error code:` / `http NNN` / `invalid api key`, **и при этом** не содержит
 маркеров auth / policy / rate-limit (иначе сработали бы другие ветки).
 
+### Вторая, независимая причина того же симптома
+
+Свежий `logs/consilium_latest.log` (22.07, 08:20) показывает состояние, в котором
+система **заблокировала сама себя**:
+
+```
+[WARNING] ⏳ openrouter:0 rate-limited (cooldown:21519s)   ← ~6 часов
+[WARNING] 🔴 groq: circuit breaker blocked                  (все 3 ключа)
+[WARNING] 🔴 github: circuit breaker blocked                (все 3 ключа)
+[WARNING] ⏳ sambanova:0 rate-limited (disabled)
+[WARNING] ⏳ sambanova:1 rate-limited (cooldown:20752s)
+[WARNING] ⏳ sambanova:2 rate-limited (cooldown:20850s)
+```
+
+Все провайдеры одновременно недоступны → `HTTP 503` → у Hermes это ошибка
+вида `Error code: 503` → срабатывает та же подмена текста.
+
+Причины залипания устранены в этом аудите:
+- `mark_402` отключал ключ **навсегда**, без возможности восстановления;
+- успешный запрос не сбрасывал cooldown (`mark_success` не вызывался);
+- circuit breaker с порогом 10 не размыкался обратно при успехе на другом ключе;
+- эскалация доходила до 6 часов и там оставалась.
+
+Теперь: успешный ответ сбрасывает `consecutive_429` и cooldown
+(`rate_limiter.mark_success`), circuit breaker закрывается при первом успехе,
+а заблокированные провайдеры не исчезают из цепочки — уходят в хвост как
+последний шанс.
+
+### Третье подтверждение: сломанный SQL статистики
+
+В том же логе на каждый запрос:
+
+```
+[WARNING] Stats failed: Incorrect number of bindings supplied.
+          The current statement uses 7, and there are 6 supplied.
+```
+
+То есть статистика провайдеров **не записывалась вообще** — при том, что
+`AUDIT_REPORT.md` от 21.07 отмечал эту ошибку как исправленную. В версии
+аудита `provider_stats.py` переписан, SQL заменён на `executemany` с
+батчевым сбросом.
+
 ### Подтверждение из логов проекта
 
 В `logs/consilium_responses.log` все 5 успешных ответов:
@@ -168,6 +210,45 @@ _GATEWAY_RAW_TEXT_PLATFORMS = frozenset({"local", "api_server", "webhook", "msgr
    возвращает: (True, None)  тип tuple
    как bool: True  ← непустой кортеж ВСЕГДА истинен
 ```
+
+### Найдено в параллельной ветке main (PR #4)
+
+Во время аудита в `main` влили независимые правки тех же файлов. Две из них
+содержат дефекты — в версии аудита они отсутствуют, файлы переписаны целиком.
+
+**1. Нарушение отступов в `fallback_manager.build_chains()`:**
+
+```python
+            for model in p.get("models", []):
+                ...
+                dps = provider_stats.get_dynamic_score(name) if provider_stats else 0
+            all_entries.append({          # ← ВНЕ цикла по моделям
+                    "provider": name,
+                    "model": model,       # ← значение последней итерации
+```
+
+`all_entries.append()` оказался на уровень выше цикла `for model`. Следствия:
+- в цепочку попадёт **только последняя модель** каждого провайдера;
+- при пустом списке моделей `model`, `tags`, `dps` не определены →
+  **`UnboundLocalError`** при старте.
+
+**2. Эскалация cooldown в `rate_limiter.mark_429()`:**
+
+```python
+        prev = self._get_consecutive_429(provider, key_index)   # SELECT на каждый 429
+        step = min(prev, len(COOLDOWN_STEPS) - 1)
+        cooldown = time.time() + COOLDOWN_STEPS[step]
+        self._save_state(...)
+        logger.warning(f"... cooldown {COOLDOWN_STEPS[0]}s")     # ← всегда 90s в логе
+```
+
+Логика верна, но лог всегда печатает `COOLDOWN_STEPS[0]` вместо фактического
+шага — при отладке это вводит в заблуждение (в логе «90s», в базе 6 часов).
+Плюс отдельный `SELECT` к SQLite на каждый 429.
+
+**Принято из main без изменений:** `load_dotenv` в `providers/__init__.py`
+(решает расхождение путей к `.env`), порядок моделей `groq`, правило
+`.gitignore` для `CONSILIUM_FIX_REPORT.md`.
 
 ---
 
