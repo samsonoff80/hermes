@@ -1,0 +1,246 @@
+"""Consilium Providers — все 26 провайдеров из FreeLLMAPI.
+Каждый провайдер: name, base_url, key_prefix, models, format, keyless, enabled.
+Если в .env нет ключей — enabled=False. Если ключ начинается с 'proxy:' — идёт через прокси."""
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Загружаем .env из домашней директории
+load_dotenv(Path.home() / ".hermes" / ".env")
+
+def _load_keys(prefix: str) -> list[str]:
+    """Загружает ключи PREFIX_1, PREFIX_2, PREFIX_3 из окружения."""
+    keys = []
+    for i in range(1, 4):
+        k = os.getenv(f"{prefix}_{i}", "").strip()
+        if k:
+            keys.append(k)
+    return keys
+
+def _provider_enabled(keys: list[str], keyless: bool) -> bool:
+    """Провайдер включён, если есть ключи или он keyless."""
+    return keyless or bool(keys)
+
+# ============================================================
+# ВСЕ 26 ПРОВАЙДЕРОВ ИЗ FREELLMAPИ (порядок = приоритет)
+# ============================================================
+RAW_PROVIDERS = [
+    # --- Рабочие (есть ключи) ---
+    {
+        "name": "openrouter",
+        "base_url": "https://openrouter.ai/api/v1",
+        "key_prefix": "OPENROUTER_API_KEY",
+        "models": ["qwen/qwen3-coder:free", "nvidia/nemotron-3-ultra-550b-a55b:free", "nvidia/nemotron-3-super-120b-a12b:free", "tencent/hy3:free", "poolside/laguna-xs-2.1:free", "poolside/laguna-m.1:free", "google/gemma-4-26b-a4b-it:free", "google/gemma-4-31b-it:free", "qwen/qwen3-next-80b-a3b-instruct:free", "cohere/north-mini-code:free", "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free", "nvidia/nemotron-3-nano-30b-a3b:free", "openai/gpt-oss-20b:free", "meta-llama/llama-3.3-70b-instruct:free", "meta-llama/llama-3.2-3b-instruct:free", "nousresearch/hermes-3-llama-3.1-405b:free", "nvidia/nemotron-3.5-content-safety:free", "nvidia/nemotron-nano-12b-v2-vl:free", "nvidia/nemotron-nano-9b-v2:free"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "groq",
+        "base_url": "https://api.groq.com/openai/v1",
+        "key_prefix": "GROQ_API_KEY",
+        "models": ["meta-llama/llama-4-scout-17b-16e-instruct", "meta-llama/llama-prompt-guard-2-86m", "llama-3.3-70b-versatile", "llama-3.1-8b-instant", "meta-llama/llama-prompt-guard-2-22m"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "github",
+        "base_url": "https://models.github.ai/inference",  # ИСПРАВЛЕНО
+        "key_prefix": "GITHUB_TOKEN",
+        "models": ["gpt-4o-mini"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "mistral",
+        "base_url": "https://api.mistral.ai/v1",
+        "key_prefix": "MISTRAL_API_KEY",
+        "models": ["mistral-large-latest"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "cloudflare",
+        "base_url": "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run",
+        "key_prefix": "CLOUDFLARE_API_KEY",
+        "models": ["@cf/meta/llama-3.2-3b-instruct", "@cf/meta/llama-3.1-8b-instruct"],
+        "format": "cloudflare",
+        "keyless": False,
+    },
+    {
+        "name": "sambanova",
+        "base_url": "https://api.sambanova.ai/v1",
+        "key_prefix": "SAMBANOVA_API_KEY",
+        "models": ["DeepSeek-V3.1", "DeepSeek-V3.2", "Meta-Llama-3.3-70B-Instruct", "MiniMax-M2.7", "gemma-4-31B-it", "gpt-oss-120b"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "hf",
+        "base_url": "https://router.huggingface.co/v1",  # ИСПРАВЛЕНО
+        "key_prefix": "HF_TOKEN",
+        "models": ["thinkingmachines/Inkling", "prism-ml/Ternary-Bonsai-27B-gguf", "zai-org/GLM-5.2", "google/gemma-4-31B-it", "moonshotai/Kimi-K2.7-Code", "Qwen/Qwen3.6-35B-A3B", "Qwen/Qwen3.6-27B", "deepseek-ai/DeepSeek-V4-Pro", "deepseek-ai/DeepSeek-V4-Flash", "deepreinforce-ai/Ornith-1.0-35B", "meta-llama/Llama-3.1-8B-Instruct", "google/gemma-4-26B-A4B-it", "openai/gpt-oss-20b", "Qwen/Qwen3.5-9B", "openai/gpt-oss-120b", "MiniMaxAI/MiniMax-M3", "moonshotai/Kimi-K2.6", "inclusionAI/Ling-2.6-1T", "zai-org/GLM-5.2-FP8", "Qwen/Qwen3-Coder-Next", "prism-ml/Ternary-Bonsai-27B-AWQ-4bit", "meta-llama/Llama-3.3-70B-Instruct", "deepseek-ai/DeepSeek-R1", "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16", "Qwen/Qwen3-Coder-30B-A3B-Instruct", "Qwen/Qwen3-14B", "google/gemma-3-4b-it", "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4", "Qwen/Qwen3-8B", "moonshotai/Kimi-K2.5", "zai-org/GLM-4.7-Flash", "Qwen/Qwen3-32B", "Qwen/Qwen3.5-35B-A3B", "XiaomiMiMo/MiMo-V2.5-Pro", "Qwen/Qwen2.5-Coder-32B-Instruct", "meta-llama/Llama-4-Scout-17B-16E-Instruct", "stepfun-ai/Step-3.7-Flash", "deepreinforce-ai/Ornith-1.0-35B-FP8", "speakleash/Bielik-11B-v3.0-Instruct", "moonshotai/Kimi-K2-Instruct-0905", "google/gemma-3-27b-it", "microsoft/phi-4", "meta-llama/Llama-Guard-4-12B", "Qwen/Qwen3.5-27B", "Qwen/Qwen2.5-Coder-7B-Instruct", "google/gemma-3-12b-it", "moonshotai/Kimi-K2-Instruct", "Qwen/Qwen2.5-7B-Instruct", "CohereLabs/tiny-aya-global", "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B", "Qwen/Qwen3-Coder-480B-A35B-Instruct", "zai-org/GLM-4.5-Air", "zai-org/GLM-5", "Qwen/Qwen3-VL-235B-A22B-Instruct", "Qwen/Qwen3-4B-Instruct-2507", "Qwen/Qwen3-Next-80B-A3B-Instruct", "Qwen/Qwen3-4B-Thinking-2507", "zai-org/GLM-4.6V-Flash", "openai/gpt-oss-safeguard-20b", "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B", "Qwen/Qwen3-VL-30B-A3B-Instruct", "deepseek-ai/DeepSeek-V3.1", "zai-org/GLM-5.1", "Qwen/Qwen3.5-397B-A17B", "stepfun-ai/Step-3.5-Flash", "deepseek-ai/DeepSeek-R1-0528", "swiss-ai/Apertus-8B-Instruct-2509", "MiniMaxAI/MiniMax-M2.7", "Qwen/Qwen2.5-VL-72B-Instruct", "MiniMaxAI/MiniMax-M2.5", "MiniMaxAI/MiniMax-M1-80k", "utter-project/EuroLLM-22B-Instruct-2512", "Qwen/Qwen3.5-122B-A10B", "deepseek-ai/DeepSeek-V3.2-Exp", "zai-org/GLM-4.7", "MiniMaxAI/MiniMax-M2.1", "zai-org/GLM-5.1-FP8", "zai-org/GLM-4.5", "baidu/ERNIE-4.5-VL-424B-A47B-Base-PT", "deepseek-ai/DeepSeek-V3-0324", "zai-org/GLM-4.6-FP8", "deepcogito/cogito-671b-v2.1", "deepseek-ai/DeepSeek-V3", "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "zai-org/GLM-4.6", "deepcogito/cogito-671b-v2.1-FP8", "Qwen/Qwen3-235B-A22B-Thinking-2507", "zai-org/GLM-4.5V", "zai-org/GLM-4.7-FP8", "zai-org/GLM-4.5V-FP8", "deepseek-ai/DeepSeek-V3.1-Terminus", "Qwen/Qwen3-VL-235B-A22B-Thinking", "Qwen/Qwen3-235B-A22B-Instruct-2507", "zai-org/GLM-4.6V", "deepseek-ai/DeepSeek-V3.2", "zai-org/AutoGLM-Phone-9B-Multilingual", "alpindale/WizardLM-2-8x22B", "zai-org/GLM-4.6V-FP8", "CohereLabs/c4ai-command-r-08-2024", "CohereLabs/aya-vision-32b", "Sao10K/L3-8B-Stheno-v3.2", "CohereLabs/aya-expanse-32b", "CohereLabs/command-a-vision-07-2025", "Sao10K/L3-8B-Lunaris-v1", "CohereLabs/c4ai-command-r7b-12-2024", "aisingapore/Gemma-SEA-LION-v4-27B-IT", "Qwen/Qwen2.5-72B-Instruct", "CohereLabs/c4ai-command-r7b-arabic-02-2025", "swiss-ai/Apertus-70B-Instruct-2509", "deepseek-ai/DeepSeek-R1-Distill-Llama-70B", "CohereLabs/c4ai-command-a-03-2025", "aisingapore/Qwen-SEA-LION-v4-32B-IT", "zai-org/GLM-4-32B-0414", "CohereLabs/command-a-reasoning-08-2025", "allenai/Olmo-3-7B-Instruct", "Qwen/Qwen3-235B-A22B", "CohereLabs/command-a-translate-08-2025", "Qwen/Qwen2.5-Coder-3B-Instruct", "MiniMaxAI/MiniMax-M2", "CohereLabs/tiny-aya-water", "google/gemma-3n-E4B-it", "deepseek-ai/DeepSeek-R1-Distill-Llama-8B", "CohereLabs/tiny-aya-earth", "pearl-ai/Gemma-4-31B-it-pearl", "CohereLabs/tiny-aya-fire"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "pollinations",
+        "base_url": "https://text.pollinations.ai/openai/v1",  # ИСПРАВЛЕНО
+        "key_prefix": "POLLINATIONS",
+        "models": ["openai"],
+        "format": "openai",
+        "keyless": True,  # keyless
+    },
+    {
+        "name": "ovh",
+        "base_url": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",  # ИСПРАВЛЕНО
+        "key_prefix": "OVH",
+        "models": ["Meta-Llama-3.3-70B-Instruct"],
+        "format": "openai",
+        "keyless": True,  # keyless
+    },
+    {
+        "name": "kilo",
+        "base_url": "https://api.kilo.ai/api/gateway/v1",  # ИСПРАВЛЕНО
+        "key_prefix": "KILO",
+        "models": ["kilo-auto/free"],
+        "format": "openai",
+        "keyless": True,  # keyless
+    },
+    {
+        "name": "bazaarlink",
+        "base_url": "https://bazaarlink.ai/api/v1",
+        "key_prefix": "BAZAARLINK",
+        "models": ["auto:free"],
+        "format": "openai",
+        "keyless": True,  # keyless
+    },
+    {
+        "name": "reka",
+        "base_url": "https://api.reka.ai/v1",
+        "key_prefix": "REKA_API_KEY",
+        "models": ["reka-core"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "siliconflow",
+        "base_url": "https://api.siliconflow.cn/v1",
+        "key_prefix": "SILICONFLOW_API_KEY",
+        "models": ["Qwen/Qwen2.5-7B-Instruct"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "routeway",
+        "base_url": "https://api.routeway.ai/v1",
+        "key_prefix": "ROUTEWAY_API_KEY",
+        "models": ["auto"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "ainative",
+        "base_url": "https://api.ainative.studio/v1",
+        "key_prefix": "AINATIVE_API_KEY",
+        "models": ["auto"],
+        "format": "openai",
+        "keyless": False,
+    },
+    {
+        "name": "aion",
+        "base_url": "https://api.aion.ai/v1",
+        "key_prefix": "AION_API_KEY",
+        "models": ["auto"],
+        "format": "openai",
+        "keyless": False,
+    },
+    # --- Остальные (закомментированы до получения ключей) ---
+    # {
+    #     "name": "cohere",
+    #     "base_url": "https://api.cohere.ai/v1",
+    #     "key_prefix": "COHERE_API_KEY",
+    #     "models": ["command-r-plus"],
+    #     "format": "openai",
+    #     "keyless": False,
+    # },
+    # {
+    #     "name": "aihorde",
+    #     "base_url": "https://aihorde.net/api/v1/generate/text",
+    #     "key_prefix": "AIHORDE",
+    #     "models": ["stable-tsoul-4.2b"],
+    #     "format": "aihorde",
+    #     "keyless": False,
+    # },
+    # {
+    #     "name": "llm7",
+    #     "base_url": "https://api.llm7.io/v1",
+    #     "key_prefix": "LLM7",
+    #     "models": ["gemini-2.5-flash"],
+    #     "format": "openai",
+    #     "keyless": True,
+    # },
+    # {
+    #     "name": "deepinfra",
+    #     "base_url": "https://api.deepinfra.com/v1/openai",
+    #     "key_prefix": "DEEPINFRA_API_KEY",
+    #     "models": ["meta-llama/Llama-3.3-70B-Instruct"],
+    #     "format": "openai",
+    #     "keyless": False,
+    # },
+    # {
+    #     "name": "together",
+    #     "base_url": "https://api.together.xyz/v1",
+    #     "key_prefix": "TOGETHER_API_KEY",
+    #     "models": ["meta-llama/Llama-3.3-70B-Instruct"],
+    #     "format": "openai",
+    #     "keyless": False,
+    # },
+    # {
+    #     "name": "fireworks",
+    #     "base_url": "https://api.fireworks.ai/inference/v1",
+    #     "key_prefix": "FIREWORKS_API_KEY",
+    #     "models": ["accounts/fireworks/models/llama-v3p3-70b-instruct"],
+    #     "format": "openai",
+    #     "keyless": False,
+    # },
+    # {
+    #     "name": "perplexity",
+    #     "base_url": "https://api.perplexity.ai",
+    #     "key_prefix": "PERPLEXITY_API_KEY",
+    #     "models": ["llama-3.1-sonar-large-128k-online"],
+    #     "format": "openai",
+    #     "keyless": False,
+    # },
+    # {
+    #     "name": "xai",
+    #     "base_url": "https://api.x.ai/v1",
+    #     "key_prefix": "XAI_API_KEY",
+    #     "models": ["grok-beta"],
+    #     "format": "openai",
+    #     "keyless": False,
+    # },
+    # {
+    #     "name": "nvidia",
+    #     "base_url": "https://integrate.api.nvidia.com/v1",
+    #     "key_prefix": "NVIDIA_API_KEY",
+    #     "models": ["nvidia/nemotron-3-ultra"],
+    #     "format": "openai",
+    #     "keyless": False,
+    # },
+]
+
+# Собираем итоговый список с загрузкой ключей и флагом enabled
+PROVIDERS = []
+for p in RAW_PROVIDERS:
+    keys = _load_keys(p["key_prefix"])
+    enabled = _provider_enabled(keys, p["keyless"])
+    PROVIDERS.append({
+        **p,
+        "keys": keys,
+        "enabled": enabled,
+        "key_index": 0,  # для round-robin
+        "cooldown_until": 0.0,  # для 429
+    })
+
+# Экспорт для удобства
+__all__ = ["PROVIDERS", "RAW_PROVIDERS"]

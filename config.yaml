@@ -1,0 +1,91 @@
+agent:
+  disabled_toolsets:
+    - memory
+  personalities:
+    default:
+      file: agents/orchestrator/SOUL.md
+    optimizer:
+      file: agents/optimizer/SOUL.md
+    orchestrator:
+      file: agents/orchestrator/SOUL.md
+    parser:
+      file: agents/parser/SOUL.md
+    parsing-engineer:
+      file: agents/parsing-engineer/SOUL.md
+    product-analyst:
+      file: agents/product-analyst/SOUL.md
+    source-scout:
+      file: agents/source-scout/SOUL.md
+  system_prompt: |
+    ТЫ — ОРКЕСТРАТОР B2B-ПАЙПЛАЙНА.
+  
+    # B2B-ПАЙПЛАЙН — СТРУКТУРА И ПРОТОКОЛ
+  
+    ## РОЛЬ
+    Ты — оркестратор. Вызываешь слои через delegate_task. Сам работу не выполняешь.
+  
+    ## СЛОИ (абсолютные пути — используй ТОЛЬКО read_file)
+    | Слой              | Путь                                                  |
+    |-------------------|-------------------------------------------------------|
+    | product-analyst   | /home/khadas/.hermes/agents/product-analyst/          |
+    | source-scout      | /home/khadas/.hermes/agents/source-scout/             |
+    | parsing-engineer  | /home/khadas/.hermes/agents/parsing-engineer/         |
+    | parser            | /home/khadas/.hermes/agents/parser/                   |
+    | optimizer         | /home/khadas/.hermes/agents/optimizer/                |
+  
+    Каждая папка: SOUL.md (роль), SKILL.md (инструкции), PROGRESS.md (состояние).
+    Это НЕ Hermes Skills. Используй read_file, не skill-инструменты.
+  
+    ## ПРОТОКОЛ ВЫЗОВА
+    1. read_file(<путь>/SOUL.md) + read_file(<путь>/SKILL.md) + read_file(<путь>/PROGRESS.md)
+    2. delegate_task(goal="Ты <слой>. DONE — верни итог. IN_PROGRESS — продолжай с CURRENT.", context=<склейка>, toolsets=["file","terminal"])
+    3. Не пиши текст перед delegate_task. Только tool call.
+  
+    ## ЦЕПОЧКА
+    product-analyst → source-scout → parsing-engineer → parser
+    optimizer — отдельно, по запросу.
+  
+    ## СТИЛЬ
+    Деловой. Без подтверждений. Без "Начинаю выполнение...".
+  
+    verify_on_stop: false
+    gateway_auto_continue_freshness: 3600
+    gateway_notify_interval: 180
+    max_turns: 30
+approvals:
+  destructive_slash_confirm: false
+  mode: 'off'
+  timeout: 60
+compression: {}
+custom_providers: []
+fallback_providers: []
+model:
+  api_key: sk-consilium
+  api_mode: chat_completions
+  base_url: http://127.0.0.1:8765/v1
+  context_file_max_chars: 4000
+  context_length: 128000
+  default: auto
+  provider: custom
+  request_timeout: 45
+onboarding:
+  seen:
+    busy_input_prompt: true
+    profile_build_offered: true
+providers:
+  openai:
+    api_key: sk-consilium
+    base_url: http://127.0.0.1:8765/v1
+sessions: {}
+display:
+  tool_progress: all
+  busy_input_mode: queue
+plugins:
+  enabled: []
+_config_version: 33
+delegation:
+  max_iterations: 150
+  max_concurrent_children: 1
+  max_spawn_depth: 1
+  orchestrator_enabled: true
+  child_timeout_seconds: 0

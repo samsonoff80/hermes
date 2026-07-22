@@ -1,0 +1,35 @@
+[2026-06-13 11:09:05] INFO: ============================================================
+[2026-06-13 11:09:05] INFO: 🚀 CONSILIUM PIPELINE V2 ЗАПУЩЕН
+[2026-06-13 11:09:06] INFO: ✅ Proton Proxy
+[2026-06-13 11:09:27] INFO: ⏱ Scout: 22 сек
+[2026-06-13 11:13:19] INFO: ⏱ Enricher: 231 сек
+[2026-06-13 11:13:19] INFO: ⏱ Parser: 0 сек
+[2026-06-13 11:13:40] INFO: ⏱ Matcher: 21 сек
+[2026-06-13 11:13:40] INFO: ⏱ Verifier: 0 сек
+[2026-06-13 11:13:41] INFO: ⏱ Supabase: 1 сек
+[2026-06-13 11:13:42] INFO: 🧹 Внутренняя дедупликация: 2 дублей
+[2026-06-13 11:13:42] INFO: 
+============================================================
+[2026-06-13 11:13:42] INFO: ✅ CONSILIUM PIPELINE V2 ЗАВЕРШЁН
+[2026-06-13 11:13:42] INFO: ⏱ Общее время: 276 сек (4.6 мин)
+[2026-06-13 11:13:42] INFO: 📊 Итого: 87 загружено, 2 дублей внутри базы
+[2026-06-13 11:26:58] INFO: ============================================================
+[2026-06-13 11:26:58] INFO: 🚀 CONSILIUM PIPELINE V3 (самообучающийся)
+[2026-06-13 11:26:58] INFO: ✅ Proton Proxy
+[2026-06-13 11:27:18] INFO: ⏱ Scout: 20 сек
+[2026-06-13 11:27:19] ERROR: ❌ ОШИБКА: Client.__init__() got an unexpected keyword argument 'phone'
+[2026-06-13 11:27:19] ERROR: Traceback (most recent call last):
+  File "/home/khadas/.hermes/skills/consilium/pipeline.py", line 175, in main
+    await run_pipeline(auto_improve=True)
+  File "/home/khadas/.hermes/skills/consilium/pipeline.py", line 103, in run_pipeline
+    all_clients = existing + [Client(name_clean=c.get("name_clean", ""),
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/khadas/.hermes/skills/consilium/pipeline.py", line 103, in <listcomp>
+    all_clients = existing + [Client(name_clean=c.get("name_clean", ""),
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Client.__init__() got an unexpected keyword argument 'phone'
+
+[2026-06-13 12:19:42] INFO: ============================================================
+[2026-06-13 12:19:42] INFO: 🚀 CONSILIUM PIPELINE V3 (самообучающийся)
+[2026-06-13 12:19:42] INFO: ✅ Proton Proxy
+[2026-06-13 12:20:07] INFO: ⏱ Scout: 25 сек

@@ -1,0 +1,25 @@
+{
+  "total": 200,
+  "rejected": 19,
+  "grey_zone": 162,
+  "precision": 0.0,
+  "recall": 0.0,
+  "f1": 0.0,
+  "grey_zone_rate": 0.81,
+  "reject_rate": 0.095,
+  "processing_speed": 3343.900057003225,
+  "elapsed_seconds": 0.05981040000915527,
+  "reject_reasons": {
+    "low_score:20": 7,
+    "low_score:0": 4,
+    "short_name": 2,
+    "low_score:5": 2,
+    "low_score:15": 2,
+    "exact_dedup": 1,
+    "low_score:10": 1
+  },
+  "invalid_emails": 0,
+  "invalid_phones": 0,
+  "fuzzy_overflow": 0,
+  "fuzzy_max_block": 0
+}
