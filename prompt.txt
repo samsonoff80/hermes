@@ -2,76 +2,43 @@
 https://github.com/samsonoff80/hermes
 
 Это Consilium v7.1 — LLM прокси для Hermes Agent v0.19 на VIM4 ARM64 8GB.
-ПРОЧИТАЙ README.md полностью — там архитектура, поток запроса, все фичи, статус.
+ПРОЧИТАЙ README.md — там полное описание, архитектура, статус, список исправлений.
 
 ## ЗАДАЧА
 
 ### 1. Найди причину критического бага
-Симптом: Consilium получает 200 OK от провайдера, формирует JSONResponse с choices[0].message.content, возвращает Hermes. НО Hermes пишет "Provider failed after retries".
+Consilium получает 200 OK от провайдера, возвращает валидный OpenAI JSON.
+НО Hermes v0.19 пишет "Provider failed after retries".
 
-### 2. Изучи документацию Hermes Agent v0.19
-Ссылки:
-- https://github.com/NousResearch/hermes-agent
-- https://hermes-agent.nousresearch.com/docs/
+Все 11 критических исправлений от предыдущего аудита применены.
+Логи: logs/consilium_latest.log
 
-### 3. Ключевые изменения в Hermes v0.19 (по сравнению с v0.18)
+### 2. Вопрос универсальности
+Должны ли мы подстраивать Consilium под каждую версию Hermes?
+Или есть способ сделать систему версионно-независимой?
+Как в FreeLLMAPI решена эта проблема?
 
-**Delivery-obligation ledger:** Ответы сохраняются в `state.db`. Если gateway упал между генерацией и доставкой — ответ НЕ теряется, повторно доставляется при следующем запуске.
+### 3. Проверь ВСЕ файлы на ошибки
+- Синтаксис, логика, дублирование, мёртвый код
+- Совместимость с Hermes v0.19 (документация: hermes-agent.nousresearch.com/docs)
 
-**Tool definitions fix:** Исправлена ошибка из-за которой tool definitions не передавались custom провайдерам. В v0.19 tools пробрасываются корректно.
+### 4. Ключевые изменения в Hermes v0.19
+- Delivery-obligation ledger (ответы сохраняются в state.db)
+- Tool definitions fix (tools пробрасываются)
+- Custom provider validation (/v1/models должен быть валидным)
+- Provider timeouts (новая иерархия)
+- Prompt caching, Tool-loop guardrails, Gateway hot-reload
 
-**Custom provider validation:** Эндпоинт `/v1/models` должен возвращать валидный JSON. Если возвращает ошибку — Hermes может отклонить запрос.
-
-**Provider timeouts:** Новая иерархия таймаутов: `providers.<id>.request_timeout_seconds` → `providers.<id>.models.<model>.timeout_seconds`.
-
-**Prompt caching:** Автоматическое `cache_control` с TTL 1h для Claude/OpenRouter, 5m для Qwen Cloud.
-
-**Tool-loop guardrails:** Детекция застрявших циклов tool calls с hard stops.
-
-**Gateway hot-reload:** Изменения `model.context_length` и `compression.*` применяются без рестарта.
-
-**Compression config migration:** `compression.summary_*` → `auxiliary.compression.*`.
-
-**Per-task fallback chain:** Каждая auxiliary задача может иметь свой `fallback_chain`.
-
-**Обязательные поля ответа (OpenAI Chat Completions API):**
-- `id`: строка
-- `object`: "chat.completion"
-- `created`: timestamp
-- `model`: название модели
-- `choices[0].message.role`: "assistant"
-- `choices[0].message.content`: строка или null (если есть tool_calls)
-- `choices[0].message.tool_calls[].id`: UUID
-- `choices[0].message.tool_calls[].type`: "function"
-- `choices[0].message.tool_calls[].function.name`: имя функции
-- `choices[0].message.tool_calls[].function.arguments`: JSON-строка
-- `usage`: опционально
-
-### 4. Проверь совместимость Consilium с v0.19
-- Формат JSON ответа — соответствует ли всем обязательным полям?
-- `/v1/models` — возвращает ли валидный JSON?
-- `tool_calls[].id` — UUID или наш формат `call_rescued_{index}`?
-- `content` — null или пустая строка при tool_calls?
-- `finish_reason` — "tool_calls" при наличии tool_calls?
-
-### 5. Проверь ВСЕ файлы на ошибки
-- Синтаксические, логические, дублирование, мёртвый код, утечки памяти
-
-### 6. Дай рекомендации
+### 5. Дай рекомендации
+- Что исправить в первую очередь
+- Как сделать систему универсальной (не зависящей от версии Hermes)
 
 ## ВАЖНО
-- НЕ выдумывай. Если не знаешь — спроси или запроси дополнительные файлы.
-- Проверяй факты в коде. Все выводы — с конкретными строками.
+- НЕ выдумывай. Если не знаешь — спроси или запроси файлы
+- Проверяй факты в коде
+- Ответ на русском
 
-## ФАЙЛЫ ДЛЯ АНАЛИЗА
-- consilium/consilium_server.py (~800 строк)
-- consilium/fallback_manager.py
-- consilium/rate_limiter.py
-- consilium/circuit_breaker.py
-- consilium/provider_stats.py
-- consilium/providers/*.py (12 шт)
-- config.yaml
-- logs/consilium_latest.log
-- README.md
-
-Ответ на русском.
+## ФАЙЛЫ
+consilium/consilium_server.py, fallback_manager.py, rate_limiter.py,
+circuit_breaker.py, provider_stats.py, providers/*.py, config.yaml,
+logs/consilium_latest.log, README.md
