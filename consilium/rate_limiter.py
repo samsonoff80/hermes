@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """Rate Limiter — per-key лимиты с сохранением состояния в SQLite.
 
@@ -22,7 +23,7 @@ from typing import Tuple, Optional, Dict
 logger = logging.getLogger("consilium.rate_limiter")
 
 DB_PATH = Path(__file__).parent / "rate_limits.db"
-COOLDOWN_STEPS = [90, 300, 900, 3600, 21600]
+COOLDOWN_STEPS = [30, 60, 120, 300, 600]
 
 
 class RateLimiter:
@@ -106,6 +107,13 @@ class RateLimiter:
                 return False, "disabled"
             if e["cooldown_until"] > time.time():
                 return False, f"cooldown:{int(e['cooldown_until'] - time.time())}s"
+            # Проверка RPD/TPD если заданы лимиты
+            max_rpd = int(os.getenv(f"{provider.upper()}_MAX_RPD", "0"))
+            max_tpd = int(os.getenv(f"{provider.upper()}_MAX_TPD", "0"))
+            if max_rpd > 0 and e.get("rpd", 0) >= max_rpd:
+                return False, f"rpd:{e['rpd']}/{max_rpd}"
+            if max_tpd > 0 and e.get("tpd", 0) >= max_tpd:
+                return False, f"tpd:{e['tpd']}/{max_tpd}"
         return True, None
 
     def any_key_available(self, provider: str, key_count: int) -> bool:

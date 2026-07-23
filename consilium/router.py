@@ -67,13 +67,14 @@ MIN_KEPT_CHARS = 40
 
 
 def filter_system_prompt(content: str, request_id: str = "") -> str:
-    """Простой фильтр: вырезаем всё начиная с 'You are Hermes'."""
+    """Вырезает только служебные блоки Hermes через _HERMES_BLOCKS."""
     if not content or not isinstance(content, str):
         return content
-    filtered = content.split("You are Hermes")[0].strip()
-    if not filtered:
-        filtered = content.split("You run on Hermes")[0].strip()
-    if len(filtered) < 40 and len(content) > 40:
+    filtered = content
+    for pattern in _HERMES_BLOCKS:
+        filtered = pattern.sub("", filtered)
+    filtered = re.sub(r"\n{3,}", "\n\n", filtered).strip()
+    if len(filtered) < MIN_KEPT_CHARS and len(content) > MIN_KEPT_CHARS:
         return content
     if len(filtered) != len(content):
         logger.info(f"[{request_id}] ✂️ Фильтр: {len(content)}→{len(filtered)} символов")

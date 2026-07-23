@@ -8,18 +8,19 @@
 | ОС | Ubuntu 24.04 |
 
 ## Архитектура
-Telegram → Hermes Agent v0.19 → Consilium (:8765) → Провайдеры
+Telegram → Hermes Agent v0.19 → Consilium (:8765) → 12 провайдеров
 
 ## Возможности
 - System Prompt Filter (513 символов)
 - Task Router (chat/code/search/analysis)
-- Fallback Manager (авто-цепочки из 12 провайдеров)
-- Rate Limiter (per-key, SQLite)
+- Fallback Manager (авто-цепочки, динамический DPS)
+- Rate Limiter (per-key RPM/TPM/RPD/TPD, SQLite)
 - Circuit Breaker (порог 5)
-- Provider Statistics (DPS баллы)
+- Provider Statistics (DPS баллы, адаптивный приоритет)
 - Health Checker (прогрев при старте)
 - Dashboard (веб на :8765)
-- Alerting (Telegram)
+- Alerting (лог + Telegram опционально)
+- Request ID трассировка
 
 ## Рабочие провайдеры (приоритет)
 1. groq (3 ключа) — llama-3.3-70b-versatile
@@ -27,18 +28,46 @@ Telegram → Hermes Agent v0.19 → Consilium (:8765) → Провайдеры
 3. github (3 ключа) — gpt-4o-mini, gpt-4o
 4. mistral (1 ключ) — mistral-large-latest
 5. sambanova (2 ключа) — Meta-Llama-3.3-70B-Instruct
-6. openrouter (3 ключа) — 344 модели (50 запросов/день)
+6. openrouter (3 ключа) — 344 модели
+
+## Ключи (.env)
+Формат: PREFIX_1, PREFIX_2, ... PREFIX_N (любое количество)
+401/402/403 → ключ отключается
+Прокси: если ключ начинается с 'proxy:' → через прокси
+
+## 6 Агентов B2B-пайплайна
+orchestrator → product-analyst → source-scout → parsing-engineer → parser (+ optimizer)
 
 ## Команды
+```bash
 systemctl --user restart hermes-consilium && systemctl --user restart hermes-agent
 curl -s http://127.0.0.1:8765/health
-curl -s http://127.0.0.1:8765/
+curl -s http://127.0.0.1:8765/usage/today
+curl -s http://127.0.0.1:8765/  # Dashboard
+Исправления v7.2 (23.07.2026)
+✅ /v1/models с context_length
 
-## Файлы (активные)
+✅ tool_calls UUID
+
+✅ Cloudflare экстракторы
+
+✅ alerting (лог)
+
+✅ rate_limiter rpd/tpd проверка
+
+✅ filter_system_prompt (сохраняет роль оркестратора)
+
+✅ mark_success с реальным key_index
+
+✅ COOLDOWN_STEPS уменьшены (30-600с)
+
+✅ Мусор удалён (providers_pkg, .backup, .old)
+
+⚠️ GitHub azureml — известный баг (update_all.py перезаписывает)
+
+⚠️ Hermes v0.19: 200 OK → "Provider failed" — расследуется
+
+Файлы
 consilium/consilium_server.py, fallback_manager.py, rate_limiter.py,
-circuit_breaker.py, provider_stats.py, router.py, dashboard.py,
-alerting.py, health_checker.py, update_all.py, providers/*.py,
-config.yaml, agents/*/SOUL.md
-
-## Статус (23.07.2026)
-Работает: Cloudflare 200 OK, фильтр 19641→513 символов
+circuit_breaker.py, provider_stats.py, alerting.py, router.py,
+key_encryption.py, providers/*.py, config.yaml

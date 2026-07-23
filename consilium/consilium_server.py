@@ -248,7 +248,7 @@ def rescue_inline_tool_calls(content: str, available_tool_names: set[str] | None
                             args_str = json.dumps(args, ensure_ascii=False)
                             if name and (not available_tool_names or name in available_tool_names):
                                 calls.append({
-                                    "id": f"call_rescued_{call_index}",
+                                    "id": f"call_{uuid.uuid4().hex}",
                                     "type": "function",
                                     "function": {"name": name, "arguments": args_str}
                                 })
@@ -261,7 +261,7 @@ def rescue_inline_tool_calls(content: str, available_tool_names: set[str] | None
                 
                 if name and (not available_tool_names or name in available_tool_names):
                     calls.append({
-                        "id": f"call_rescued_{call_index}",
+                        "id": f"call_{uuid.uuid4().hex}",
                         "type": "function",
                         "function": {"name": name, "arguments": args_str}
                     })
@@ -368,6 +368,25 @@ def extract_huggingface_usage(data: dict) -> Optional[dict]:
     return None
 
 def extract_huggingface_reasoning_content(data: dict) -> Optional[str]:
+    return None
+
+
+def extract_cloudflare_content(data: dict) -> Optional[str]:
+    try:
+        return (data.get("result") or {}).get("response")
+    except Exception:
+        return None
+
+def extract_cloudflare_finish_reason(data: dict) -> str:
+    return "stop"
+
+def extract_cloudflare_tool_calls(data: dict) -> Optional[list]:
+    return None
+
+def extract_cloudflare_usage(data: dict) -> Optional[dict]:
+    return None
+
+def extract_cloudflare_reasoning_content(data: dict) -> Optional[str]:
     return None
 
 def normalize_message_content(data: dict, tool_calls: Optional[list] = None, provider_format: str = "openai") -> Optional[str]:
@@ -776,7 +795,7 @@ async def list_models():
     models = []
     for p in PROVIDERS:
         for m in p["models"]:
-            models.append({"id": m, "object": "model", "owned_by": p["name"]})
+            models.append({"id": m, "object": "model", "owned_by": p["name"], "context_length": 128000})
     return {"object": "list", "data": models}
 
 @app.post("/v1/chat/completions")
