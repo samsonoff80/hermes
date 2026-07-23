@@ -38,3 +38,13 @@ fuser -k 8765/tcp 2>/dev/null; pkill -9 -f "hermes_cli.main|hermes-agent gateway
 - Hermes v0.19 не принимает ответ при 200 OK (основная проблема)
 - Telegram бот токен был в логах — скомпрометирован
 - COOLDOWN_STEPS до 6ч — всей цепочке конец
+
+
+
+
+## Статус на 2026-07-23 21:11
+- Model Registry: SQLite, 40/47 моделей
+- Fallback Manager v2: FreeLLMAPI-style
+- 10 файлов синхронизированы
+- 5/5 компилируются
+- 9 провайдеров активно

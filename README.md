@@ -55,13 +55,32 @@ alerting.py, health_checker.py, update_all.py, providers/*.py,
 config.yaml, SOUL.md, HERMES_FULL_CONTEXT.md
 
 
-## Статус (23.07.2026 16:15)
-- ✅ SOUL.md в ~/.hermes/ заменён на оркестратора (согласно докам v0.19)
-- ✅ Фильтр system prompt: 19621 → 689 символов
-- ✅ Обрезка истории: system + последнее user-сообщение
-- ✅ GitHub: models.github.ai/inference + gpt-4o-mini/gpt-4o
-- ✅ Cloudflare: только 2 chat-модели
-- ✅ record_request + реальный key_index
-- ✅ requirements.txt + .gitignore
-- ⚠️ Все провайдеры 413/401/402/429 — проблема в ключах/лимитах
-- 🔄 Передано на аудит ИИ (23.07.2026)
+
+## v7.2 (23.07.2026) — Model Registry + FreeLLMAPI Fallback
+
+### Что сделано
+- Model Registry (SQLite): классификация моделей, автоотбор (>=128K ctx, исключены embedding/audio/vision), 40/47 моделей
+- Fallback Manager v2: provider → keys → models (max 3), перебор ключей
+- Цепочки из реестра: chat 20, code 13, search 8, analysis 4
+- GitHub модели исправлены (azureml:// → gpt-4o-mini)
+- Все 5 файлов компилируются без ошибок
+- 9 провайдеров активно
+
+### Логирование
+📥 REQ → ✂️ FILTER → 🎯 ROUTER → [{id}] → provider/model → ✅/❌
+
+#
+
+## Статус на 23.07.2026 21:15
+- ✅ Model Registry: SQLite, 40/47 моделей, автоотбор >=128K ctx
+- ✅ Fallback Manager v2: FreeLLMAPI-style (provider → keys → models max 3)
+- ✅ 10 файлов синхронизированы с локальной версией
+- ✅ 5 файлов компилируются без ошибок
+- ✅ 9 провайдеров активно
+- ✅ Логирование: REQ → FILTER → ROUTER → provider/model → результат
+- ✅ GitHub модели: gpt-4o-mini, gpt-4o (не azureml)
+- ✅ api_mode: chat_completions, /v1/models с context_length
+- ✅ tool_calls UUID, content=null при tool_calls
+- ✅ Фильтр лишних полей в ответе
+- ✅ rate_limiter + circuit_breaker + OVERALL_DEADLINE
+- ⚠️ Hermes v0.19: провайдеры исчерпаны (rate limits)

@@ -30,3 +30,13 @@ agent.disabled_toolsets: [memory]
 Проверка: curl -s http://127.0.0.1:8765/health
 Usage: curl -s http://127.0.0.1:8765/usage/today
 Логи: tail -f ~/.hermes/logs/consilium.log
+
+
+
+
+## Статус на 2026-07-23 21:11
+- Model Registry: SQLite, 40/47 моделей
+- Fallback Manager v2: FreeLLMAPI-style
+- 10 файлов синхронизированы
+- 5/5 компилируются
+- 9 провайдеров активно
