@@ -819,13 +819,35 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     session_key = request.headers.get('X-Session-Key', '')
     messages = body.get("messages", [])
 
+    # Фильтр system prompt — вырезаем технические блоки Hermes
+    with open("/tmp/raw_prompt.txt", "w") as f:
+        f.write(messages[0].get("content", "") if messages else "")
+    for m in messages:
+        if m.get("role") == "system" and isinstance(m.get("content"), str):
+            # Вырезаем все блоки Hermes после нашего SOUL.md
+            # Наш контент заканчивается на "потом ответ."
+            # Всё что после — блоки Hermes (Finishing the job, Parallel tool calls, etc.)
+            cut = m["content"].find("# Finishing the job")
+            if cut == -1:
+                cut = m["content"].find("You are Hermes")
+            if cut == -1:
+                cut = m["content"].find("You run on Hermes")
+            if cut > 0:
+                m["content"] = m["content"][:cut].strip()[:2000]
+            logger.info(f"✂️ Filtered: {len(m['content'])} chars")
+
     if not messages:
         raise HTTPException(400, "Messages required")
 
-    # Фильтр: вырезаем служебные блоки Hermes, СОХРАНЯЯ роль агента.
-    for m in messages:
-        if m.get("role") == "system" and isinstance(m.get("content"), str):
-            m["content"] = filter_system_prompt(m["content"], request_id)
+    # Обрезаем историю до последних 4 сообщений (system + 3 последних)
+    # Оставляем только system + последнее user-сообщение
+    system_msgs = [m for m in messages if m.get("role") == "system"]
+    user_msgs = [m for m in messages if m.get("role") == "user"]
+    if len(messages) > 2:
+        messages = system_msgs + [user_msgs[-1]] if user_msgs else system_msgs
+        logger.info(f"✂️ History trimmed to {len(messages)} messages")
+
+    # Первый фильтр уже отработал выше
 
     model = body.get("model", "auto")
     if not model or model == "":
@@ -952,7 +974,8 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         try:
             _log_usage(target_provider["name"], target_model, None)
             circuit_breaker.record_success(target_provider["name"])
-            rate_limiter.mark_success(target_provider["name"], 0)
+            rate_limiter.mark_success(target_provider["name"], key_index)
+            rate_limiter.record_request(target_provider["name"], key_index, 0)
             provider_stats.record_success(target_provider["name"],
                                           time.time() - start_time, 0, target_model)
         except Exception as e:
@@ -1048,7 +1071,8 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             logger.warning(f"📊 usage log failed: {e}")
         try:
             circuit_breaker.record_success(target_provider["name"])
-            rate_limiter.mark_success(target_provider["name"], 0)
+            rate_limiter.mark_success(target_provider["name"], key_index)
+            rate_limiter.record_request(target_provider["name"], key_index, 0)
             provider_stats.record_success(
                 target_provider["name"], time.time() - start_time,
                 usage.get("total_tokens", 0) if usage else 0, target_model)
