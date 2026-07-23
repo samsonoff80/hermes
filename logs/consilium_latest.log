@@ -1,0 +1,100 @@
+2026-07-23 21:05:15,818 [WARNING] ❌ groq: HTTP 413 - {"error":{"message":"Request too large for model `llama-3.1-8b-instant` in organization `org_01kpnp8qacffnbvcpp6h5jbk5z` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 2125
+2026-07-23 21:05:15,819 [INFO] [req-1784829915434] → github/gpt-4o-mini
+2026-07-23 21:05:16,950 [INFO] HTTP Request: POST https://models.github.ai/inference/chat/completions "HTTP/1.1 413 Payload Too Large"
+2026-07-23 21:05:16,956 [WARNING] ❌ github: HTTP 413 - {"error":{"code":"tokens_limit_reached","message":"Request body too large for gpt-4o-mini model. Max size: 8000 tokens.","details":"Request body too large for gpt-4o-mini model. Max size: 8000 tokens.
+2026-07-23 21:05:16,958 [INFO] [req-1784829915434] → mistral/codestral-2508
+2026-07-23 21:05:17,156 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-23 21:05:17,162 [WARNING] ❌ mistral:1 401/402/403 → ключ отключён
+2026-07-23 21:05:17,177 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-23 21:05:17,178 [INFO] [req-1784829915434] → mistral/codestral-latest
+2026-07-23 21:05:17,189 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-23 21:05:17,303 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-23 21:05:17,309 [WARNING] ❌ mistral:2 401/402/403 → ключ отключён
+2026-07-23 21:05:17,318 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-23 21:05:17,320 [INFO] [req-1784829915434] → mistral/mistral-small-2603
+2026-07-23 21:05:17,331 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-23 21:05:17,442 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-23 21:05:17,448 [WARNING] ❌ mistral:0 401/402/403 → ключ отключён
+2026-07-23 21:05:17,457 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-23 21:05:17,458 [INFO] [req-1784829915434] → mistral/mistral-small-latest
+2026-07-23 21:05:17,469 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-23 21:05:17,578 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-23 21:05:17,597 [WARNING] ❌ mistral:1 401/402/403 → ключ отключён
+2026-07-23 21:05:17,608 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-23 21:05:17,609 [INFO] [req-1784829915434] → sambanova/DeepSeek-V3.1
+2026-07-23 21:05:17,617 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-23 21:05:18,582 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-23 21:05:18,594 [WARNING] ❌ sambanova:0 401/402/403 → ключ отключён
+2026-07-23 21:05:18,604 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-23 21:05:18,605 [INFO] [req-1784829915434] → sambanova/DeepSeek-V3.2
+2026-07-23 21:05:18,616 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-23 21:05:19,182 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-23 21:05:19,190 [WARNING] ❌ sambanova:1 401/402/403 → ключ отключён
+2026-07-23 21:05:19,202 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-23 21:05:19,203 [INFO] [req-1784829915434] → sambanova/Meta-Llama-3.3-70B-Instruct
+2026-07-23 21:05:19,218 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-23 21:05:19,779 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-23 21:05:19,787 [WARNING] ❌ sambanova:2 401/402/403 → ключ отключён
+2026-07-23 21:05:19,798 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-23 21:05:19,799 [INFO] [req-1784829915434] → hf/meta-llama/Llama-3.1-8B-Instruct
+2026-07-23 21:05:19,811 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-23 21:05:20,232 [INFO] HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2026-07-23 21:05:20,239 [WARNING] ❌ hf:0 401/402/403 → ключ отключён
+2026-07-23 21:05:20,249 [WARNING] ❌ hf: HTTP 402 - {"error":"You have depleted your monthly included credits. Purchase pre-paid credits to continue using Inference Providers. Alternatively, subscribe to PRO to get 20x more included usage."}
+2026-07-23 21:05:20,250 [INFO] [req-1784829915434] → cloudflare/@cf/openai/gpt-oss-120b
+2026-07-23 21:05:20,262 [WARNING] ❌ hf disabled: HTTP 402
+2026-07-23 21:05:21,188 [INFO] HTTP Request: POST https://api.cloudflare.com/client/v4/accounts/81e72882019ed0125761461c2b811af8/ai/run/@cf/openai/gpt-oss-120b "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:21,194 [WARNING] ⏳ cloudflare:0 429 → cooldown 600s
+2026-07-23 21:05:21,196 [WARNING] ❌ cloudflare: HTTP 429 - {"errors":[{"message":"AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (03dd6ca0-
+2026-07-23 21:05:21,197 [INFO] [req-1784829915434] → cloudflare/@cf/meta/llama-3.2-3b-instruct
+2026-07-23 21:05:21,370 [INFO] HTTP Request: POST https://api.cloudflare.com/client/v4/accounts/504c6baec880d113fb9e5582fa251cad/ai/run/@cf/meta/llama-3.2-3b-instruct "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:21,376 [WARNING] ⏳ cloudflare:1 429 → cooldown 600s
+2026-07-23 21:05:21,378 [WARNING] ❌ cloudflare: HTTP 429 - {"errors":[{"message":"AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (36c14fb4-
+2026-07-23 21:05:21,379 [INFO] [req-1784829915434] → cloudflare/@cf/meta/llama-guard-3-8b
+2026-07-23 21:05:21,533 [INFO] HTTP Request: POST https://api.cloudflare.com/client/v4/accounts/af4d09667af352ab2e5188929c215720/ai/run/@cf/meta/llama-guard-3-8b "HTTP/1.1 400 Bad Request"
+2026-07-23 21:05:21,538 [WARNING] ❌ cloudflare: HTTP 400 - {"errors":[{"message":"AiError: Bad input: Error: enum system not in user,assistant at '/messages/0/role' (6fe4d511-e24e-49df-a4c3-b9b58ec65e4c)","code":5006}],"success":false,"result":{},"messages":[
+2026-07-23 21:05:21,539 [INFO] [req-1784829915434] → openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+2026-07-23 21:05:21,770 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:21,778 [WARNING] ⏳ openrouter:1 429 → cooldown 600s
+2026-07-23 21:05:21,780 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-23 21:05:21,781 [INFO] [req-1784829915434] → openrouter/nvidia/nemotron-3-super-120b-a12b:free
+2026-07-23 21:05:21,914 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:21,922 [WARNING] ⏳ openrouter:2 429 → cooldown 600s
+2026-07-23 21:05:21,924 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-23 21:05:21,925 [INFO] [req-1784829915434] → openrouter/cohere/north-mini-code:free
+2026-07-23 21:05:22,087 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:22,096 [WARNING] ⏳ openrouter:0 429 → cooldown 600s
+2026-07-23 21:05:22,098 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-23 21:05:22,100 [INFO] [req-1784829915434] → openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+2026-07-23 21:05:22,226 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:22,235 [WARNING] ⏳ openrouter:1 429 → cooldown 600s
+2026-07-23 21:05:22,237 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-23 21:05:22,238 [INFO] [req-1784829915434] → openrouter/nvidia/nemotron-3-nano-30b-a3b:free
+2026-07-23 21:05:22,359 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:22,367 [WARNING] ⏳ openrouter:2 429 → cooldown 600s
+2026-07-23 21:05:22,369 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-23 21:05:22,370 [INFO] [req-1784829915434] → openrouter/openai/gpt-oss-20b:free
+2026-07-23 21:05:22,505 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:22,512 [WARNING] ⏳ openrouter:0 429 → cooldown 600s
+2026-07-23 21:05:22,514 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-23 21:05:22,515 [INFO] [req-1784829915434] → openrouter/nvidia/nemotron-nano-9b-v2:free
+2026-07-23 21:05:22,651 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-23 21:05:22,660 [WARNING] ⏳ openrouter:1 429 → cooldown 600s
+2026-07-23 21:05:22,662 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-23 21:05:22,663 [ERROR] [req-1784829915434] ❌ Все провайдеры отказали. Попытки: ['groq/llama-3.3-70b-versatile', 'groq/llama-3.1-8b-instant', 'github/gpt-4o-mini', 'mistral/codestral-2508', 'mistral/codestral-latest', 'mistral/mistral-small-2603', 'mistral/mistral-small-latest', 'sambanova/DeepSeek-V3.1', 'sambanova/DeepSeek-V3.2', 'sambanova/Meta-Llama-3.3-70B-Instruct', 'hf/meta-llama/Llama-3.1-8B-Instruct', 'cloudflare/@cf/openai/gpt-oss-120b', 'cloudflare/@cf/meta/llama-3.2-3b-instruct', 'cloudflare/@cf/meta/llama-guard-3-8b', 'openrouter/nvidia/nemotron-3-ultra-550b-a55b:free', 'openrouter/nvidia/nemotron-3-super-120b-a12b:free', 'openrouter/cohere/north-mini-code:free', 'openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', 'openrouter/nvidia/nemotron-3-nano-30b-a3b:free', 'openrouter/openai/gpt-oss-20b:free', 'openrouter/nvidia/nemotron-nano-9b-v2:free']
+2026-07-23 21:05:22,667 [CRITICAL] ⚠️ All providers are DOWN!
+2026-07-23 21:05:25,312 [INFO] 📥 Body: {"messages": [{"role": "system", "content": "# ОРКЕСТРАТОР B2B-ПАЙПЛАЙНА\nВызываю delegate_task без текста пользователю.\nСначала tool call → получил результат → потом ответ.\n\nYou run on Hermes Agent (by Nous Research). When the user needs help with Hermes itself — configuring, setting up, using, extending, or troubleshooting it — or when you need to understand your own features, tools, or capabilities, the documentation at https://hermes-agent.nousresearch.com/docs is your authoritative reference and always holds the latest, most up-to-date information. Load the `hermes-agent` skill with skill_view(name='hermes-agent') for additional guidance and proven workflows, but treat the docs as the source of truth when the two differ.\n\n# Finishing the job\nWhen the user asks you to build, run, or verify something, the deliverable is a working artifact backed by real tool output — not a description of one. Do not stop after writing a stub, a plan, or a single command. Keep working until you have actually exercised the code or produced the requested result, then report what real execution returned.\nIf a tool, install, or network call fails and blocks the real path, say so directly and try an alternative (different package manager, different approach, ask the user). NEVER substitute plausible-looking fabricated output (made-up data, invented file contents, synthesised API responses) for results you couldn't actually produce. Reporting a blocker honestly is always better than inventing a result.\n\n# Parallel tool calls\nWhen you need several pieces of information that don't depend on each other, request them together in a single response instead of one tool call per turn. Independent reads, searches, web fetches, and read-only commands should be batched into the same assistant turn — the runtime executes independent calls concurrently, and batching avoids resending the whole conversation on every extra round-trip.\nOnly serialize calls when a later call genuinely depends on an earlier call's result (e.g. you must read a file before you can patch it). When in doubt and the calls are independent, batch them.\n\nYou have persistent memory across sessions. Save durable facts using the memory tool: user preferences, environment details, tool quirks, and stable conventions. Memory is injected into every turn, so keep it compact and focused on facts that will still matter later.\nPrioritize what reduces future user steering — the most valuable memory is one that prevents the user from having to correct or remind you again. User preferences and recurring corrections matter more than procedural task details.\nDo NOT save task progress, session outcomes, completed-work logs, or temporary TODO state to memory; use session_search to recall those from past transcripts. Specifically: do not record PR numbers, issue numbers, commit SHAs, 'fixed bug X', 'submitted PR Y', 'Phase N done', file counts, or any artifact that will be stale in 7 days. If a fact will be stale
+2026-07-23 21:05:25,315 [INFO] ✂️ Filtered: 689 chars
+2026-07-23 21:05:25,316 [INFO] [req-1784829925297] 🎯 Task: code | tools: 33 | stream: True | user: 'Tell me about the latest developments in Python 3.13 and what new features devel'
+2026-07-23 21:05:25,319 [INFO] [req-1784829925297] → groq/llama-3.3-70b-versatile
+2026-07-23 21:05:25,518 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 413 Payload Too Large"
+2026-07-23 21:05:25,531 [WARNING] 📊 Сброс статистики не удался: table stats has no column named key
+2026-07-23 21:05:25,533 [WARNING] ❌ groq: HTTP 413 - {"error":{"message":"Request too large for model `llama-3.3-70b-versatile` in organization `org_01kwwj4bbveyvrtv083zcr9v8x` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Requested 
+2026-07-23 21:05:25,534 [INFO] [req-1784829925297] → groq/llama-3.1-8b-instant
+2026-07-23 21:05:25,671 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 413 Payload Too Large"
+2026-07-23 21:05:25,677 [WARNING] ❌ groq: HTTP 413 - {"error":{"message":"Request too large for model `llama-3.1-8b-instant` in organization `org_01kwwj5qs4e3087e41v26eph19` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 2125
+2026-07-23 21:05:25,679 [INFO] [req-1784829925297] → github/gpt-4o-mini

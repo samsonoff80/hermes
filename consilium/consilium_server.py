@@ -818,6 +818,10 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
 
     session_key = request.headers.get('X-Session-Key', '')
     messages = body.get("messages", [])
+    # Только system + последнее user-сообщение (остальное в PROGRESS.md)
+    system_msgs = [m for m in messages if m["role"] == "system"]
+    user_msgs = [m for m in messages if m["role"] == "user"]
+    messages = system_msgs + user_msgs[-1:]
 
     # Фильтр system prompt — вырезаем технические блоки Hermes
     with open("/tmp/raw_prompt.txt", "w") as f:
