@@ -53,3 +53,15 @@ consilium/consilium_server.py, fallback_manager.py, rate_limiter.py,
 circuit_breaker.py, provider_stats.py, router.py, dashboard.py,
 alerting.py, health_checker.py, update_all.py, providers/*.py,
 config.yaml, SOUL.md, HERMES_FULL_CONTEXT.md
+
+
+## Статус (23.07.2026 16:15)
+- ✅ SOUL.md в ~/.hermes/ заменён на оркестратора (согласно докам v0.19)
+- ✅ Фильтр system prompt: 19621 → 689 символов
+- ✅ Обрезка истории: system + последнее user-сообщение
+- ✅ GitHub: models.github.ai/inference + gpt-4o-mini/gpt-4o
+- ✅ Cloudflare: только 2 chat-модели
+- ✅ record_request + реальный key_index
+- ✅ requirements.txt + .gitignore
+- ⚠️ Все провайдеры 413/401/402/429 — проблема в ключах/лимитах
+- 🔄 Передано на аудит ИИ (23.07.2026)
