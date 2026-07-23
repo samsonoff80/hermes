@@ -1,5 +1,3 @@
-$ cat /workspace/AUDIT_REPORT.txt 2>/dev/null || echo "Файл не найден, создаю..."
-cat /workspace/AUDIT_REPORT.txt 2>/dev/null || echo "Файл не найден, создаю..."
 # AUDIT REPORT — Consilium v7.2 для Hermes Agent v0.19
 **Дата аудита:** 23 июля 2026
 **Версия системы:** Consilium v7.2, Hermes Agent v0.19
