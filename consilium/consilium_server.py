@@ -570,7 +570,7 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
                 data = resp.json()
                 usage_info = data.get("usage", {})
                 if usage_info:
-                    logger.info(f"📊 usage: {usage_info}")
+                    logger.info(f"📊 PROVIDER: {provider['name']} → {resp.status_code}, tokens={usage_info.get('total_tokens','?')}")
                 return data
             except json.JSONDecodeError as e:
                 logger.error(f"❌ {provider['name']}: Invalid JSON response: {e}, text: {resp.text[:3000]}")
@@ -812,7 +812,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     request_id = f"req-{int(start_time*1000)}"
     try:
         body = await request.json()
-        logger.info(f'📥 Body: {json.dumps(body, ensure_ascii=False)[:3000]}')
+        logger.info(f'📥 REQ: model={body.get("model","?")}, msgs={len(body.get("messages",[]))}, stream={body.get("stream",False)}, tools={bool(body.get("tools"))}')
     except Exception:
         raise HTTPException(400, "Invalid JSON")
 
@@ -834,7 +834,7 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
                 cut = m["content"].find("You run on Hermes")
             if cut > 0:
                 m["content"] = m["content"][:cut].strip()[:2000]
-            logger.info(f"✂️ Filtered: {len(m['content'])} chars")
+            logger.info(f'✂️ FILTER: {len(m["content"])} chars')
 
     if not messages:
         raise HTTPException(400, "Messages required")
@@ -868,8 +868,8 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     task = classify_task(messages)
     user_preview = next((m.get("content", "") for m in reversed(messages)
                          if m.get("role") == "user" and isinstance(m.get("content"), str)), "")
-    logger.info(f"[{request_id}] 🎯 Task: {task} | tools: {len(tools)} | stream: {stream} "
-                f"| user: {str(user_preview)[:80]!r}")
+    logger.info(f"[{request_id}] 🎯 ROUTER: task={task} | user: {str(user_preview)[:80]!r}")
+
 
     # Гейт доступности: провайдер отсеивается, если ключи в cooldown/disabled
     # или сработал circuit breaker. Раньше rate_limiter не участвовал в выборе.
@@ -943,12 +943,14 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         provider_resp = resp
         target_provider = prov
         target_model = pmodel
+        logger.info(f'[{request_id}] ✅ SELECTED: {prov["name"]}/{pmodel}')
         break
 
     if provider_resp is None:
         logger.error(f"[{request_id}] ❌ Все провайдеры отказали. Попытки: {attempts}")
         asyncio.create_task(alert_all_providers_down())
         # Тело в OpenAI-формате ошибки: SDK на стороне Hermes ждёт именно его
+        logger.error(f"[{request_id}] ❌ ALL DEAD: {len(attempts)} attempts")
         return JSONResponse(status_code=503, content={"error": {
             "message": f"All providers failed after {len(attempts)} attempts",
             "type": "service_unavailable",

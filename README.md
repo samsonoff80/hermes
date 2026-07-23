@@ -65,3 +65,36 @@ config.yaml, SOUL.md, HERMES_FULL_CONTEXT.md
 - ✅ requirements.txt + .gitignore
 - ⚠️ Все провайдеры 413/401/402/429 — проблема в ключах/лимитах
 - 🔄 Передано на аудит ИИ (23.07.2026)
+
+
+## Статус (23.07.2026 19:45)
+### Логирование (внедрено)
+- 📥 REQ — входящий запрос
+- ✂️ FILTER — после фильтрации
+- 🎯 ROUTER — классификация задачи
+- → {provider}/{model} — каждая попытка
+- ❌ ALL DEAD — все отказали
+- ✅ DONE — успешный ответ
+
+### Исправления (15 шт)
+- FreeLLMAPI-style группировка провайдеров в fallback
+- tools проброшены в call_provider
+- circuit_breaker для HTTP-ошибок
+- rate_limiter.is_available перед вызовом
+- mark_429 escalation
+- DPS балльная система
+- content=null при tool_calls
+- tool_calls[].id → UUID
+- Фильтр лишних полей
+- /v1/models с context_length
+- GitHub модели исправлены
+- api_mode: chat_completions
+- OVERALL_DEADLINE
+- sticky_sessions очистка
+- key_indexes lock
+
+### Текущая проблема
+Fallback перебирает 24 модели OpenRouter и упирается в лимит попыток.
+Нужна перестройка цепочки на вложенную структуру (как в FreeLLMAPI).
+
+### Передано на аудит ИИ
