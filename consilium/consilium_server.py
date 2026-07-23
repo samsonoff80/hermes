@@ -21,15 +21,15 @@ from dotenv import load_dotenv
 # Импортируем провайдеры из централизованного модуля
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from providers import PROVIDERS
-from rate_limiter import rate_limiter
-from circuit_breaker import circuit_breaker
+# providers удалены — используются Hermes custom_providers
+# rate_limiter удалён — используется Hermes credential_pool_strategies
+# circuit_breaker удалён — используется Hermes retry
 from provider_stats import provider_stats
 from alerting import alert_all_providers_down, alert_circuit_breaker, alert_provider_disabled
 from dashboard import dashboard_html
 from health_checker import check_all_providers
 from router import classify_task, filter_system_prompt
-from fallback_manager import fallback
+# fallback_manager удалён — используется Hermes fallback_providers
 
 # Поля запроса, которые проксируются провайдеру без изменений.
 # tools/tool_choice — критично: без них агент Hermes не может вызывать инструменты.
