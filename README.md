@@ -71,16 +71,29 @@ config.yaml, SOUL.md, HERMES_FULL_CONTEXT.md
 
 #
 
-## Статус на 23.07.2026 21:15
-- ✅ Model Registry: SQLite, 40/47 моделей, автоотбор >=128K ctx
-- ✅ Fallback Manager v2: FreeLLMAPI-style (provider → keys → models max 3)
-- ✅ 10 файлов синхронизированы с локальной версией
-- ✅ 5 файлов компилируются без ошибок
-- ✅ 9 провайдеров активно
-- ✅ Логирование: REQ → FILTER → ROUTER → provider/model → результат
-- ✅ GitHub модели: gpt-4o-mini, gpt-4o (не azureml)
-- ✅ api_mode: chat_completions, /v1/models с context_length
-- ✅ tool_calls UUID, content=null при tool_calls
-- ✅ Фильтр лишних полей в ответе
-- ✅ rate_limiter + circuit_breaker + OVERALL_DEADLINE
-- ⚠️ Hermes v0.19: провайдеры исчерпаны (rate limits)
+
+## v8.0 (23.07.2026) — Consilium облегчённый, интеграция с Hermes v0.19
+
+### Что изменилось
+- Удалено 18 файлов (providers/, rate_limiter, fallback_manager, circuit_breaker, update_all, key_encryption, router)
+- Ротация ключей → встроенная credential_pool_strategies (round_robin, least_used)
+- Fallback цепочка → встроенная fallback_providers: в config.yaml
+- Модели провайдеров → встроенный model catalog + custom_providers:
+- Circuit breaker → встроенный retry (3 попытки) → fallback
+
+### Что осталось в Consilium (5 файлов, ~500 строк)
+- System Prompt Filter — вырезает технические блоки Hermes
+- Task Router — классифицирует запросы (chat/code/search/analysis)
+- Model Registry — фильтрует модели (>=128K, исключает embedding/audio/vision)
+- Usage Logger — SQLite статистика токенов
+- Provider Stats — мониторинг успешности и задержек
+- Dashboard — веб-интерфейс на :8765
+- Alerting — уведомления в Telegram при сбоях
+
+### Статус
+- 18 файлов удалено (экономия ~1000 строк)
+- config.yaml: custom_providers + fallback_providers + credential_pool_strategies
+- 18 ключей в auth.json через hermes auth add
+- consilium_server.py компилируется без ошибок
+- v7.2 сохранена в отдельной ветке
+- Требуется тестирование с Hermes v0.19

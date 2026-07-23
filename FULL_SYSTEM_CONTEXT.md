@@ -42,9 +42,10 @@ fuser -k 8765/tcp 2>/dev/null; pkill -9 -f "hermes_cli.main|hermes-agent gateway
 
 
 
-## Статус на 2026-07-23 21:11
-- Model Registry: SQLite, 40/47 моделей
-- Fallback Manager v2: FreeLLMAPI-style
-- 10 файлов синхронизированы
-- 5/5 компилируются
-- 9 провайдеров активно
+
+
+## Статус на 2026-07-23 22:35
+- Consilium v8.0 (облегчённый): 5 файлов
+- 18 ключей в auth.json
+- 6 провайдеров + openrouter, huggingface, deepseek
+- v7.2 в отдельной ветке
