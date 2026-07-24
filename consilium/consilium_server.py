@@ -4,6 +4,15 @@ Returns content + tool_calls (if present). No XML/CDATA rendering.
 Guarantees tool_calls field is always present in message (empty list if none).
 Rescues inline tool calls from content (Hermes/Qwen/XML formats)."""
 import os, sys, json, time, asyncio, logging, hashlib, re, uuid, threading
+
+HERMES_BLOCK_PATTERNS = [
+    r"You are Hermes Agent",
+    r"You run on Hermes Agent",
+    r"#\s*Finishing the job",
+    r"#\s*Parallel tool calls",
+    r"You have persistent memory",
+]
+_HERMES_RE = re.compile("|".join(HERMES_BLOCK_PATTERNS), re.IGNORECASE)
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any, AsyncGenerator
@@ -841,13 +850,17 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             # Вырезаем все блоки Hermes после нашего SOUL.md
             # Наш контент заканчивается на "потом ответ."
             # Всё что после — блоки Hermes (Finishing the job, Parallel tool calls, etc.)
-            markers = ["# Finishing the job", "You are Hermes Agent",
-                       "You run on Hermes Agent", "# Parallel tool calls",
-                       "You have persistent memory"]
-            cuts = [m["content"].find(x) for x in markers]
-            cuts = [c for c in cuts if c > 0]
-            if cuts:
-                m["content"] = m["content"][:min(cuts)].strip()[:2000]
+            # Простой фильтр: вырезаем всё начиная с блоков Hermes
+            # В v0.19 Hermes-блоки идут ПЕРЕД нашим SOUL.md
+            # Оставляем текст после последнего маркера
+            for marker in ["You are Hermes Agent", "You run on Hermes Agent"]:
+                if marker in m["content"]:
+                    m["content"] = m["content"].split(marker)[-1]
+            # Вырезаем оставшиеся блоки
+            for marker in ["# Finishing the job", "# Parallel tool calls", "You have persistent memory"]:
+                if marker in m["content"]:
+                    m["content"] = m["content"].split(marker)[0]
+            m["content"] = m["content"].strip()
             logger.info(f"✂️ Filtered: {len(m['content'])} chars")
 
     if not messages:
