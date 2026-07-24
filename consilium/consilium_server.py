@@ -1091,7 +1091,11 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             }]
         }
         if usage:
-            response["usage"] = usage
+            # Только стандартные поля usage
+            std_usage = {"prompt_tokens": usage.get("prompt_tokens", 0),
+                         "completion_tokens": usage.get("completion_tokens", 0),
+                         "total_tokens": usage.get("total_tokens", 0)}
+            response["usage"] = std_usage
 
         try:
             _log_usage(target_provider["name"], target_model, usage)
