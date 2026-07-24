@@ -70,38 +70,44 @@ systemctl --user restart hermes-consilium && systemctl --user restart hermes-age
 curl -s http://127.0.0.1:8765/health
 curl -s http://127.0.0.1:8765/
 
-Данные по Hermes v0.19 (для разработчиков)
-Что умеет Hermes (нам не нужно делать):
-credential_pool_strategies: fill_first, round_robin, least_used, random
-Cooldown: 5 мин (401), 1 час (429/402). Персистентность в auth.json
-fallback_providers: упорядоченный список, реактивный (после 429)
-Prompt caching: авто (Anthropic/OpenRouter 1h, Qwen 5m)
-System prompt: 3-tier сборка (stable→context→volatile)
-context_file_max_chars: 20000
-Context files: .hermes.md → AGENTS.md → CLAUDE.md → .cursorrules (один)
-Skills ≠ AGENTS.md (комплементарны)
-SecretSource: Bitwarden/1Password (нет шифрования .env)
-Что НЕ умеет Hermes (нам нужно самим):
-Фильтрация system prompt (технические блоки)
-Классификация задач (chat/code/search/analysis)
-Фильтрация моделей по контексту (>=128K)
-Учёт latency/success rate (least_used только счётчик)
-Превентивный учёт RPD/TPD (только реактивный после 429)
-Встроенные провайдеры Hermes:
-OpenRouter ✅, HuggingFace ✅, DeepSeek ✅ — first-class
-Groq ❌, Cloudflare ❌, GitHub ❌, Mistral ❌, SambaNova ❌ — custom
-Исправления (история)
-v7.2 (23.07): Model Registry + FreeLLMAPI Fallback
-v7.1 (22.07): 11 критических исправлений от 4 ИИ
-v7.0 (21.07): all_entries.append fix, tool_calls UUID, фильтр полей
-v6.x: Базовый Consilium
-Статус (24.07.2026)
+## Данные по Hermes v0.19 (для разработчиков)
+
+### Что умеет Hermes (нам не нужно делать):
+- `credential_pool_strategies`: fill_first, round_robin, least_used, random
+- Cooldown: 5 мин (401), 1 час (429/402). Персистентность в auth.json
+- `fallback_providers`: упорядоченный список, реактивный (после 429)
+- Prompt caching: авто (Anthropic/OpenRouter 1h, Qwen 5m)
+- System prompt: 3-tier сборка (stable→context→volatile)
+- `context_file_max_chars`: 20000
+- Context files: .hermes.md → AGENTS.md → CLAUDE.md → .cursorrules (один)
+- Skills ≠ AGENTS.md (комплементарны)
+- SecretSource: Bitwarden/1Password (нет шифрования .env)
+
+### Что НЕ умеет Hermes (нам нужно самим):
+- Фильтрация system prompt (технические блоки)
+- Классификация задач (chat/code/search/analysis)
+- Фильтрация моделей по контексту (>=128K)
+- Учёт latency/success rate (least_used только счётчик)
+- Превентивный учёт RPD/TPD (только реактивный после 429)
+
+### Встроенные провайдеры Hermes:
+- OpenRouter ✅, HuggingFace ✅, DeepSeek ✅ — first-class
+- Groq ❌, Cloudflare ❌, GitHub ❌, Mistral ❌, SambaNova ❌ — custom
+
+## Исправления (история)
+- v7.2 (23.07): Model Registry + FreeLLMAPI Fallback
+- v7.1 (22.07): 11 критических исправлений от 4 ИИ
+- v7.0 (21.07): all_entries.append fix, tool_calls UUID, фильтр полей
+- v6.x: Базовый Consilium
+
+## Статус (24.07.2026)
 ✅ 8 файлов компилируются
 ✅ 12 провайдеров
 ✅ System Prompt Filter: 513 chars
 ⚠️ provider_stats — проверить SQL
 ⚠️ filter_models.py — ждёт кэш Hermes
-Файлы
+
+## Файлы
 consilium/consilium_server.py, model_registry.py, provider_stats.py,
 rate_limiter.py, fallback_manager.py, dashboard.py, filter_models.py,
-providers/*.py, config.yaml, README.md, logs
+providers/*.py, config.yaml, README.md, logs/
