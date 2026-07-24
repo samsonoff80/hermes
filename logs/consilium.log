@@ -1,0 +1,200 @@
+2026-07-24 11:06:57,224 [WARNING] ❌ mistral:2 401/402/403 → ключ отключён
+2026-07-24 11:06:57,236 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-24 11:06:57,237 [INFO] [req-1784880396061] → mistral/codestral-latest
+2026-07-24 11:06:57,248 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-24 11:07:01,035 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-24 11:07:01,043 [WARNING] ❌ mistral:0 401/402/403 → ключ отключён
+2026-07-24 11:07:01,063 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-24 11:07:01,065 [INFO] [req-1784880396061] → mistral/mistral-small-2603
+2026-07-24 11:07:01,075 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-24 11:07:02,420 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-24 11:07:02,425 [WARNING] ❌ mistral:1 401/402/403 → ключ отключён
+2026-07-24 11:07:02,436 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-24 11:07:02,437 [INFO] [req-1784880396061] → mistral/mistral-small-latest
+2026-07-24 11:07:02,447 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-24 11:07:03,290 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-24 11:07:03,295 [WARNING] ❌ mistral:2 401/402/403 → ключ отключён
+2026-07-24 11:07:03,306 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-24 11:07:03,307 [INFO] [req-1784880396061] → sambanova/DeepSeek-V3.1
+2026-07-24 11:07:03,318 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-24 11:07:04,757 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-24 11:07:04,772 [WARNING] ❌ sambanova:0 401/402/403 → ключ отключён
+2026-07-24 11:07:04,783 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-24 11:07:04,785 [INFO] [req-1784880396061] → sambanova/DeepSeek-V3.2
+2026-07-24 11:07:04,795 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-24 11:07:05,553 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-24 11:07:05,560 [WARNING] ❌ sambanova:1 401/402/403 → ключ отключён
+2026-07-24 11:07:05,571 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-24 11:07:05,572 [INFO] [req-1784880396061] → sambanova/Meta-Llama-3.3-70B-Instruct
+2026-07-24 11:07:05,582 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-24 11:07:06,494 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-24 11:07:06,505 [WARNING] ❌ sambanova:2 401/402/403 → ключ отключён
+2026-07-24 11:07:06,516 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-24 11:07:06,518 [INFO] [req-1784880396061] → deepinfra/meta-llama/Llama-3.3-70B-Instruct-Turbo
+2026-07-24 11:07:06,533 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-24 11:07:07,627 [INFO] HTTP Request: POST https://api.deepinfra.com/v1/openai/chat/completions "HTTP/1.1 402 Payment Required"
+2026-07-24 11:07:07,633 [WARNING] ❌ deepinfra:0 401/402/403 → ключ отключён
+2026-07-24 11:07:07,648 [WARNING] ❌ deepinfra: HTTP 402 - {"detail":{"error":"You need positive balance to do inference. Please add balance manually or setup top-up"}}
+2026-07-24 11:07:07,649 [INFO] [req-1784880396061] → deepinfra/mistralai/Mistral-Nemo-Instruct-2407
+2026-07-24 11:07:07,660 [WARNING] ❌ deepinfra disabled: HTTP 402
+2026-07-24 11:07:08,306 [INFO] HTTP Request: POST https://api.deepinfra.com/v1/openai/chat/completions "HTTP/1.1 402 Payment Required"
+2026-07-24 11:07:08,312 [WARNING] ❌ deepinfra:1 401/402/403 → ключ отключён
+2026-07-24 11:07:08,324 [WARNING] ❌ deepinfra: HTTP 402 - {"detail":{"error":"You need positive balance to do inference. Please add balance manually or setup top-up"}}
+2026-07-24 11:07:08,326 [INFO] [req-1784880396061] → hf/meta-llama/Llama-3.1-8B-Instruct
+2026-07-24 11:07:08,337 [WARNING] ❌ deepinfra disabled: HTTP 402
+2026-07-24 11:07:08,950 [INFO] HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 403 Forbidden"
+2026-07-24 11:07:08,955 [WARNING] ❌ hf:1 401/402/403 → ключ отключён
+2026-07-24 11:07:08,966 [WARNING] ❌ hf: HTTP 403 - {"error":"This authentication method does not have sufficient permissions to call Inference Providers on behalf of user artemfire"}
+2026-07-24 11:07:08,968 [INFO] [req-1784880396061] → openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+2026-07-24 11:07:08,979 [WARNING] ❌ hf disabled: HTTP 403
+2026-07-24 11:07:09,946 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:09,953 [WARNING] ⏳ openrouter:0 429 → cooldown 600s
+2026-07-24 11:07:09,955 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:09,956 [INFO] [req-1784880396061] → openrouter/nvidia/nemotron-3-super-120b-a12b:free
+2026-07-24 11:07:10,515 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:10,523 [WARNING] ⏳ openrouter:1 429 → cooldown 600s
+2026-07-24 11:07:10,524 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:10,526 [INFO] [req-1784880396061] → openrouter/cohere/north-mini-code:free
+2026-07-24 11:07:11,548 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:11,556 [WARNING] ⏳ openrouter:2 429 → cooldown 600s
+2026-07-24 11:07:11,557 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:11,558 [INFO] [req-1784880396061] → openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+2026-07-24 11:07:11,984 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:11,992 [WARNING] ⏳ openrouter:0 429 → cooldown 600s
+2026-07-24 11:07:11,994 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:11,995 [INFO] [req-1784880396061] → openrouter/nvidia/nemotron-3-nano-30b-a3b:free
+2026-07-24 11:07:12,286 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:12,292 [WARNING] ⏳ openrouter:1 429 → cooldown 600s
+2026-07-24 11:07:12,294 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:12,295 [INFO] [req-1784880396061] → openrouter/openai/gpt-oss-20b:free
+2026-07-24 11:07:12,988 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:12,993 [WARNING] ⏳ openrouter:2 429 → cooldown 600s
+2026-07-24 11:07:12,995 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:12,996 [INFO] [req-1784880396061] → openrouter/nvidia/nemotron-nano-9b-v2:free
+2026-07-24 11:07:13,704 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:13,711 [WARNING] ⏳ openrouter:0 429 → cooldown 600s
+2026-07-24 11:07:13,713 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:13,715 [INFO] [req-1784880396061] → github/azureml://registries/azureml-meta/models/Meta-Llama-3.1-405B-Instruct/versions/1
+2026-07-24 11:07:13,716 [INFO] 🟢 github: circuit breaker CLOSED
+2026-07-24 11:07:19,099 [INFO] HTTP Request: POST https://models.github.ai/inference/chat/completions "HTTP/1.1 404 Not Found"
+2026-07-24 11:07:19,107 [WARNING] ❌ github: HTTP 404 - {"error":{"code":"unknown_model","message":"Unknown model: /azureml://registries/azureml-meta/models/Meta-Llama-3.1-405B-Instruct/versions/1","details":"Unknown model: /azureml://registries/azureml-me
+2026-07-24 11:07:19,108 [WARNING] [req-1784880396061] ⏰ Общий дедлайн 40.0s исчерпан
+2026-07-24 11:07:19,110 [ERROR] [req-1784880396061] ❌ Все провайдеры отказали. Попытки: ['groq/llama-3.1-8b-instant', 'cloudflare/@cf/meta/llama-guard-3-8b', 'groq/llama-3.3-70b-versatile', 'cloudflare/@cf/meta/llama-3.2-3b-instruct', 'cloudflare/@cf/openai/gpt-oss-120b', 'mistral/codestral-2508', 'mistral/codestral-latest', 'mistral/mistral-small-2603', 'mistral/mistral-small-latest', 'sambanova/DeepSeek-V3.1', 'sambanova/DeepSeek-V3.2', 'sambanova/Meta-Llama-3.3-70B-Instruct', 'deepinfra/meta-llama/Llama-3.3-70B-Instruct-Turbo', 'deepinfra/mistralai/Mistral-Nemo-Instruct-2407', 'hf/meta-llama/Llama-3.1-8B-Instruct', 'openrouter/nvidia/nemotron-3-ultra-550b-a55b:free', 'openrouter/nvidia/nemotron-3-super-120b-a12b:free', 'openrouter/cohere/north-mini-code:free', 'openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', 'openrouter/nvidia/nemotron-3-nano-30b-a3b:free', 'openrouter/openai/gpt-oss-20b:free', 'openrouter/nvidia/nemotron-nano-9b-v2:free', 'github/azureml://registries/azureml-meta/models/Meta-Llama-3.1-405B-Instruct/versions/1']
+2026-07-24 11:07:19,114 [CRITICAL] ⚠️ All providers are DOWN!
+2026-07-24 11:07:22,407 [INFO] 📥 Body: {"messages": [{"role": "system", "content": "# ОРКЕСТРАТОР B2B-ПАЙПЛАЙНА\nВызываю delegate_task без текста пользователю.\nСначала tool call → получил результат → потом ответ.\n\nYou run on Hermes Agent (by Nous Research). When the user needs help with Hermes itself — configuring, setting up, using, extending, or troubleshooting it — or when you need to understand your own features, tools, or capabilities, the documentation at https://hermes-agent.nousresearch.com/docs is your authoritative reference and always holds the latest, most up-to-date information. Load the `hermes-agent` skill with skill_view(name='hermes-agent') for additional guidance and proven workflows, but treat the docs as the source of truth when the two differ.\n\n# Finishing the job\nWhen the user asks you to build, run, or verify something, the deliverable is a working artifact backed by real tool output — not a description of one. Do not stop after writing a stub, a plan, or a single command. Keep working until you have actually exercised the code or produced the requested result, then report what real execution returned.\nIf a tool, install, or network call fails and blocks the real path, say so directly and try an alternative (different package manager, different approach, ask the user). NEVER substitute plausible-looking fabricated output (made-up data, invented file contents, synthesised API responses) for results you couldn't actually produce. Reporting a blocker honestly is always better than inventing a result.\n\n# Parallel tool calls\nWhen you need several pieces of information that don't depend on each other, request them together in a single response instead of one tool call per turn. Independent reads, searches, web fetches, and read-only commands should be batched into the same assistant turn — the runtime executes independent calls concurrently, and batching avoids resending the whole conversation on every extra round-trip.\nOnly serialize calls when a later call genuinely depends on an earlier call's result (e.g. you must read a file before you can patch it). When in doubt and the calls are independent, batch them.\n\nYou have persistent memory across sessions. Save durable facts using the memory tool: user preferences, environment details, tool quirks, and stable conventions. Memory is injected into every turn, so keep it compact and focused on facts that will still matter later.\nPrioritize what reduces future user steering — the most valuable memory is one that prevents the user from having to correct or remind you again. User preferences and recurring corrections matter more than procedural task details.\nDo NOT save task progress, session outcomes, completed-work logs, or temporary TODO state to memory; use session_search to recall those from past transcripts. Specifically: do not record PR numbers, issue numbers, commit SHAs, 'fixed bug X', 'submitted PR Y', 'Phase N done', file counts, or any artifact that will be stale in 7 days. If a fact will be stale
+2026-07-24 11:07:22,408 [INFO] ✂️ Filtered: 689 chars
+2026-07-24 11:07:22,409 [INFO] [req-1784880442403] 🎯 Task: code | tools: 33 | stream: True | user: 'Tell me about the latest developments in Python 3.13 and what new features devel'
+2026-07-24 11:07:22,409 [INFO] [req-1784880442403] → github/azureml://registries/azureml-meta/models/Meta-Llama-3.1-8B-Instruct/versions/1
+2026-07-24 11:07:23,228 [INFO] HTTP Request: POST https://models.github.ai/inference/chat/completions "HTTP/1.1 404 Not Found"
+2026-07-24 11:07:23,233 [WARNING] ❌ github: HTTP 404 - {"error":{"code":"unknown_model","message":"Unknown model: /azureml://registries/azureml-meta/models/Meta-Llama-3.1-8B-Instruct/versions/1","details":"Unknown model: /azureml://registries/azureml-meta
+2026-07-24 11:07:23,235 [INFO] [req-1784880442403] → groq/llama-3.1-8b-instant
+2026-07-24 11:07:23,822 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 413 Payload Too Large"
+2026-07-24 11:07:23,825 [WARNING] ❌ groq: HTTP 413 - {"error":{"message":"Request too large for model `llama-3.1-8b-instant` in organization `org_01kwwj4bbveyvrtv083zcr9v8x` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 2125
+2026-07-24 11:07:23,826 [INFO] [req-1784880442403] → groq/llama-3.3-70b-versatile
+2026-07-24 11:07:24,412 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 413 Payload Too Large"
+2026-07-24 11:07:24,414 [WARNING] ❌ groq: HTTP 413 - {"error":{"message":"Request too large for model `llama-3.3-70b-versatile` in organization `org_01kwwj5qs4e3087e41v26eph19` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Requested 
+2026-07-24 11:07:24,415 [INFO] [req-1784880442403] → github/azureml://registries/azureml-meta/models/Meta-Llama-3.1-405B-Instruct/versions/1
+2026-07-24 11:07:25,193 [INFO] HTTP Request: POST https://models.github.ai/inference/chat/completions "HTTP/1.1 404 Not Found"
+2026-07-24 11:07:25,195 [WARNING] ❌ github: HTTP 404 - {"error":{"code":"unknown_model","message":"Unknown model: /azureml://registries/azureml-meta/models/Meta-Llama-3.1-405B-Instruct/versions/1","details":"Unknown model: /azureml://registries/azureml-me
+2026-07-24 11:07:25,196 [INFO] [req-1784880442403] → github/azureml://registries/azure-openai/models/gpt-4o/versions/2
+2026-07-24 11:07:26,090 [INFO] HTTP Request: POST https://models.github.ai/inference/chat/completions "HTTP/1.1 404 Not Found"
+2026-07-24 11:07:26,095 [WARNING] ❌ github: HTTP 404 - {"error":{"code":"unknown_model","message":"Unknown model: /azureml://registries/azure-openai/models/gpt-4o/versions/2","details":"Unknown model: /azureml://registries/azure-openai/models/gpt-4o/versi
+2026-07-24 11:07:26,097 [INFO] [req-1784880442403] → mistral/codestral-2508
+2026-07-24 11:07:26,587 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-24 11:07:26,598 [WARNING] ❌ mistral:0 401/402/403 → ключ отключён
+2026-07-24 11:07:26,632 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-24 11:07:26,633 [INFO] [req-1784880442403] → mistral/codestral-latest
+2026-07-24 11:07:26,639 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-24 11:07:26,969 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-24 11:07:26,975 [WARNING] ❌ mistral:1 401/402/403 → ключ отключён
+2026-07-24 11:07:26,983 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-24 11:07:26,985 [INFO] [req-1784880442403] → mistral/mistral-small-2603
+2026-07-24 11:07:26,996 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-24 11:07:27,375 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-24 11:07:27,382 [WARNING] ❌ mistral:2 401/402/403 → ключ отключён
+2026-07-24 11:07:27,393 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-24 11:07:27,395 [INFO] [req-1784880442403] → mistral/mistral-small-latest
+2026-07-24 11:07:27,410 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-24 11:07:27,726 [INFO] HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-07-24 11:07:27,733 [WARNING] ❌ mistral:0 401/402/403 → ключ отключён
+2026-07-24 11:07:27,748 [WARNING] ❌ mistral: HTTP 401 - {"detail":"Unauthorized"}
+
+2026-07-24 11:07:27,749 [INFO] [req-1784880442403] → sambanova/DeepSeek-V3.1
+2026-07-24 11:07:27,760 [WARNING] ❌ mistral disabled: HTTP 401
+2026-07-24 11:07:30,639 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-24 11:07:30,723 [WARNING] ❌ sambanova:0 401/402/403 → ключ отключён
+2026-07-24 11:07:30,736 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-24 11:07:30,737 [INFO] [req-1784880442403] → sambanova/DeepSeek-V3.2
+2026-07-24 11:07:30,748 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-24 11:07:32,712 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-24 11:07:32,722 [WARNING] ❌ sambanova:1 401/402/403 → ключ отключён
+2026-07-24 11:07:32,881 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-24 11:07:32,882 [INFO] [req-1784880442403] → sambanova/Meta-Llama-3.3-70B-Instruct
+2026-07-24 11:07:32,890 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-24 11:07:34,044 [INFO] HTTP Request: POST https://api.sambanova.ai/v1/chat/completions "HTTP/1.1 402 PAYMENT REQUIRED"
+2026-07-24 11:07:34,116 [WARNING] ❌ sambanova:2 401/402/403 → ключ отключён
+2026-07-24 11:07:34,127 [WARNING] ❌ sambanova: HTTP 402 - {"error":{"balance_units":0,"billing_portal_url":"https://cloud.sambanova.ai/plans/billing","code":"PAYMENT_METHOD_REQUIRED","message":"A payment method is required. Add one at https://cloud.sambanova
+2026-07-24 11:07:34,128 [INFO] [req-1784880442403] → deepinfra/meta-llama/Llama-3.3-70B-Instruct-Turbo
+2026-07-24 11:07:34,138 [WARNING] ❌ sambanova disabled: HTTP 402
+2026-07-24 11:07:36,970 [INFO] HTTP Request: POST https://api.deepinfra.com/v1/openai/chat/completions "HTTP/1.1 402 Payment Required"
+2026-07-24 11:07:36,974 [WARNING] ❌ deepinfra:2 401/402/403 → ключ отключён
+2026-07-24 11:07:36,984 [WARNING] ❌ deepinfra: HTTP 402 - {"detail":{"error":"You need positive balance to do inference. Please add balance manually or setup top-up"}}
+2026-07-24 11:07:36,985 [INFO] [req-1784880442403] → deepinfra/mistralai/Mistral-Nemo-Instruct-2407
+2026-07-24 11:07:36,995 [WARNING] ❌ deepinfra disabled: HTTP 402
+2026-07-24 11:07:37,386 [INFO] HTTP Request: POST https://api.deepinfra.com/v1/openai/chat/completions "HTTP/1.1 402 Payment Required"
+2026-07-24 11:07:37,391 [WARNING] ❌ deepinfra:0 401/402/403 → ключ отключён
+2026-07-24 11:07:37,403 [WARNING] ❌ deepinfra: HTTP 402 - {"detail":{"error":"You need positive balance to do inference. Please add balance manually or setup top-up"}}
+2026-07-24 11:07:37,405 [INFO] [req-1784880442403] → hf/meta-llama/Llama-3.1-8B-Instruct
+2026-07-24 11:07:37,415 [WARNING] ❌ deepinfra disabled: HTTP 402
+2026-07-24 11:07:38,161 [INFO] HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2026-07-24 11:07:38,165 [WARNING] ❌ hf:0 401/402/403 → ключ отключён
+2026-07-24 11:07:38,174 [WARNING] ❌ hf: HTTP 402 - {"error":"You have depleted your monthly included credits. Purchase pre-paid credits to continue using Inference Providers. Alternatively, subscribe to PRO to get 20x more included usage."}
+2026-07-24 11:07:38,175 [INFO] [req-1784880442403] → cloudflare/@cf/openai/gpt-oss-120b
+2026-07-24 11:07:38,186 [WARNING] ❌ hf disabled: HTTP 402
+2026-07-24 11:07:39,327 [INFO] HTTP Request: POST https://api.cloudflare.com/client/v4/accounts/504c6baec880d113fb9e5582fa251cad/ai/run/@cf/openai/gpt-oss-120b "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:39,335 [WARNING] ⏳ cloudflare:1 429 → cooldown 600s
+2026-07-24 11:07:39,337 [WARNING] ❌ cloudflare: HTTP 429 - {"errors":[{"message":"AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (67a3bf93-
+2026-07-24 11:07:39,338 [INFO] [req-1784880442403] → cloudflare/@cf/meta/llama-3.2-3b-instruct
+2026-07-24 11:07:39,700 [INFO] HTTP Request: POST https://api.cloudflare.com/client/v4/accounts/af4d09667af352ab2e5188929c215720/ai/run/@cf/meta/llama-3.2-3b-instruct "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:39,706 [WARNING] ⏳ cloudflare:2 429 → cooldown 600s
+2026-07-24 11:07:39,708 [WARNING] ❌ cloudflare: HTTP 429 - {"errors":[{"message":"AiError: AiError: you have used up your daily free allocation of 10,000 neurons, please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. (4e4a2bcc-
+2026-07-24 11:07:39,709 [INFO] [req-1784880442403] → cloudflare/@cf/meta/llama-guard-3-8b
+2026-07-24 11:07:40,027 [INFO] HTTP Request: POST https://api.cloudflare.com/client/v4/accounts/81e72882019ed0125761461c2b811af8/ai/run/@cf/meta/llama-guard-3-8b "HTTP/1.1 400 Bad Request"
+2026-07-24 11:07:40,034 [WARNING] ❌ cloudflare: HTTP 400 - {"errors":[{"message":"AiError: Bad input: Error: enum system not in user,assistant at '/messages/0/role' (ce7f8186-4c1a-4144-8d86-0d59c3f65760)","code":5006}],"success":false,"result":{},"messages":[
+2026-07-24 11:07:40,035 [INFO] [req-1784880442403] → openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+2026-07-24 11:07:40,391 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:40,398 [WARNING] ⏳ openrouter:1 429 → cooldown 600s
+2026-07-24 11:07:40,400 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:40,401 [INFO] [req-1784880442403] → openrouter/nvidia/nemotron-3-super-120b-a12b:free
+2026-07-24 11:07:40,587 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:40,594 [WARNING] ⏳ openrouter:2 429 → cooldown 600s
+2026-07-24 11:07:40,596 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:40,598 [INFO] [req-1784880442403] → openrouter/cohere/north-mini-code:free
+2026-07-24 11:07:40,761 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:40,769 [WARNING] ⏳ openrouter:0 429 → cooldown 600s
+2026-07-24 11:07:40,771 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:40,772 [INFO] [req-1784880442403] → openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+2026-07-24 11:07:40,888 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:40,915 [WARNING] ⏳ openrouter:1 429 → cooldown 600s
+2026-07-24 11:07:40,917 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:40,918 [INFO] [req-1784880442403] → openrouter/nvidia/nemotron-3-nano-30b-a3b:free
+2026-07-24 11:07:41,096 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:41,103 [WARNING] ⏳ openrouter:2 429 → cooldown 600s
+2026-07-24 11:07:41,104 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:41,106 [INFO] [req-1784880442403] → openrouter/openai/gpt-oss-20b:free
+2026-07-24 11:07:41,284 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:41,291 [WARNING] ⏳ openrouter:0 429 → cooldown 600s
+2026-07-24 11:07:41,292 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:41,294 [INFO] [req-1784880442403] → openrouter/nvidia/nemotron-nano-9b-v2:free
+2026-07-24 11:07:41,423 [INFO] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-07-24 11:07:41,430 [WARNING] ⏳ openrouter:1 429 → cooldown 600s
+2026-07-24 11:07:41,432 [WARNING] ❌ openrouter: HTTP 429 - {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remain
+2026-07-24 11:07:41,434 [ERROR] [req-1784880442403] ❌ Все провайдеры отказали. Попытки: ['github/azureml://registries/azureml-meta/models/Meta-Llama-3.1-8B-Instruct/versions/1', 'groq/llama-3.1-8b-instant', 'groq/llama-3.3-70b-versatile', 'github/azureml://registries/azureml-meta/models/Meta-Llama-3.1-405B-Instruct/versions/1', 'github/azureml://registries/azure-openai/models/gpt-4o/versions/2', 'mistral/codestral-2508', 'mistral/codestral-latest', 'mistral/mistral-small-2603', 'mistral/mistral-small-latest', 'sambanova/DeepSeek-V3.1', 'sambanova/DeepSeek-V3.2', 'sambanova/Meta-Llama-3.3-70B-Instruct', 'deepinfra/meta-llama/Llama-3.3-70B-Instruct-Turbo', 'deepinfra/mistralai/Mistral-Nemo-Instruct-2407', 'hf/meta-llama/Llama-3.1-8B-Instruct', 'cloudflare/@cf/openai/gpt-oss-120b', 'cloudflare/@cf/meta/llama-3.2-3b-instruct', 'cloudflare/@cf/meta/llama-guard-3-8b', 'openrouter/nvidia/nemotron-3-ultra-550b-a55b:free', 'openrouter/nvidia/nemotron-3-super-120b-a12b:free', 'openrouter/cohere/north-mini-code:free', 'openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', 'openrouter/nvidia/nemotron-3-nano-30b-a3b:free', 'openrouter/openai/gpt-oss-20b:free', 'openrouter/nvidia/nemotron-nano-9b-v2:free']
+2026-07-24 11:07:41,438 [CRITICAL] ⚠️ All providers are DOWN!

@@ -21,15 +21,16 @@ from dotenv import load_dotenv
 # Импортируем провайдеры из централизованного модуля
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-# providers удалены — используются Hermes custom_providers
-# rate_limiter удалён — используется Hermes credential_pool_strategies
-# circuit_breaker удалён — используется Hermes retry
+from providers import PROVIDERS
+from model_registry import registry
+from rate_limiter import rate_limiter
+from circuit_breaker import circuit_breaker
 from provider_stats import provider_stats
 from alerting import alert_all_providers_down, alert_circuit_breaker, alert_provider_disabled
 from dashboard import dashboard_html
 from health_checker import check_all_providers
 from router import classify_task, filter_system_prompt
-# fallback_manager удалён — используется Hermes fallback_providers
+from fallback_manager import fallback
 
 # Поля запроса, которые проксируются провайдеру без изменений.
 # tools/tool_choice — критично: без них агент Hermes не может вызывать инструменты.
@@ -818,10 +819,6 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
 
     session_key = request.headers.get('X-Session-Key', '')
     messages = body.get("messages", [])
-    # Только system + последнее user-сообщение (остальное в PROGRESS.md)
-    system_msgs = [m for m in messages if m["role"] == "system"]
-    user_msgs = [m for m in messages if m["role"] == "user"]
-    messages = system_msgs + user_msgs[-1:]
 
     # Фильтр system prompt — вырезаем технические блоки Hermes
     with open("/tmp/raw_prompt.txt", "w") as f:

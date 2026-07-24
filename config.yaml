@@ -57,8 +57,6 @@ approvals:
   mode: 'off'
   timeout: 60
 compression: {}
-custom_providers: []
-fallback_providers: []
 model:
   api_key: sk-consilium
   api_mode: chat_completions
