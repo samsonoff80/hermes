@@ -1,0 +1,857 @@
+{
+  "updated": "2026-07-24T15:59:30",
+  "chains": {
+    "chat": [
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "analysis"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "poolside/laguna-s-2.1:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "poolside/laguna-xs-2.1:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "poolside/laguna-m.1:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "google/gemma-4-26b-a4b-it:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "google/gemma-4-31b-it:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-super-120b-a12b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "analysis"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-nano-30b-a3b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "openai/gpt-oss-20b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-nano-9b-v2:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "groq",
+        "model": "llama-3.1-8b-instant",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 1,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "groq",
+        "model": "llama-3.3-70b-versatile",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 1,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "mistral",
+        "model": "mistral-small-2603",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 0,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "mistral",
+        "model": "mistral-small-latest",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 0,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "mistral",
+        "model": "magistral-small-latest",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 0,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "gpt-4o-mini",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "gpt-4o",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "Meta-Llama-3.1-405B-Instruct",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "sambanova",
+        "model": "Meta-Llama-3.3-70B-Instruct",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 2,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "hf",
+        "model": "google/gemma-4-31B-it",
+        "keys": 2,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 4,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "hf",
+        "model": "Qwen/Qwen3.6-35B-A3B",
+        "keys": 2,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 4,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "hf",
+        "model": "Qwen/Qwen3.6-27B",
+        "keys": 2,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 4,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "hf",
+        "model": "meta-llama/Llama-3.1-8B-Instruct",
+        "keys": 2,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 4,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "hf",
+        "model": "Qwen/Qwen3.5-9B",
+        "keys": 2,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 4,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "cloudflare",
+        "model": "@cf/openai/gpt-oss-120b",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 5,
+        "rpd": 0,
+        "format": "cloudflare"
+      },
+      {
+        "provider": "cloudflare",
+        "model": "@cf/meta/llama-3.2-3b-instruct",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 5,
+        "rpd": 0,
+        "format": "cloudflare"
+      },
+      {
+        "provider": "aihorde",
+        "model": "stable-tsoul-4.2b",
+        "keys": 0,
+        "keyless": true,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 11,
+        "rpd": 0,
+        "format": "aihorde"
+      },
+      {
+        "provider": "deepinfra",
+        "model": "Qwen/Qwen3-14B",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 3,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "deepinfra",
+        "model": "Qwen/Qwen3.5-122B-A10B",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 3,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "deepinfra",
+        "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 3,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "deepinfra",
+        "model": "Qwen/Qwen3.6-27B",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat"
+        ],
+        "cold_priority": 3,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "deepinfra",
+        "model": "mistralai/Mistral-Nemo-Instruct-2407",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 3,
+        "rpd": 0,
+        "format": "openai"
+      }
+    ],
+    "code": [
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "analysis"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-super-120b-a12b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "cohere/north-mini-code:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "code"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "analysis"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-nano-30b-a3b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "openai/gpt-oss-20b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-nano-9b-v2:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "groq",
+        "model": "llama-3.1-8b-instant",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 1,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "groq",
+        "model": "llama-3.3-70b-versatile",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 1,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "mistral",
+        "model": "codestral-2508",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "code"
+        ],
+        "cold_priority": 0,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "mistral",
+        "model": "codestral-latest",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "code"
+        ],
+        "cold_priority": 0,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "mistral",
+        "model": "mistral-small-2603",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 0,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "mistral",
+        "model": "mistral-small-latest",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 0,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "gpt-4o-mini",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "gpt-4o",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "Meta-Llama-3.1-405B-Instruct",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "sambanova",
+        "model": "DeepSeek-V3.1",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "code"
+        ],
+        "cold_priority": 2,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "sambanova",
+        "model": "DeepSeek-V3.2",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "code"
+        ],
+        "cold_priority": 2,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "sambanova",
+        "model": "Meta-Llama-3.3-70B-Instruct",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 2,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "hf",
+        "model": "meta-llama/Llama-3.1-8B-Instruct",
+        "keys": 2,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 4,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "cloudflare",
+        "model": "@cf/openai/gpt-oss-120b",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 5,
+        "rpd": 0,
+        "format": "cloudflare"
+      },
+      {
+        "provider": "cloudflare",
+        "model": "@cf/meta/llama-3.2-3b-instruct",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 5,
+        "rpd": 0,
+        "format": "cloudflare"
+      },
+      {
+        "provider": "deepinfra",
+        "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 3,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "deepinfra",
+        "model": "mistralai/Mistral-Nemo-Instruct-2407",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code"
+        ],
+        "cold_priority": 3,
+        "rpd": 0,
+        "format": "openai"
+      }
+    ],
+    "search": [
+      {
+        "provider": "openrouter",
+        "model": "openai/gpt-oss-20b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "gpt-4o-mini",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "github",
+        "model": "gpt-4o",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 7,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "cloudflare",
+        "model": "@cf/openai/gpt-oss-120b",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "search"
+        ],
+        "cold_priority": 5,
+        "rpd": 0,
+        "format": "cloudflare"
+      }
+    ],
+    "analysis": [
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "analysis"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      },
+      {
+        "provider": "openrouter",
+        "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "keys": 3,
+        "keyless": false,
+        "tags": [
+          "chat",
+          "code",
+          "analysis"
+        ],
+        "cold_priority": 6,
+        "rpd": 0,
+        "format": "openai"
+      }
+    ]
+  }
+}

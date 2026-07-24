@@ -1,0 +1,774 @@
+{
+  "cross_exhibitions": [
+    {
+      "name": "Продэкспо Москва",
+      "url": "https://icatalog.expocentr.ru/ru/exhibitions/870c9c18-e84b-11ef-80ce-a0d3c1fab97f",
+      "country": "Россия",
+      "method": "Playwright+PDF",
+      "participants": 2500,
+      "frequency": "ежегодно (февраль)",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "website",
+        "products",
+        "phone",
+        "email"
+      ],
+      "free": true
+    },
+    {
+      "name": "WorldFood Moscow",
+      "url": "https://exhibitors-itegroup.exhibitoronlinemanual.com/worldfood-moscow-2025/en/Exhibitor",
+      "country": "Россия",
+      "method": "Playwright",
+      "participants": 1100,
+      "frequency": "ежегодно (сентябрь)",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "WorldFood Istanbul",
+      "url": "https://worldfood-istanbul.com/en/katilimci-listesi",
+      "country": "Турция",
+      "method": "Playwright",
+      "participants": 1500,
+      "frequency": "ежегодно",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "products",
+        "website"
+      ],
+      "free": true
+    },
+    {
+      "name": "Gulfood Dubai",
+      "url": "https://exhibitors.gulfood.com/gulfood-2026/Sectorlist/world-food",
+      "country": "ОАЭ",
+      "method": "Playwright",
+      "participants": 5000,
+      "frequency": "ежегодно (февраль)",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "products",
+        "website"
+      ],
+      "free": true
+    },
+    {
+      "name": "Агропродмаш",
+      "url": "https://www.agroprodmash-expo.ru/ru/visitors/catalog/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "participants": 800,
+      "frequency": "ежегодно (октябрь)",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "products",
+        "website"
+      ],
+      "free": true
+    },
+    {
+      "name": "Modern Bakery Moscow",
+      "url": "https://www.modern-bakery.ru/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "participants": 400,
+      "frequency": "ежегодно",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "products",
+        "website"
+      ],
+      "free": true
+    },
+    {
+      "name": "FoodExpo Qazaqstan",
+      "url": "https://foodexpo.kz/",
+      "country": "Казахстан",
+      "method": "Playwright",
+      "participants": 500,
+      "frequency": "ежегодно",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "InterFood Azerbaijan",
+      "url": "https://interfood.az/en/exhibitors",
+      "country": "Азербайджан",
+      "method": "Playwright",
+      "participants": 300,
+      "frequency": "ежегодно",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "UzFood",
+      "url": "https://uzfoodexpo.uz/en/exhibitors-list",
+      "country": "Узбекистан",
+      "method": "Playwright",
+      "participants": 400,
+      "frequency": "ежегодно",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "ArmProdExpo",
+      "url": "https://expo.am/ru/exhibition/armprodekspo",
+      "country": "Армения",
+      "method": "requests",
+      "participants": 100,
+      "frequency": "ежегодно",
+      "status": "✅ обновлён",
+      "fields": [
+        "name",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "Expofood & Drinks Georgia",
+      "url": "https://expogeorgia.ge/",
+      "country": "Грузия",
+      "method": "requests",
+      "participants": 100,
+      "frequency": "ежегодно",
+      "status": "✅ обновлён",
+      "fields": [
+        "name",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "DairyTech",
+      "url": "https://www.dairytechexpo.ru/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "participants": 300,
+      "frequency": "ежегодно",
+      "status": "🟡 не проверен",
+      "fields": [
+        "name",
+        "products",
+        "website"
+      ],
+      "free": true
+    },
+    {
+      "name": "Candy Russia",
+      "url": "https://candy-russia.ru/ru/uchastniki/",
+      "country": "Россия",
+      "method": "Playwright",
+      "participants": 150,
+      "frequency": "ежегодно",
+      "status": "❌ DNS не резолвится",
+      "fields": [
+        "name",
+        "phone",
+        "website",
+        "email",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "Bakery Expo Kazakhstan",
+      "url": "https://all-events.ru/events/bakery-expo-kazakhstan-2025",
+      "country": "Казахстан",
+      "method": "Playwright",
+      "participants": 300,
+      "frequency": "ежегодно",
+      "status": "🟡 не проверен",
+      "fields": [
+        "name",
+        "phone",
+        "website",
+        "products"
+      ],
+      "free": true
+    }
+  ],
+  "cross_catalogs": [
+    {
+      "name": "productcenter.ru",
+      "url": "https://productcenter.ru/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "phone",
+        "website",
+        "products",
+        "address"
+      ],
+      "free": true,
+      "notes": "Каталог по 7 категориям, пагинация /page-N"
+    },
+    {
+      "name": "fabricators.ru",
+      "url": "https://fabricators.ru/proizvodstvo/konditerskie-fabriki",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "phone",
+        "website",
+        "email",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "candy-factory.ru",
+      "url": "https://candy-factory.ru/russia/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "inn",
+        "ogrn",
+        "phone",
+        "website",
+        "email",
+        "address",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "wiki-prom.ru",
+      "url": "https://www.wiki-prom.ru/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "inn",
+        "phone",
+        "address",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "foodmarkets.ru",
+      "url": "https://foodmarkets.ru/firms/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "phone",
+        "products",
+        "address"
+      ],
+      "free": true
+    },
+    {
+      "name": "foodretail.ru",
+      "url": "https://foodretail.ru/litecat",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "inn",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "foodsuppliers.ru",
+      "url": "https://foodsuppliers.ru/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "factories.kz",
+      "url": "https://factories.kz/producers/pischevaya-promyshlennost",
+      "country": "Казахстан",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "phone",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "flagma.kz",
+      "url": "https://flagma.kz/en/companies/foodstuffs-companies/",
+      "country": "Казахстан",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "phone",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "flagma.uz",
+      "url": "https://flagma.uz/ru/kompanii",
+      "country": "Узбекистан",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "phone",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "sprav.uz",
+      "url": "https://sprav.uz/",
+      "country": "Узбекистан",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "phone",
+        "address",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "AllFoods Market",
+      "url": "https://allfoods.market/",
+      "country": "СНГ",
+      "method": "Playwright",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "products",
+        "website"
+      ],
+      "free": "registration (email)"
+    },
+    {
+      "name": "Europages",
+      "url": "https://www.europages.co.uk/",
+      "country": "Международный",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "country",
+        "website",
+        "products",
+        "address"
+      ],
+      "free": true
+    },
+    {
+      "name": "B2BMap Turkey",
+      "url": "https://b2bmap.com/turkey/food-beverage-product-suppliers",
+      "country": "Турция",
+      "method": "requests+BS4",
+      "status": "⚠️ 403 нужен прокси",
+      "fields": [
+        "name",
+        "city",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "b2b-fmcg.ru",
+      "url": "https://b2b-fmcg.ru/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "phone",
+        "website",
+        "products",
+        "address"
+      ],
+      "free": true
+    },
+    {
+      "name": "mkond.ru",
+      "url": "https://mkond.ru/companies/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "address",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "DairyNews.ru",
+      "url": "https://dairynews.ru/proizvoditeli/",
+      "country": "Россия",
+      "method": "requests+BS4",
+      "status": "❌ 404 мёртв",
+      "fields": [
+        "name",
+        "phone",
+        "website",
+        "email",
+        "products"
+      ],
+      "free": true
+    }
+  ],
+  "cross_registers": [
+    {
+      "name": "ЕГРЮЛ ФНС (зеркало)",
+      "url": "https://egrul.itsoft.ru/{INN}.json",
+      "country": "Россия",
+      "method": "API JSON",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "inn",
+        "ogrn",
+        "address",
+        "okved"
+      ],
+      "free": true,
+      "notes": "Бесплатно, безлимитно"
+    },
+    {
+      "name": "egrul.org API",
+      "url": "https://egrul.org/",
+      "country": "Россия",
+      "method": "API JSON",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "inn",
+        "ogrn",
+        "address",
+        "okved"
+      ],
+      "free": "100 запросов/сутки"
+    },
+    {
+      "name": "Прозрачный бизнес",
+      "url": "https://pb.nalog.ru/",
+      "country": "Россия",
+      "method": "Playwright",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "inn",
+        "address",
+        "okved",
+        "employees"
+      ],
+      "free": true
+    },
+    {
+      "name": "Россельхознадзор (все СНГ)",
+      "url": "https://navigator.fsvps.gov.ru/trafficking/argus/index",
+      "country": "СНГ",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "address",
+        "country",
+        "products"
+      ],
+      "free": true,
+      "notes": "countryId для каждой страны"
+    },
+    {
+      "name": "e-ondiris.gov.kz",
+      "url": "https://e-ondiris.gov.kz/",
+      "country": "Казахстан",
+      "method": "Playwright",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "bin",
+        "address",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "stat.gov.kz",
+      "url": "https://stat.gov.kz/ru/juridical/by/bin/",
+      "country": "Казахстан",
+      "method": "Playwright",
+      "status": "⚠️ нужна регистрация",
+      "fields": [
+        "name",
+        "bin",
+        "oked",
+        "address"
+      ],
+      "free": "registration (email)"
+    },
+    {
+      "name": "openinfo.uz",
+      "url": "https://openinfo.uz/ru",
+      "country": "Узбекистан",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "stir",
+        "address",
+        "activity"
+      ],
+      "free": true
+    },
+    {
+      "name": "orginfo.uz",
+      "url": "https://orginfo.uz/ru/",
+      "country": "Узбекистан",
+      "method": "requests+BS4",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "stir",
+        "address",
+        "activity"
+      ],
+      "free": true
+    },
+    {
+      "name": "taxes.gov.az",
+      "url": "https://www.taxes.gov.az/",
+      "country": "Азербайджан",
+      "method": "requests",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "voen",
+        "address"
+      ],
+      "free": true
+    },
+    {
+      "name": "e-register.am",
+      "url": "https://www.e-register.am/",
+      "country": "Армения",
+      "method": "requests",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "inn",
+        "address"
+      ],
+      "free": true
+    },
+    {
+      "name": "napr.gov.ge",
+      "url": "https://napr.gov.ge/",
+      "country": "Грузия",
+      "method": "requests",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "inn",
+        "address"
+      ],
+      "free": true
+    },
+    {
+      "name": "osoo.kg",
+      "url": "https://osoo.kg/search/",
+      "country": "Кыргызстан",
+      "method": "requests",
+      "status": "⚠️ 403 (нужен прокси)",
+      "fields": [
+        "name",
+        "inn",
+        "address"
+      ],
+      "free": "через Proton Proxy"
+    },
+    {
+      "name": "andoz.tj",
+      "url": "https://andoz.tj/Fehrist?culture=ru-RU",
+      "country": "Таджикистан",
+      "method": "requests",
+      "status": "⚠️ через прокси",
+      "fields": [
+        "name",
+        "inn",
+        "address"
+      ],
+      "free": "через Proton Proxy"
+    },
+    {
+      "name": "OpenSanctions KZ",
+      "url": "https://www.opensanctions.org/datasets/kz_companies/",
+      "country": "Казахстан",
+      "method": "bulk JSON",
+      "status": "✅ проверен",
+      "fields": [
+        "name",
+        "bin",
+        "address",
+        "oked"
+      ],
+      "free": true,
+      "notes": "2.5M+ компаний"
+    }
+  ],
+  "cross_associations": [
+    {
+      "name": "Асконд (кондитеры)",
+      "url": "https://ascond.ru/members/",
+      "country": "Россия",
+      "fields": [
+        "name",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "Союзмолоко",
+      "url": "https://soyuzmoloko.ru/uchastniki-rynka/",
+      "country": "Россия",
+      "fields": [
+        "name",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "РосХлебПром",
+      "url": "http://roshlebprom.ru/members/",
+      "country": "Россия",
+      "fields": [
+        "name",
+        "website",
+        "address"
+      ],
+      "free": true
+    },
+    {
+      "name": "NutsUnion",
+      "url": "https://nutsunion.ru/",
+      "country": "Россия",
+      "fields": [
+        "name",
+        "website",
+        "products"
+      ],
+      "free": true
+    },
+    {
+      "name": "OrganicUnion",
+      "url": "https://organicunion.ru/reestr/",
+      "country": "Россия",
+      "fields": [
+        "name",
+        "website",
+        "products",
+        "address"
+      ],
+      "free": true
+    }
+  ],
+  "okved_food": {
+    "Кондитерские": [
+      "10.82",
+      "10.7",
+      "10.72"
+    ],
+    "Молочные": [
+      "10.51",
+      "10.52"
+    ],
+    "Хлебобулочные": [
+      "10.71",
+      "10.72"
+    ],
+    "Заморозка": [
+      "10.85",
+      "10.52"
+    ],
+    "Орехи/сухофрукты": [
+      "10.39"
+    ],
+    "Здоровое питание": [
+      "10.89"
+    ],
+    "Снеки": [
+      "10.6",
+      "10.89",
+      "10.31"
+    ]
+  },
+  "problem_countries": {
+    "Кыргызстан": "Нет публичного API. Использовать osoo.kg (через прокси), record.minjust.gov.kg, flagma-kg.com",
+    "Таджикистан": "Нет открытых реестров. andoz.tj (через прокси), manufacturers.ru, eprocurement.gov.tj",
+    "Туркменистан": "Закрытая страна. Только business.com.tm, FSVPS реестр"
+  },
+  "priority_order": [
+    "1️⃣ Продэкспо (icatalog.expocentr.ru) — 2500 участников, все группы",
+    "2️⃣ ЕГРЮЛ (egrul.itsoft.ru) — Россия, по ОКВЭД",
+    "3️⃣ productcenter.ru — каталог по 7 категориям",
+    "4️⃣ candy-factory.ru — кондитерские с ИНН/телефонами",
+    "5️⃣ Россельхознадзор — все страны СНГ",
+    "6️⃣ fabricators.ru — кондитерские фабрики",
+    "7️⃣ WorldFood Istanbul — Турция + СНГ",
+    "8️⃣ Gulfood Dubai — фильтр по стране",
+    "9️⃣ OpenSanctions KZ — Казахстан bulk",
+    "🔟 e-ondiris.gov.kz — Казахстан реестр"
+  ]
+}

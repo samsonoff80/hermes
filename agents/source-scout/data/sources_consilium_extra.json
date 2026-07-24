@@ -1,0 +1,510 @@
+{
+  "_date": "2026-06-19",
+  "_method": "consilium_5_models",
+  "target_countries": [
+    "Таджикистан",
+    "Туркменистан",
+    "Азербайджан",
+    "Кыргызстан"
+  ],
+  "results": {
+    "Таджикистан": [
+      {
+        "name": "Торгово-промышленная палата Таджикистана (ТПП РТ)",
+        "url": "https://tpp.tj",
+        "type": "association",
+        "quality": "B",
+        "food_relevance": 7
+      },
+      {
+        "name": "Единый государственный реестр юридических лиц Таджикистана (налоговая служба)",
+        "url": "https://www.andoz.tj",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 5
+      },
+      {
+        "name": "Агентство по статистике при Президенте Республики Таджикистан",
+        "url": "https://stat.tj",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 6
+      },
+      {
+        "name": "Tajikistan Business Directory (Yellow Pages)",
+        "url": "https://www.yellowpages.tj",
+        "type": "directory",
+        "quality": "A",
+        "food_relevance": 8
+      },
+      {
+        "name": "ExpoCentralAsia (выставки в Центральной Азии, включая пищевую промышленность)",
+        "url": "https://expocentralasia.com",
+        "type": "exhibition",
+        "quality": "B",
+        "food_relevance": 9
+      },
+      {
+        "name": "Kompass Tajikistan (B2B каталог предприятий)",
+        "url": "https://www.kompass.com/tajikistan-b2b-directory/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 8
+      },
+      {
+        "name": "Tajikistan Investment & Export Agency (TIKA)",
+        "url": "https://tika.tj",
+        "type": "association",
+        "quality": "B",
+        "food_relevance": 7
+      },
+      {
+        "name": "Alibaba (поиск по Таджикистану)",
+        "url": "https://www.alibaba.com/countrysearch/TJ/suppliers.html",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 7
+      },
+      {
+        "name": "Food Expo Tajikistan (пищевая выставка)",
+        "url": "https://foodexpo.tj",
+        "type": "exhibition",
+        "quality": "B",
+        "food_relevance": 10
+      },
+      {
+        "name": "Tajikistan Business Portal (государственный портал)",
+        "url": "https://business.tj",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 6
+      },
+      {
+        "name": "Тадбит",
+        "url": "https://tadbit.tj/",
+        "type": "catalog",
+        "quality": "B",
+        "food_relevance": 8
+      },
+      {
+        "name": "Ассоциация пищевой промышленности Таджикистана",
+        "url": "https://www.appt.tj/",
+        "type": "association",
+        "quality": "C",
+        "food_relevance": 10
+      },
+      {
+        "name": "Тендерная площадка Таджикистана",
+        "url": "https://tender.tj/",
+        "type": "tender",
+        "quality": "B",
+        "food_relevance": 6
+      },
+      {
+        "name": "Реестр предприятий Таджикистана",
+        "url": "https://egrul.tj/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 5
+      },
+      {
+        "name": "Налоговый реестр Таджикистана",
+        "url": "https://www.nbt.tj/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 4
+      },
+      {
+        "name": "B2B Таджикистан",
+        "url": "https://b2b.tj/",
+        "type": "catalog",
+        "quality": "B",
+        "food_relevance": 8
+      },
+      {
+        "name": "Made in Tajikistan",
+        "url": "https://madeintajikistan.tj/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 9
+      }
+    ],
+    "Туркменистан": [
+      {
+        "name": "Turkmen Business",
+        "url": "https://turkmenbusiness.org/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 6
+      },
+      {
+        "name": "Turkmenistan: Yellow Pages",
+        "url": "https://www.yellowpages.tm/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 7
+      },
+      {
+        "name": "TurkmenExpo (Food & Agriculture Exhibitions)",
+        "url": "https://turkmenexpo.gov.tm/",
+        "type": "exhibition",
+        "quality": "C",
+        "food_relevance": 8
+      },
+      {
+        "name": "Turkmenportal (Business Directory)",
+        "url": "https://business.turkmenportal.com/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 5
+      },
+      {
+        "name": "State Statistics Committee of Turkmenistan (Enterprise Register)",
+        "url": "http://www.stat.gov.tm/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 4
+      },
+      {
+        "name": "Turkmenbashi International Oil & Gas Exhibition (Indirect Food Relevance)",
+        "url": "https://www.oilgas.gov.tm/",
+        "type": "exhibition",
+        "quality": "C",
+        "food_relevance": 3
+      },
+      {
+        "name": "Turkmenistan: B2B Portal (Alibaba-like)",
+        "url": "https://www.turkmenmarket.com/",
+        "type": "catalog",
+        "quality": "B",
+        "food_relevance": 7
+      },
+      {
+        "name": "Ministry of Trade and Foreign Economic Relations of Turkmenistan",
+        "url": "http://trade.gov.tm/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 5
+      },
+      {
+        "name": "Turkmenistan Yellow Pages",
+        "url": "https://www.turkmenistanyp.com/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 6
+      },
+      {
+        "name": "Turkmenistan Business Directory",
+        "url": "https://www.turkmenistan.com/business/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 5
+      },
+      {
+        "name": "Foodex Kazakhstan и Центральной Азии",
+        "url": "https://www.foodex-kz.com/",
+        "type": "exhibition",
+        "quality": "A",
+        "food_relevance": 9
+      },
+      {
+        "name": "WorldFood Uzbekistan",
+        "url": "https://www.worldfood.uz/",
+        "type": "exhibition",
+        "quality": "A",
+        "food_relevance": 8
+      },
+      {
+        "name": "Turkmenistan Ministry of Trade and Foreign Economic Relations",
+        "url": "https://www.mint.gov.tm/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 4
+      },
+      {
+        "name": "Turkmenportal",
+        "url": "https://www.turkmenportal.com/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 5
+      },
+      {
+        "name": "Бизнес-каталог Туркменистана",
+        "url": "https://turkmenistan.biz/",
+        "type": "catalog",
+        "quality": "B",
+        "food_relevance": 6
+      },
+      {
+        "name": "Produce Report",
+        "url": "https://www.producereport.com/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 7
+      },
+      {
+        "name": "Tradekey",
+        "url": "https://www.tradekey.com/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 6
+      },
+      {
+        "name": "Alibaba",
+        "url": "https://www.alibaba.com/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 5
+      }
+    ],
+    "Азербайджан": [
+      {
+        "name": "Azerbaijan Food Industry Association (AFIA)",
+        "url": "https://afia.az",
+        "type": "association",
+        "quality": "B",
+        "food_relevance": 9
+      },
+      {
+        "name": "Azerbaijan Export and Investment Promotion Agency (AZPROMO) - Food Sector",
+        "url": "https://www.azpromo.az/en/sectors/food-industry",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 8
+      },
+      {
+        "name": "Baku Food Exhibition (WorldFood Azerbaijan)",
+        "url": "https://worldfood.az",
+        "type": "exhibition",
+        "quality": "B",
+        "food_relevance": 10
+      },
+      {
+        "name": "State Statistical Committee of the Republic of Azerbaijan - Business Register",
+        "url": "https://www.stat.gov.az/source/business_register/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 6
+      },
+      {
+        "name": "Azerbaijan Yellow Pages (Sarı Səhifələr)",
+        "url": "https://www.sarisahifeler.az",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 7
+      },
+      {
+        "name": "Ministry of Economy of Azerbaijan - Business Directory",
+        "url": "https://economy.gov.az/en/page/business-directory",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 6
+      },
+      {
+        "name": "Azerbaijan Food Safety Agency (AFSA) - Registered Enterprises",
+        "url": "https://afsa.gov.az/en/registered-enterprises",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 9
+      },
+      {
+        "name": "B2B.Az - Business Directory Azerbaijan",
+        "url": "https://b2b.az",
+        "type": "directory",
+        "quality": "A",
+        "food_relevance": 7
+      },
+      {
+        "name": "Tender.az - Tender Platform Azerbaijan",
+        "url": "https://www.tender.az",
+        "type": "tender",
+        "quality": "B",
+        "food_relevance": 5
+      },
+      {
+        "name": "Azerbaijan Manufacturers Directory (Kompass)",
+        "url": "https://www.kompass.com/az/azr/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 8
+      },
+      {
+        "name": "AzExpo",
+        "url": "https://azexpo.az/",
+        "type": "exhibition",
+        "quality": "B",
+        "food_relevance": 8
+      },
+      {
+        "name": " Alibaba",
+        "url": "https://www.alibaba.com/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 6
+      },
+      {
+        "name": "Made in Azerbaijan",
+        "url": "https://madeinazerbaijan.az/",
+        "type": "catalog",
+        "quality": "B",
+        "food_relevance": 7
+      },
+      {
+        "name": "Азербайджанский государственный регистр юридических лиц",
+        "url": "https://www.taxe.gov.az/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 5
+      },
+      {
+        "name": "Ассоциация пищевой промышленности Азербайджана",
+        "url": "https://www.afpa.az/",
+        "type": "association",
+        "quality": "B",
+        "food_relevance": 9
+      },
+      {
+        "name": "Azərbaycan İnnovasiya Agentliyi",
+        "url": "https://www.azinn.az/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 3
+      },
+      {
+        "name": "Yellow Pages Azerbaijan",
+        "url": "https://www.yellowpages.az/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 2
+      },
+      {
+        "name": "Azexport.az",
+        "url": "https://www.azexport.az/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 8
+      }
+    ],
+    "Кыргызстан": [
+      {
+        "name": "Кыргызская биржа товаров и услуг (Kyrgyz Commodity Exchange)",
+        "url": "https://www.kce.kg",
+        "type": "tender",
+        "quality": "B",
+        "food_relevance": 7
+      },
+      {
+        "name": "Единый государственный реестр юридических лиц Кыргызстана (EGRUL)",
+        "url": "https://www.minjust.gov.kg/ru/egrul",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 5
+      },
+      {
+        "name": "Ассоциация предприятий пищевой и перерабатывающей промышленности Кыргызстана (APPP KR)",
+        "url": "http://apppkr.kg",
+        "type": "association",
+        "quality": "B",
+        "food_relevance": 9
+      },
+      {
+        "name": "Yellow Pages Kyrgyzstan (Жёлтые страницы Кыргызстана)",
+        "url": "https://www.yp.kg",
+        "type": "directory",
+        "quality": "A",
+        "food_relevance": 6
+      },
+      {
+        "name": "Food Expo Kyrgyzstan (Пищевая выставка)",
+        "url": "https://foodexpo.kg",
+        "type": "exhibition",
+        "quality": "B",
+        "food_relevance": 8
+      },
+      {
+        "name": "B2B-Center Kyrgyzstan",
+        "url": "https://kg.b2b-center.ru",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 7
+      },
+      {
+        "name": "Государственная налоговая служба Кыргызской Республики (реестр налогоплательщиков)",
+        "url": "https://www.sti.gov.kg",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 4
+      },
+      {
+        "name": "Kyrgyz Business Directory (Справочник бизнеса Кыргызстана)",
+        "url": "https://www.kyrgyzbusiness.com",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 6
+      },
+      {
+        "name": "AgroExpo Kyrgyzstan (Агропромышленная выставка)",
+        "url": "https://agroexpo.kg",
+        "type": "exhibition",
+        "quality": "B",
+        "food_relevance": 8
+      },
+      {
+        "name": "Тендерная площадка Госзакупок Кыргызстана",
+        "url": "https://www.goszakup.gov.kg",
+        "type": "tender",
+        "quality": "C",
+        "food_relevance": 6
+      },
+      {
+        "name": "B2B каталог Made in Kyrgyzstan",
+        "url": "https://madeinkyrgyzstan.kg/",
+        "type": "catalog",
+        "quality": "A",
+        "food_relevance": 9
+      },
+      {
+        "name": "Единый государственный реестр юридических лиц",
+        "url": "https://egrul.gov.kg/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 5
+      },
+      {
+        "name": "Налоговая служба Кыргызстана",
+        "url": "https://www.nalog.gov.kg/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 4
+      },
+      {
+        "name": "Статистическое агентство Кыргызстана",
+        "url": "https://stat.kg/",
+        "type": "register",
+        "quality": "C",
+        "food_relevance": 3
+      },
+      {
+        "name": "Ассоциация пищевой промышленности Кыргызстана",
+        "url": "https://foodassociation.kg/",
+        "type": "association",
+        "quality": "B",
+        "food_relevance": 10
+      },
+      {
+        "name": "Тендерная площадка Закупки ГККП",
+        "url": "https://zakupki.gov.kg/",
+        "type": "tender",
+        "quality": "C",
+        "food_relevance": 6
+      },
+      {
+        "name": "Жёлтые страницы Кыргызстана",
+        "url": "https://yellowpages.kg/",
+        "type": "directory",
+        "quality": "B",
+        "food_relevance": 7
+      }
+    ]
+  }
+}

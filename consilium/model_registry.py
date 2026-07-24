@@ -67,14 +67,16 @@ class ModelRegistry:
         return tags if tags else ["chat"]  # по умолчанию — chat
 
     def should_enable(self, context_length: int, tags: list, free_tokens: int) -> bool:
-        """Проверяет, подходит ли модель под наши требования."""
+        """Проверяет, подходит ли модель под наши требования (per-tag пороги)."""
         if not tags:
             return False
-        if context_length < 128000:
-            return False
-        if free_tokens > 0 and free_tokens < REQUIREMENTS["free_tokens_daily_min"]:
-            return False
-        return True
+        for tag in tags:
+            required = REQUIREMENTS["context_length"].get(tag, 128000)
+            if context_length >= required:
+                if free_tokens > 0 and free_tokens < REQUIREMENTS["free_tokens_daily_min"]:
+                    continue
+                return True
+        return False
 
     def update_model(self, provider: str, model: str, context_length: int, free_tokens: int = 0):
         """Добавляет или обновляет модель в реестре."""

@@ -1,0 +1,6 @@
+# Supabase (основной доступ)
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_KEY=sb_secret_your_key
+
+# Supabase (публичный доступ, только для чтения)
+SUPABASE_KEY=sb_public_your_key

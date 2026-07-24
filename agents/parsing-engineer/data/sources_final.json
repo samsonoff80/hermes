@@ -1,0 +1,2667 @@
+{
+  "groups": {
+    "Кондитерские изделия": {
+      "sources": [
+        {
+          "name": "Продэкспо Москва",
+          "url": "https://icatalog.expocentr.ru/ru/exhibitions/870c9c18-e84b-11ef-80ce-a0d3c1fab97f",
+          "country": "Россия",
+          "method": "Playwright+PDF",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products",
+            "phone",
+            "email"
+          ],
+          "priority": 1,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 2500"
+        },
+        {
+          "name": "WorldFood Moscow",
+          "url": "https://exhibitors-itegroup.exhibitoronlinemanual.com/worldfood-moscow-2025/en/Exhibitor",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 1100"
+        },
+        {
+          "name": "WorldFood Istanbul",
+          "url": "https://worldfood-istanbul.com/en/katilimci-listesi",
+          "country": "Турция",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 1500"
+        },
+        {
+          "name": "Gulfood Dubai",
+          "url": "https://exhibitors.gulfood.com/gulfood-2026/Sectorlist/world-food",
+          "country": "ОАЭ",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 5000"
+        },
+        {
+          "name": "Агропродмаш",
+          "url": "https://www.agroprodmash-expo.ru/ru/visitors/catalog/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 800"
+        },
+        {
+          "name": "Modern Bakery Moscow",
+          "url": "https://www.modern-bakery.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "FoodExpo Qazaqstan",
+          "url": "https://foodexpo.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 500"
+        },
+        {
+          "name": "InterFood Azerbaijan",
+          "url": "https://interfood.az/en/exhibitors",
+          "country": "Азербайджан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "UzFood",
+          "url": "https://uzfoodexpo.uz/en/exhibitors-list",
+          "country": "Узбекистан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "DairyTech",
+          "url": "https://www.dairytechexpo.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "Bakery Expo Kazakhstan",
+          "url": "https://all-events.ru/events/bakery-expo-kazakhstan-2025",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "phone",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "ЕГРЮЛ ФНС (зеркало)",
+          "url": "https://egrul.itsoft.ru/{INN}.json",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "❌ недоступен (?)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "egrul.org API",
+          "url": "https://egrul.org/",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "Прозрачный бизнес",
+          "url": "https://pb.nalog.ru/",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "inn",
+            "address",
+            "okved",
+            "employees"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "Россельхознадзор (все СНГ)",
+          "url": "https://navigator.fsvps.gov.ru/trafficking/argus/index",
+          "country": "СНГ",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "address",
+            "country",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "e-ondiris.gov.kz",
+          "url": "https://e-ondiris.gov.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "stat.gov.kz",
+          "url": "https://stat.gov.kz/ru/juridical/by/bin/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "oked",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "openinfo.uz",
+          "url": "https://openinfo.uz/ru",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "orginfo.uz",
+          "url": "https://orginfo.uz/ru/",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "taxes.gov.az",
+          "url": "https://www.taxes.gov.az/",
+          "country": "Азербайджан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "voen",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "e-register.am",
+          "url": "https://www.e-register.am/",
+          "country": "Армения",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "napr.gov.ge",
+          "url": "https://napr.gov.ge/",
+          "country": "Грузия",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "osoo.kg",
+          "url": "https://osoo.kg/search/",
+          "country": "Кыргызстан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "andoz.tj",
+          "url": "https://andoz.tj/Fehrist?culture=ru-RU",
+          "country": "Таджикистан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "OpenSanctions KZ",
+          "url": "https://www.opensanctions.org/datasets/kz_companies/",
+          "country": "Казахстан",
+          "method": "bulk JSON",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "oked"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.82, 10.7, 10.72"
+        },
+        {
+          "name": "Асконд (кондитеры)",
+          "url": "https://ascond.ru/members/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "website",
+            "products"
+          ],
+          "priority": 5,
+          "status": "✅ через прокси (200)",
+          "notes": "Ассоциация"
+        }
+      ]
+    },
+    "Молочные продукты": {
+      "sources": [
+        {
+          "name": "Продэкспо Москва",
+          "url": "https://icatalog.expocentr.ru/ru/exhibitions/870c9c18-e84b-11ef-80ce-a0d3c1fab97f",
+          "country": "Россия",
+          "method": "Playwright+PDF",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products",
+            "phone",
+            "email"
+          ],
+          "priority": 1,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 2500"
+        },
+        {
+          "name": "WorldFood Moscow",
+          "url": "https://exhibitors-itegroup.exhibitoronlinemanual.com/worldfood-moscow-2025/en/Exhibitor",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 1100"
+        },
+        {
+          "name": "WorldFood Istanbul",
+          "url": "https://worldfood-istanbul.com/en/katilimci-listesi",
+          "country": "Турция",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 1500"
+        },
+        {
+          "name": "Gulfood Dubai",
+          "url": "https://exhibitors.gulfood.com/gulfood-2026/Sectorlist/world-food",
+          "country": "ОАЭ",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 5000"
+        },
+        {
+          "name": "Агропродмаш",
+          "url": "https://www.agroprodmash-expo.ru/ru/visitors/catalog/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 800"
+        },
+        {
+          "name": "Modern Bakery Moscow",
+          "url": "https://www.modern-bakery.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "FoodExpo Qazaqstan",
+          "url": "https://foodexpo.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 500"
+        },
+        {
+          "name": "InterFood Azerbaijan",
+          "url": "https://interfood.az/en/exhibitors",
+          "country": "Азербайджан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "UzFood",
+          "url": "https://uzfoodexpo.uz/en/exhibitors-list",
+          "country": "Узбекистан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "DairyTech",
+          "url": "https://www.dairytechexpo.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "Bakery Expo Kazakhstan",
+          "url": "https://all-events.ru/events/bakery-expo-kazakhstan-2025",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "phone",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "ЕГРЮЛ ФНС (зеркало)",
+          "url": "https://egrul.itsoft.ru/{INN}.json",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "❌ недоступен (?)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "egrul.org API",
+          "url": "https://egrul.org/",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "Прозрачный бизнес",
+          "url": "https://pb.nalog.ru/",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "inn",
+            "address",
+            "okved",
+            "employees"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "Россельхознадзор (все СНГ)",
+          "url": "https://navigator.fsvps.gov.ru/trafficking/argus/index",
+          "country": "СНГ",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "address",
+            "country",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "e-ondiris.gov.kz",
+          "url": "https://e-ondiris.gov.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "stat.gov.kz",
+          "url": "https://stat.gov.kz/ru/juridical/by/bin/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "oked",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "openinfo.uz",
+          "url": "https://openinfo.uz/ru",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "orginfo.uz",
+          "url": "https://orginfo.uz/ru/",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "taxes.gov.az",
+          "url": "https://www.taxes.gov.az/",
+          "country": "Азербайджан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "voen",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "e-register.am",
+          "url": "https://www.e-register.am/",
+          "country": "Армения",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "napr.gov.ge",
+          "url": "https://napr.gov.ge/",
+          "country": "Грузия",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "osoo.kg",
+          "url": "https://osoo.kg/search/",
+          "country": "Кыргызстан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "andoz.tj",
+          "url": "https://andoz.tj/Fehrist?culture=ru-RU",
+          "country": "Таджикистан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        },
+        {
+          "name": "OpenSanctions KZ",
+          "url": "https://www.opensanctions.org/datasets/kz_companies/",
+          "country": "Казахстан",
+          "method": "bulk JSON",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "oked"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.51, 10.52"
+        }
+      ]
+    },
+    "Хлебобулочные изделия": {
+      "sources": [
+        {
+          "name": "Продэкспо Москва",
+          "url": "https://icatalog.expocentr.ru/ru/exhibitions/870c9c18-e84b-11ef-80ce-a0d3c1fab97f",
+          "country": "Россия",
+          "method": "Playwright+PDF",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products",
+            "phone",
+            "email"
+          ],
+          "priority": 1,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 2500"
+        },
+        {
+          "name": "WorldFood Moscow",
+          "url": "https://exhibitors-itegroup.exhibitoronlinemanual.com/worldfood-moscow-2025/en/Exhibitor",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 1100"
+        },
+        {
+          "name": "WorldFood Istanbul",
+          "url": "https://worldfood-istanbul.com/en/katilimci-listesi",
+          "country": "Турция",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 1500"
+        },
+        {
+          "name": "Gulfood Dubai",
+          "url": "https://exhibitors.gulfood.com/gulfood-2026/Sectorlist/world-food",
+          "country": "ОАЭ",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 5000"
+        },
+        {
+          "name": "Агропродмаш",
+          "url": "https://www.agroprodmash-expo.ru/ru/visitors/catalog/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 800"
+        },
+        {
+          "name": "Modern Bakery Moscow",
+          "url": "https://www.modern-bakery.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "FoodExpo Qazaqstan",
+          "url": "https://foodexpo.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 500"
+        },
+        {
+          "name": "InterFood Azerbaijan",
+          "url": "https://interfood.az/en/exhibitors",
+          "country": "Азербайджан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "UzFood",
+          "url": "https://uzfoodexpo.uz/en/exhibitors-list",
+          "country": "Узбекистан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "DairyTech",
+          "url": "https://www.dairytechexpo.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "Bakery Expo Kazakhstan",
+          "url": "https://all-events.ru/events/bakery-expo-kazakhstan-2025",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "phone",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "ЕГРЮЛ ФНС (зеркало)",
+          "url": "https://egrul.itsoft.ru/{INN}.json",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "❌ недоступен (?)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "egrul.org API",
+          "url": "https://egrul.org/",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "Прозрачный бизнес",
+          "url": "https://pb.nalog.ru/",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "inn",
+            "address",
+            "okved",
+            "employees"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "Россельхознадзор (все СНГ)",
+          "url": "https://navigator.fsvps.gov.ru/trafficking/argus/index",
+          "country": "СНГ",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "address",
+            "country",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "e-ondiris.gov.kz",
+          "url": "https://e-ondiris.gov.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "stat.gov.kz",
+          "url": "https://stat.gov.kz/ru/juridical/by/bin/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "oked",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "openinfo.uz",
+          "url": "https://openinfo.uz/ru",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "orginfo.uz",
+          "url": "https://orginfo.uz/ru/",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "taxes.gov.az",
+          "url": "https://www.taxes.gov.az/",
+          "country": "Азербайджан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "voen",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "e-register.am",
+          "url": "https://www.e-register.am/",
+          "country": "Армения",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "napr.gov.ge",
+          "url": "https://napr.gov.ge/",
+          "country": "Грузия",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "osoo.kg",
+          "url": "https://osoo.kg/search/",
+          "country": "Кыргызстан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "andoz.tj",
+          "url": "https://andoz.tj/Fehrist?culture=ru-RU",
+          "country": "Таджикистан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        },
+        {
+          "name": "OpenSanctions KZ",
+          "url": "https://www.opensanctions.org/datasets/kz_companies/",
+          "country": "Казахстан",
+          "method": "bulk JSON",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "oked"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.71, 10.72"
+        }
+      ]
+    },
+    "Замороженные продукты": {
+      "sources": [
+        {
+          "name": "Продэкспо Москва",
+          "url": "https://icatalog.expocentr.ru/ru/exhibitions/870c9c18-e84b-11ef-80ce-a0d3c1fab97f",
+          "country": "Россия",
+          "method": "Playwright+PDF",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products",
+            "phone",
+            "email"
+          ],
+          "priority": 1,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 2500"
+        },
+        {
+          "name": "WorldFood Moscow",
+          "url": "https://exhibitors-itegroup.exhibitoronlinemanual.com/worldfood-moscow-2025/en/Exhibitor",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 1100"
+        },
+        {
+          "name": "WorldFood Istanbul",
+          "url": "https://worldfood-istanbul.com/en/katilimci-listesi",
+          "country": "Турция",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 1500"
+        },
+        {
+          "name": "Gulfood Dubai",
+          "url": "https://exhibitors.gulfood.com/gulfood-2026/Sectorlist/world-food",
+          "country": "ОАЭ",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 5000"
+        },
+        {
+          "name": "Агропродмаш",
+          "url": "https://www.agroprodmash-expo.ru/ru/visitors/catalog/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 800"
+        },
+        {
+          "name": "Modern Bakery Moscow",
+          "url": "https://www.modern-bakery.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "FoodExpo Qazaqstan",
+          "url": "https://foodexpo.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 500"
+        },
+        {
+          "name": "InterFood Azerbaijan",
+          "url": "https://interfood.az/en/exhibitors",
+          "country": "Азербайджан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "UzFood",
+          "url": "https://uzfoodexpo.uz/en/exhibitors-list",
+          "country": "Узбекистан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "DairyTech",
+          "url": "https://www.dairytechexpo.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "Bakery Expo Kazakhstan",
+          "url": "https://all-events.ru/events/bakery-expo-kazakhstan-2025",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "phone",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "ЕГРЮЛ ФНС (зеркало)",
+          "url": "https://egrul.itsoft.ru/{INN}.json",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "❌ недоступен (?)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "egrul.org API",
+          "url": "https://egrul.org/",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "Прозрачный бизнес",
+          "url": "https://pb.nalog.ru/",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "inn",
+            "address",
+            "okved",
+            "employees"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "Россельхознадзор (все СНГ)",
+          "url": "https://navigator.fsvps.gov.ru/trafficking/argus/index",
+          "country": "СНГ",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "address",
+            "country",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "e-ondiris.gov.kz",
+          "url": "https://e-ondiris.gov.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "stat.gov.kz",
+          "url": "https://stat.gov.kz/ru/juridical/by/bin/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "oked",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "openinfo.uz",
+          "url": "https://openinfo.uz/ru",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "orginfo.uz",
+          "url": "https://orginfo.uz/ru/",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "taxes.gov.az",
+          "url": "https://www.taxes.gov.az/",
+          "country": "Азербайджан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "voen",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "e-register.am",
+          "url": "https://www.e-register.am/",
+          "country": "Армения",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "napr.gov.ge",
+          "url": "https://napr.gov.ge/",
+          "country": "Грузия",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "osoo.kg",
+          "url": "https://osoo.kg/search/",
+          "country": "Кыргызстан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "andoz.tj",
+          "url": "https://andoz.tj/Fehrist?culture=ru-RU",
+          "country": "Таджикистан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        },
+        {
+          "name": "OpenSanctions KZ",
+          "url": "https://www.opensanctions.org/datasets/kz_companies/",
+          "country": "Казахстан",
+          "method": "bulk JSON",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "oked"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.85, 10.52"
+        }
+      ]
+    },
+    "Орехи и сухофрукты": {
+      "sources": [
+        {
+          "name": "Продэкспо Москва",
+          "url": "https://icatalog.expocentr.ru/ru/exhibitions/870c9c18-e84b-11ef-80ce-a0d3c1fab97f",
+          "country": "Россия",
+          "method": "Playwright+PDF",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products",
+            "phone",
+            "email"
+          ],
+          "priority": 1,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 2500"
+        },
+        {
+          "name": "WorldFood Moscow",
+          "url": "https://exhibitors-itegroup.exhibitoronlinemanual.com/worldfood-moscow-2025/en/Exhibitor",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 1100"
+        },
+        {
+          "name": "WorldFood Istanbul",
+          "url": "https://worldfood-istanbul.com/en/katilimci-listesi",
+          "country": "Турция",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 1500"
+        },
+        {
+          "name": "Gulfood Dubai",
+          "url": "https://exhibitors.gulfood.com/gulfood-2026/Sectorlist/world-food",
+          "country": "ОАЭ",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 5000"
+        },
+        {
+          "name": "Агропродмаш",
+          "url": "https://www.agroprodmash-expo.ru/ru/visitors/catalog/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 800"
+        },
+        {
+          "name": "Modern Bakery Moscow",
+          "url": "https://www.modern-bakery.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "FoodExpo Qazaqstan",
+          "url": "https://foodexpo.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 500"
+        },
+        {
+          "name": "InterFood Azerbaijan",
+          "url": "https://interfood.az/en/exhibitors",
+          "country": "Азербайджан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "UzFood",
+          "url": "https://uzfoodexpo.uz/en/exhibitors-list",
+          "country": "Узбекистан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "DairyTech",
+          "url": "https://www.dairytechexpo.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "Bakery Expo Kazakhstan",
+          "url": "https://all-events.ru/events/bakery-expo-kazakhstan-2025",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "phone",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "ЕГРЮЛ ФНС (зеркало)",
+          "url": "https://egrul.itsoft.ru/{INN}.json",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "❌ недоступен (?)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "egrul.org API",
+          "url": "https://egrul.org/",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "Прозрачный бизнес",
+          "url": "https://pb.nalog.ru/",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "inn",
+            "address",
+            "okved",
+            "employees"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "Россельхознадзор (все СНГ)",
+          "url": "https://navigator.fsvps.gov.ru/trafficking/argus/index",
+          "country": "СНГ",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "address",
+            "country",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "e-ondiris.gov.kz",
+          "url": "https://e-ondiris.gov.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "stat.gov.kz",
+          "url": "https://stat.gov.kz/ru/juridical/by/bin/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "oked",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "openinfo.uz",
+          "url": "https://openinfo.uz/ru",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "orginfo.uz",
+          "url": "https://orginfo.uz/ru/",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "taxes.gov.az",
+          "url": "https://www.taxes.gov.az/",
+          "country": "Азербайджан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "voen",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "e-register.am",
+          "url": "https://www.e-register.am/",
+          "country": "Армения",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "napr.gov.ge",
+          "url": "https://napr.gov.ge/",
+          "country": "Грузия",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "osoo.kg",
+          "url": "https://osoo.kg/search/",
+          "country": "Кыргызстан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "andoz.tj",
+          "url": "https://andoz.tj/Fehrist?culture=ru-RU",
+          "country": "Таджикистан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.39"
+        },
+        {
+          "name": "OpenSanctions KZ",
+          "url": "https://www.opensanctions.org/datasets/kz_companies/",
+          "country": "Казахстан",
+          "method": "bulk JSON",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "oked"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.39"
+        }
+      ]
+    },
+    "Здоровое питание": {
+      "sources": [
+        {
+          "name": "Продэкспо Москва",
+          "url": "https://icatalog.expocentr.ru/ru/exhibitions/870c9c18-e84b-11ef-80ce-a0d3c1fab97f",
+          "country": "Россия",
+          "method": "Playwright+PDF",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products",
+            "phone",
+            "email"
+          ],
+          "priority": 1,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 2500"
+        },
+        {
+          "name": "WorldFood Moscow",
+          "url": "https://exhibitors-itegroup.exhibitoronlinemanual.com/worldfood-moscow-2025/en/Exhibitor",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 1100"
+        },
+        {
+          "name": "WorldFood Istanbul",
+          "url": "https://worldfood-istanbul.com/en/katilimci-listesi",
+          "country": "Турция",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 1500"
+        },
+        {
+          "name": "Gulfood Dubai",
+          "url": "https://exhibitors.gulfood.com/gulfood-2026/Sectorlist/world-food",
+          "country": "ОАЭ",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 5000"
+        },
+        {
+          "name": "Агропродмаш",
+          "url": "https://www.agroprodmash-expo.ru/ru/visitors/catalog/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 800"
+        },
+        {
+          "name": "Modern Bakery Moscow",
+          "url": "https://www.modern-bakery.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "FoodExpo Qazaqstan",
+          "url": "https://foodexpo.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 500"
+        },
+        {
+          "name": "InterFood Azerbaijan",
+          "url": "https://interfood.az/en/exhibitors",
+          "country": "Азербайджан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "UzFood",
+          "url": "https://uzfoodexpo.uz/en/exhibitors-list",
+          "country": "Узбекистан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "DairyTech",
+          "url": "https://www.dairytechexpo.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "Bakery Expo Kazakhstan",
+          "url": "https://all-events.ru/events/bakery-expo-kazakhstan-2025",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "phone",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "ЕГРЮЛ ФНС (зеркало)",
+          "url": "https://egrul.itsoft.ru/{INN}.json",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "❌ недоступен (?)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "egrul.org API",
+          "url": "https://egrul.org/",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "Прозрачный бизнес",
+          "url": "https://pb.nalog.ru/",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "inn",
+            "address",
+            "okved",
+            "employees"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "Россельхознадзор (все СНГ)",
+          "url": "https://navigator.fsvps.gov.ru/trafficking/argus/index",
+          "country": "СНГ",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "address",
+            "country",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "e-ondiris.gov.kz",
+          "url": "https://e-ondiris.gov.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "stat.gov.kz",
+          "url": "https://stat.gov.kz/ru/juridical/by/bin/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "oked",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "openinfo.uz",
+          "url": "https://openinfo.uz/ru",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "orginfo.uz",
+          "url": "https://orginfo.uz/ru/",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "taxes.gov.az",
+          "url": "https://www.taxes.gov.az/",
+          "country": "Азербайджан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "voen",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "e-register.am",
+          "url": "https://www.e-register.am/",
+          "country": "Армения",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "napr.gov.ge",
+          "url": "https://napr.gov.ge/",
+          "country": "Грузия",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "osoo.kg",
+          "url": "https://osoo.kg/search/",
+          "country": "Кыргызстан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "andoz.tj",
+          "url": "https://andoz.tj/Fehrist?culture=ru-RU",
+          "country": "Таджикистан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.89"
+        },
+        {
+          "name": "OpenSanctions KZ",
+          "url": "https://www.opensanctions.org/datasets/kz_companies/",
+          "country": "Казахстан",
+          "method": "bulk JSON",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "oked"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.89"
+        }
+      ]
+    },
+    "Снеки": {
+      "sources": [
+        {
+          "name": "Продэкспо Москва",
+          "url": "https://icatalog.expocentr.ru/ru/exhibitions/870c9c18-e84b-11ef-80ce-a0d3c1fab97f",
+          "country": "Россия",
+          "method": "Playwright+PDF",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products",
+            "phone",
+            "email"
+          ],
+          "priority": 1,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 2500"
+        },
+        {
+          "name": "WorldFood Moscow",
+          "url": "https://exhibitors-itegroup.exhibitoronlinemanual.com/worldfood-moscow-2025/en/Exhibitor",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 1100"
+        },
+        {
+          "name": "WorldFood Istanbul",
+          "url": "https://worldfood-istanbul.com/en/katilimci-listesi",
+          "country": "Турция",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 1500"
+        },
+        {
+          "name": "Gulfood Dubai",
+          "url": "https://exhibitors.gulfood.com/gulfood-2026/Sectorlist/world-food",
+          "country": "ОАЭ",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 5000"
+        },
+        {
+          "name": "Агропродмаш",
+          "url": "https://www.agroprodmash-expo.ru/ru/visitors/catalog/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "country",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 800"
+        },
+        {
+          "name": "Modern Bakery Moscow",
+          "url": "https://www.modern-bakery.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "FoodExpo Qazaqstan",
+          "url": "https://foodexpo.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 500"
+        },
+        {
+          "name": "InterFood Azerbaijan",
+          "url": "https://interfood.az/en/exhibitors",
+          "country": "Азербайджан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "UzFood",
+          "url": "https://uzfoodexpo.uz/en/exhibitors-list",
+          "country": "Узбекистан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "country",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 400"
+        },
+        {
+          "name": "DairyTech",
+          "url": "https://www.dairytechexpo.ru/",
+          "country": "Россия",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "products",
+            "website"
+          ],
+          "priority": 2,
+          "status": "✅ через прокси (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "Bakery Expo Kazakhstan",
+          "url": "https://all-events.ru/events/bakery-expo-kazakhstan-2025",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "phone",
+            "website",
+            "products"
+          ],
+          "priority": 2,
+          "status": "✅ прямой доступ (200)",
+          "notes": "Участников: 300"
+        },
+        {
+          "name": "ЕГРЮЛ ФНС (зеркало)",
+          "url": "https://egrul.itsoft.ru/{INN}.json",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "❌ недоступен (?)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "egrul.org API",
+          "url": "https://egrul.org/",
+          "country": "Россия",
+          "method": "API JSON",
+          "fields": [
+            "name",
+            "inn",
+            "ogrn",
+            "address",
+            "okved"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "Прозрачный бизнес",
+          "url": "https://pb.nalog.ru/",
+          "country": "Россия",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "inn",
+            "address",
+            "okved",
+            "employees"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "Россельхознадзор (все СНГ)",
+          "url": "https://navigator.fsvps.gov.ru/trafficking/argus/index",
+          "country": "СНГ",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "address",
+            "country",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "e-ondiris.gov.kz",
+          "url": "https://e-ondiris.gov.kz/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "products"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "stat.gov.kz",
+          "url": "https://stat.gov.kz/ru/juridical/by/bin/",
+          "country": "Казахстан",
+          "method": "Playwright",
+          "fields": [
+            "name",
+            "bin",
+            "oked",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "openinfo.uz",
+          "url": "https://openinfo.uz/ru",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "orginfo.uz",
+          "url": "https://orginfo.uz/ru/",
+          "country": "Узбекистан",
+          "method": "requests+BS4",
+          "fields": [
+            "name",
+            "stir",
+            "address",
+            "activity"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "taxes.gov.az",
+          "url": "https://www.taxes.gov.az/",
+          "country": "Азербайджан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "voen",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "e-register.am",
+          "url": "https://www.e-register.am/",
+          "country": "Армения",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "napr.gov.ge",
+          "url": "https://napr.gov.ge/",
+          "country": "Грузия",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "osoo.kg",
+          "url": "https://osoo.kg/search/",
+          "country": "Кыргызстан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "andoz.tj",
+          "url": "https://andoz.tj/Fehrist?culture=ru-RU",
+          "country": "Таджикистан",
+          "method": "requests",
+          "fields": [
+            "name",
+            "inn",
+            "address"
+          ],
+          "priority": 4,
+          "status": "✅ через прокси (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        },
+        {
+          "name": "OpenSanctions KZ",
+          "url": "https://www.opensanctions.org/datasets/kz_companies/",
+          "country": "Казахстан",
+          "method": "bulk JSON",
+          "fields": [
+            "name",
+            "bin",
+            "address",
+            "oked"
+          ],
+          "priority": 4,
+          "status": "✅ прямой доступ (200)",
+          "notes": "OKВЭД: 10.6, 10.89, 10.31"
+        }
+      ]
+    }
+  },
+  "priority_order": [
+    "1️⃣ Продэкспо (icatalog.expocentr.ru) — 2500 участников, все группы",
+    "2️⃣ ЕГРЮЛ (egrul.itsoft.ru) — Россия, по ОКВЭД",
+    "3️⃣ productcenter.ru — каталог по 7 категориям",
+    "4️⃣ candy-factory.ru — кондитерские с ИНН/телефонами",
+    "5️⃣ Россельхознадзор — все страны СНГ",
+    "6️⃣ fabricators.ru — кондитерские фабрики",
+    "7️⃣ WorldFood Istanbul — Турция + СНГ",
+    "8️⃣ Gulfood Dubai — фильтр по стране",
+    "9️⃣ OpenSanctions KZ — Казахстан bulk",
+    "🔟 e-ondiris.gov.kz — Казахстан реестр"
+  ],
+  "problem_countries": {
+    "Кыргызстан": "Нет публичного API. Использовать osoo.kg (через прокси), record.minjust.gov.kg, flagma-kg.com",
+    "Таджикистан": "Нет открытых реестров. andoz.tj (через прокси), manufacturers.ru, eprocurement.gov.tj",
+    "Туркменистан": "Закрытая страна. Только business.com.tm, FSVPS реестр"
+  }
+}

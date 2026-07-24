@@ -1,0 +1,710 @@
+{
+  "_date": "2026-06-19",
+  "_method": "consilium_5_models + curl_check",
+  "total_checked": 70,
+  "working": 21,
+  "needs_proxy": 12,
+  "dead": 37,
+  "checked_sources": [
+    {
+      "country": "Таджикистан",
+      "name": "Торгово-промышленная палата Таджикистана (ТПП РТ)",
+      "url": "https://tpp.tj",
+      "quality": "B",
+      "food_relevance": 7,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Единый государственный реестр юридических лиц Таджикистана (налоговая служба)",
+      "url": "https://www.andoz.tj",
+      "quality": "C",
+      "food_relevance": 5,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Агентство по статистике при Президенте Республики Таджикистан",
+      "url": "https://stat.tj",
+      "quality": "C",
+      "food_relevance": 6,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Tajikistan Business Directory (Yellow Pages)",
+      "url": "https://www.yellowpages.tj",
+      "quality": "A",
+      "food_relevance": 8,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "ExpoCentralAsia (выставки в Центральной Азии, включая пищевую промышленность)",
+      "url": "https://expocentralasia.com",
+      "quality": "B",
+      "food_relevance": 9,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Kompass Tajikistan (B2B каталог предприятий)",
+      "url": "https://www.kompass.com/tajikistan-b2b-directory/",
+      "quality": "A",
+      "food_relevance": 8,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Tajikistan Investment & Export Agency (TIKA)",
+      "url": "https://tika.tj",
+      "quality": "B",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Alibaba (поиск по Таджикистану)",
+      "url": "https://www.alibaba.com/countrysearch/TJ/suppliers.html",
+      "quality": "A",
+      "food_relevance": 7,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Food Expo Tajikistan (пищевая выставка)",
+      "url": "https://foodexpo.tj",
+      "quality": "B",
+      "food_relevance": 10,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Tajikistan Business Portal (государственный портал)",
+      "url": "https://business.tj",
+      "quality": "B",
+      "food_relevance": 6,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Тадбит",
+      "url": "https://tadbit.tj/",
+      "quality": "B",
+      "food_relevance": 8,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Ассоциация пищевой промышленности Таджикистана",
+      "url": "https://www.appt.tj/",
+      "quality": "C",
+      "food_relevance": 10,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Тендерная площадка Таджикистана",
+      "url": "https://tender.tj/",
+      "quality": "B",
+      "food_relevance": 6,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Реестр предприятий Таджикистана",
+      "url": "https://egrul.tj/",
+      "quality": "C",
+      "food_relevance": 5,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Налоговый реестр Таджикистана",
+      "url": "https://www.nbt.tj/",
+      "quality": "C",
+      "food_relevance": 4,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Таджикистан",
+      "name": "B2B Таджикистан",
+      "url": "https://b2b.tj/",
+      "quality": "B",
+      "food_relevance": 8,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Таджикистан",
+      "name": "Made in Tajikistan",
+      "url": "https://madeintajikistan.tj/",
+      "quality": "A",
+      "food_relevance": 9,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmen Business",
+      "url": "https://turkmenbusiness.org/",
+      "quality": "B",
+      "food_relevance": 6,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmenistan: Yellow Pages",
+      "url": "https://www.yellowpages.tm/",
+      "quality": "B",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "TurkmenExpo (Food & Agriculture Exhibitions)",
+      "url": "https://turkmenexpo.gov.tm/",
+      "quality": "C",
+      "food_relevance": 8,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmenportal (Business Directory)",
+      "url": "https://business.turkmenportal.com/",
+      "quality": "B",
+      "food_relevance": 5,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "State Statistics Committee of Turkmenistan (Enterprise Register)",
+      "url": "http://www.stat.gov.tm/",
+      "quality": "C",
+      "food_relevance": 4,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmenbashi International Oil & Gas Exhibition (Indirect Food Relevance)",
+      "url": "https://www.oilgas.gov.tm/",
+      "quality": "C",
+      "food_relevance": 3,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmenistan: B2B Portal (Alibaba-like)",
+      "url": "https://www.turkmenmarket.com/",
+      "quality": "B",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Ministry of Trade and Foreign Economic Relations of Turkmenistan",
+      "url": "http://trade.gov.tm/",
+      "quality": "C",
+      "food_relevance": 5,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmenistan Yellow Pages",
+      "url": "https://www.turkmenistanyp.com/",
+      "quality": "B",
+      "food_relevance": 6,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmenistan Business Directory",
+      "url": "https://www.turkmenistan.com/business/",
+      "quality": "B",
+      "food_relevance": 5,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Foodex Kazakhstan и Центральной Азии",
+      "url": "https://www.foodex-kz.com/",
+      "quality": "A",
+      "food_relevance": 9,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "WorldFood Uzbekistan",
+      "url": "https://www.worldfood.uz/",
+      "quality": "A",
+      "food_relevance": 8,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmenistan Ministry of Trade and Foreign Economic Relations",
+      "url": "https://www.mint.gov.tm/",
+      "quality": "C",
+      "food_relevance": 4,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Turkmenportal",
+      "url": "https://www.turkmenportal.com/",
+      "quality": "B",
+      "food_relevance": 5,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Бизнес-каталог Туркменистана",
+      "url": "https://turkmenistan.biz/",
+      "quality": "B",
+      "food_relevance": 6,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Produce Report",
+      "url": "https://www.producereport.com/",
+      "quality": "A",
+      "food_relevance": 7,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Tradekey",
+      "url": "https://www.tradekey.com/",
+      "quality": "A",
+      "food_relevance": 6,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Туркменистан",
+      "name": "Alibaba",
+      "url": "https://www.alibaba.com/",
+      "quality": "A",
+      "food_relevance": 5,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Azerbaijan Food Industry Association (AFIA)",
+      "url": "https://afia.az",
+      "quality": "B",
+      "food_relevance": 9,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Azerbaijan Export and Investment Promotion Agency (AZPROMO) - Food Sector",
+      "url": "https://www.azpromo.az/en/sectors/food-industry",
+      "quality": "A",
+      "food_relevance": 8,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Baku Food Exhibition (WorldFood Azerbaijan)",
+      "url": "https://worldfood.az",
+      "quality": "B",
+      "food_relevance": 10,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "State Statistical Committee of the Republic of Azerbaijan - Business Register",
+      "url": "https://www.stat.gov.az/source/business_register/",
+      "quality": "C",
+      "food_relevance": 6,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Azerbaijan Yellow Pages (Sarı Səhifələr)",
+      "url": "https://www.sarisahifeler.az",
+      "quality": "B",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Ministry of Economy of Azerbaijan - Business Directory",
+      "url": "https://economy.gov.az/en/page/business-directory",
+      "quality": "B",
+      "food_relevance": 6,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Azerbaijan Food Safety Agency (AFSA) - Registered Enterprises",
+      "url": "https://afsa.gov.az/en/registered-enterprises",
+      "quality": "C",
+      "food_relevance": 9,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Азербайджан",
+      "name": "B2B.Az - Business Directory Azerbaijan",
+      "url": "https://b2b.az",
+      "quality": "A",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Tender.az - Tender Platform Azerbaijan",
+      "url": "https://www.tender.az",
+      "quality": "B",
+      "food_relevance": 5,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Azerbaijan Manufacturers Directory (Kompass)",
+      "url": "https://www.kompass.com/az/azr/",
+      "quality": "A",
+      "food_relevance": 8,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Азербайджан",
+      "name": "AzExpo",
+      "url": "https://azexpo.az/",
+      "quality": "B",
+      "food_relevance": 8,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Азербайджан",
+      "name": " Alibaba",
+      "url": "https://www.alibaba.com/",
+      "quality": "A",
+      "food_relevance": 6,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Made in Azerbaijan",
+      "url": "https://madeinazerbaijan.az/",
+      "quality": "B",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Азербайджанский государственный регистр юридических лиц",
+      "url": "https://www.taxe.gov.az/",
+      "quality": "C",
+      "food_relevance": 5,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Ассоциация пищевой промышленности Азербайджана",
+      "url": "https://www.afpa.az/",
+      "quality": "B",
+      "food_relevance": 9,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Azərbaycan İnnovasiya Agentliyi",
+      "url": "https://www.azinn.az/",
+      "quality": "B",
+      "food_relevance": 3,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Yellow Pages Azerbaijan",
+      "url": "https://www.yellowpages.az/",
+      "quality": "B",
+      "food_relevance": 2,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Азербайджан",
+      "name": "Azexport.az",
+      "url": "https://www.azexport.az/",
+      "quality": "A",
+      "food_relevance": 8,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Кыргызская биржа товаров и услуг (Kyrgyz Commodity Exchange)",
+      "url": "https://www.kce.kg",
+      "quality": "B",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Единый государственный реестр юридических лиц Кыргызстана (EGRUL)",
+      "url": "https://www.minjust.gov.kg/ru/egrul",
+      "quality": "C",
+      "food_relevance": 5,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Ассоциация предприятий пищевой и перерабатывающей промышленности Кыргызстана (APPP KR)",
+      "url": "http://apppkr.kg",
+      "quality": "B",
+      "food_relevance": 9,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Yellow Pages Kyrgyzstan (Жёлтые страницы Кыргызстана)",
+      "url": "https://www.yp.kg",
+      "quality": "A",
+      "food_relevance": 6,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Food Expo Kyrgyzstan (Пищевая выставка)",
+      "url": "https://foodexpo.kg",
+      "quality": "B",
+      "food_relevance": 8,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "B2B-Center Kyrgyzstan",
+      "url": "https://kg.b2b-center.ru",
+      "quality": "A",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Государственная налоговая служба Кыргызской Республики (реестр налогоплательщиков)",
+      "url": "https://www.sti.gov.kg",
+      "quality": "C",
+      "food_relevance": 4,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Kyrgyz Business Directory (Справочник бизнеса Кыргызстана)",
+      "url": "https://www.kyrgyzbusiness.com",
+      "quality": "B",
+      "food_relevance": 6,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "AgroExpo Kyrgyzstan (Агропромышленная выставка)",
+      "url": "https://agroexpo.kg",
+      "quality": "B",
+      "food_relevance": 8,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Тендерная площадка Госзакупок Кыргызстана",
+      "url": "https://www.goszakup.gov.kg",
+      "quality": "C",
+      "food_relevance": 6,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "B2B каталог Made in Kyrgyzstan",
+      "url": "https://madeinkyrgyzstan.kg/",
+      "quality": "A",
+      "food_relevance": 9,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Единый государственный реестр юридических лиц",
+      "url": "https://egrul.gov.kg/",
+      "quality": "C",
+      "food_relevance": 5,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Налоговая служба Кыргызстана",
+      "url": "https://www.nalog.gov.kg/",
+      "quality": "C",
+      "food_relevance": 4,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Статистическое агентство Кыргызстана",
+      "url": "https://stat.kg/",
+      "quality": "C",
+      "food_relevance": 3,
+      "status": "needs_proxy",
+      "http_code": 200,
+      "used_proxy": true
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Ассоциация пищевой промышленности Кыргызстана",
+      "url": "https://foodassociation.kg/",
+      "quality": "B",
+      "food_relevance": 10,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Тендерная площадка Закупки ГККП",
+      "url": "https://zakupki.gov.kg/",
+      "quality": "C",
+      "food_relevance": 6,
+      "status": "working",
+      "http_code": 200,
+      "used_proxy": false
+    },
+    {
+      "country": "Кыргызстан",
+      "name": "Жёлтые страницы Кыргызстана",
+      "url": "https://yellowpages.kg/",
+      "quality": "B",
+      "food_relevance": 7,
+      "status": "dead",
+      "http_code": 0,
+      "used_proxy": false
+    }
+  ]
+}

@@ -153,7 +153,7 @@ def get_next_key(name: str):
 # HTTP КЛИЕНТ с таймаутом 30с на провайдера
 http_client = httpx.AsyncClient(
     timeout=httpx.Timeout(PROVIDER_TIMEOUT, connect=CONNECT_TIMEOUT),
-    limits=httpx.Limits(max_connections=150, max_keepalive_connections=30)
+    limits=httpx.Limits(max_connections=40, max_keepalive_connections=20)
 )
 
 # STICKY SESSIONS
@@ -585,10 +585,17 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
         return None
     except httpx.HTTPStatusError as e:
         code = e.response.status_code
-        if code == 429:
+        if code == 413:
+            provider_stats.record_failure(provider["name"], "413", model)
+        elif code == 413:
+            provider_stats.record_failure(provider["name"], "413", model)
+        elif code == 429:
             rate_limiter.mark_429(provider["name"], key_index)
             provider_stats.record_failure(provider["name"], "429", model)
-        elif code in (401, 402, 403):
+        elif code == 401:
+            rate_limiter.mark_401(provider["name"], key_index)
+            provider_stats.record_failure(provider["name"], "auth", model)
+        elif code in (402, 403):
             rate_limiter.mark_402(provider["name"], key_index)
             provider_stats.record_failure(provider["name"], "auth", model)
             asyncio.create_task(alert_provider_disabled(provider["name"], f"HTTP {code}"))
@@ -796,7 +803,15 @@ async def list_models():
     models = []
     for p in PROVIDERS:
         for m in p["models"]:
-            models.append({"id": m, "object": "model", "owned_by": p["name"], "context_length": 128000})
+            ctx = 128000
+            try:
+                for entry in registry.get_enabled_models():
+                    if entry["model"] == m:
+                        ctx = entry["context_length"]
+                        break
+            except:
+                pass
+            models.append({"id": m, "object": "model", "owned_by": p["name"], "context_length": ctx})
     return {"object": "list", "data": models}
 
 @app.post("/v1/chat/completions")
@@ -828,13 +843,13 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             # Вырезаем все блоки Hermes после нашего SOUL.md
             # Наш контент заканчивается на "потом ответ."
             # Всё что после — блоки Hermes (Finishing the job, Parallel tool calls, etc.)
-            cut = m["content"].find("# Finishing the job")
-            if cut == -1:
-                cut = m["content"].find("You are Hermes")
-            if cut == -1:
-                cut = m["content"].find("You run on Hermes")
-            if cut > 0:
-                m["content"] = m["content"][:cut].strip()[:2000]
+            markers = ["# Finishing the job", "You are Hermes Agent",
+                       "You run on Hermes Agent", "# Parallel tool calls",
+                       "You have persistent memory"]
+            cuts = [m["content"].find(x) for x in markers]
+            cuts = [c for c in cuts if c > 0]
+            if cuts:
+                m["content"] = m["content"][:min(cuts)].strip()[:2000]
             logger.info(f"✂️ Filtered: {len(m['content'])} chars")
 
     if not messages:
@@ -877,8 +892,9 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
     def _gate(provider_name: str) -> bool:
         if not circuit_breaker.is_available(provider_name):
             return False
-        ok, _reason = rate_limiter.is_available(provider_name, 0)
-        return ok
+        # Проверяем любой доступный ключ, не только key_index=0
+        return rate_limiter.any_key_available(
+            provider_name, len(PROVIDER_KEYS.get(provider_name, [])))
 
     # Явно запрошенная модель имеет приоритет над роутером.
     # Раньше при model != "auto" провайдер не выбирался ВООБЩЕ -> HTTP 503,

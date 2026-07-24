@@ -1,0 +1,341 @@
+{
+  "metadata": {
+    "description": "Дополнительные источники для стран СНГ — пищевые выставки, каталоги производителей, реестры",
+    "checked_at": "2026-06-19",
+    "total_urls_checked": 30,
+    "working_count": 14,
+    "failed_count": 16
+  },
+  "sources": [
+    {
+      "name": "UzFood (WorldFood Uzbekistan)",
+      "url": "https://uzfoodexpo.uz/",
+      "original_url": "https://worldfood.uz",
+      "country": "Узбекистан",
+      "type": "exhibition",
+      "status": "✅ checked",
+      "http_code": 200,
+      "redirect_from": "https://worldfood.uz",
+      "source_quality": "A",
+      "food_relevance": 10,
+      "notes": "Крупнейшая пищевая выставка Узбекистана. WorldFood Uzbekistan → UzFood. Каталог экспонентов с продуктами и контактами."
+    },
+    {
+      "name": "InterFood Azerbaijan",
+      "url": "https://interfood.az/",
+      "original_url": "https://worldfood.az",
+      "country": "Азербайджан",
+      "type": "exhibition",
+      "status": "✅ checked",
+      "http_code": 200,
+      "redirect_from": "https://worldfood.az",
+      "source_quality": "A",
+      "food_relevance": 10,
+      "notes": "Международная выставка пищевой промышленности Азербайджана. WorldFood Azerbaijan → InterFood."
+    },
+    {
+      "name": "Flagma Узбекистан",
+      "url": "https://flagma.uz",
+      "country": "Узбекистан",
+      "type": "catalog",
+      "status": "⚠️ captcha",
+      "http_code": 200,
+      "source_quality": "C",
+      "food_relevance": 5,
+      "notes": "Каталог товаров и услуг. Блокировка reCAPTCHA при прямом доступе. Требует прокси/playwright для обхода."
+    },
+    {
+      "name": "Flagма Казахстан",
+      "url": "https://flagma.kz",
+      "country": "Казахстан",
+      "type": "catalog",
+      "status": "✅ checked",
+      "http_code": 200,
+      "source_quality": "B",
+      "food_relevance": 5,
+      "notes": "Онлайн-каталог товаров и услуг Казахстана. Широкий охват включая пищевой сектор."
+    },
+    {
+      "name": "Intelligent Solutions Узбекистан",
+      "url": "https://is.uz",
+      "country": "Узбекистан",
+      "type": "catalog",
+      "status": "✅ checked",
+      "http_code": 200,
+      "source_quality": "C",
+      "food_relevance": 2,
+      "notes": "IT-компания, не пищевой каталог. Низкая релевантность для пищевого скрейпинга."
+    },
+    {
+      "name": "Yellow Pages Узбекистан",
+      "url": "https://www.yellowpages.uz/",
+      "original_url": "https://yellowpages.uz",
+      "country": "Узбекистан",
+      "type": "catalog",
+      "status": "✅ checked",
+      "http_code": 200,
+      "redirect_from": "https://yellowpages.uz",
+      "source_quality": "B",
+      "food_relevance": 6,
+      "notes": "Каталог-справочник компаний Узбекистана. Включает пищевые предприятия. Телефоны, адреса, контакты."
+    },
+    {
+      "name": "KDB Узбекистан (банк развития)",
+      "url": "https://kdb.uz/uz",
+      "original_url": "https://kdb.uz",
+      "country": "Узбекистан",
+      "type": "register",
+      "status": "✅ checked",
+      "http_code": 200,
+      "redirect_from": "https://kdb.uz",
+      "source_quality": "C",
+      "food_relevance": 2,
+      "notes": "Банк развития Узбекистана. Не является пищевым каталогом. Возможен реестр финансируемых проектов."
+    },
+    {
+      "name": "Банк Развития Казахстана (KDB)",
+      "url": "https://www.kdb.kz/",
+      "original_url": "https://kdb.kz",
+      "country": "Казахстан",
+      "type": "register",
+      "status": "✅ checked",
+      "http_code": 200,
+      "redirect_from": "https://kdb.kz",
+      "source_quality": "C",
+      "food_relevance": 2,
+      "notes": "Банк развития Казахстана. Не пищевой каталог."
+    },
+    {
+      "name": "stat.gov.kz — Бюро статистики Казахстана",
+      "url": "https://stat.gov.kz",
+      "country": "Казахстан",
+      "type": "register",
+      "status": "✅ checked",
+      "http_code": 200,
+      "source_quality": "A",
+      "food_relevance": 4,
+      "notes": "Национальная статистика Казахстана. Данные по пищевой промышленности, производству, экспорту/импорту. Реестр предприятий."
+    },
+    {
+      "name": "Export.tj — Экспорт Таджикистана",
+      "url": "https://export.tj",
+      "country": "Таджикистан",
+      "type": "catalog",
+      "status": "✅ checked",
+      "http_code": 200,
+      "source_quality": "B",
+      "food_relevance": 7,
+      "notes": "Портал экспорта Таджикистана. Каталог экспортёров включая пищевую продукцию."
+    },
+    {
+      "name": "Armeniagid — Гид по Армении",
+      "url": "https://armeniagid.com",
+      "country": "Армения",
+      "type": "catalog",
+      "status": "✅ checked",
+      "http_code": 200,
+      "source_quality": "C",
+      "food_relevance": 3,
+      "notes": "Туристический портал Армении. Низкая пищевая релевантность."
+    },
+    {
+      "name": "Arminfo — Информагентство Армении",
+      "url": "https://arminfo.info",
+      "country": "Армения",
+      "type": "catalog",
+      "status": "✅ checked",
+      "http_code": 200,
+      "source_quality": "C",
+      "food_relevance": 2,
+      "notes": "Новостное агентство Армении. Не является каталогом производителей."
+    },
+    {
+      "name": "RussiaExpert",
+      "url": "https://russiaexpert.ru",
+      "country": "Россия",
+      "type": "catalog",
+      "status": "✅ checked",
+      "http_code": 200,
+      "source_quality": "C",
+      "food_relevance": 2,
+      "notes": "Новостное СМИ России. Не является каталогом производителей."
+    },
+    {
+      "name": "Armenia.com",
+      "url": "https://www.armenia.com/",
+      "original_url": "https://armenia.com",
+      "country": "Армения",
+      "type": "catalog",
+      "status": "✅ checked",
+      "http_code": 200,
+      "redirect_from": "https://armenia.com",
+      "source_quality": "C",
+      "food_relevance": 3,
+      "notes": "Информационный портал об Армении. Возможны бизнес-каталоги с пищевыми компаниями."
+    }
+  ],
+  "failed_sources": [
+    {
+      "name": "Expos.uz",
+      "url": "https://expos.uz",
+      "country": "Узбекистан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут/хост не резолвится)"
+    },
+    {
+      "name": "Expos.az",
+      "url": "https://expos.az",
+      "country": "Азербайджан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут/хост не резолвится)"
+    },
+    {
+      "name": "Itsoft.az",
+      "url": "https://itsoft.az",
+      "country": "Азербайджан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут/хост не резолвится)"
+    },
+    {
+      "name": "Osoo.kg",
+      "url": "https://www.osoo.kg/",
+      "country": "Кыргызстан",
+      "http_code": 403,
+      "reason": "Доступ запрещён (403 Forbidden)"
+    },
+    {
+      "name": "Andoz.tj",
+      "url": "https://andoz.tj",
+      "country": "Таджикистан",
+      "http_code": "000",
+      "reason": "Недоступен напрямую (прокси вернул 200, требует прокси)"
+    },
+    {
+      "name": "Businessinfo.tj",
+      "url": "https://businessinfo.tj",
+      "country": "Таджикистан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут)"
+    },
+    {
+      "name": "Spravka.uz",
+      "url": "https://spravka.uz",
+      "country": "Узбекистан",
+      "http_code": "000",
+      "reason": "Недоступен напрямую (прокси вернул 200, требует прокси)"
+    },
+    {
+      "name": "Ondiris.uz",
+      "url": "https://ondiris.uz",
+      "country": "Узбекистан",
+      "http_code": "000",
+      "reason": "Недоступен напрямую (прокси вернул 200, требует прокси)"
+    },
+    {
+      "name": "Openinfo.az",
+      "url": "https://openinfo.az",
+      "country": "Азербайджан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут)"
+    },
+    {
+      "name": "Expert.tj",
+      "url": "https://expert.tj",
+      "country": "Таджикистан",
+      "http_code": 500,
+      "reason": "Ошибка сервера (500 Internal Server Error)"
+    },
+    {
+      "name": "Minagro.tj",
+      "url": "https://minagro.tj",
+      "country": "Таджикистан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут)"
+    },
+    {
+      "name": "Agro.gov.tm",
+      "url": "https://agro.gov.tm",
+      "country": "Туркменистан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут)"
+    },
+    {
+      "name": "Turkmenexport.tm",
+      "url": "https://turkmenexport.tm",
+      "country": "Туркменистан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут)"
+    },
+    {
+      "name": "Turkmen.gov.tm",
+      "url": "https://turkmen.gov.tm",
+      "country": "Туркменистан",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут)"
+    },
+    {
+      "name": "Made-in-russia.com",
+      "url": "https://made-in-russia.com",
+      "country": "Россия",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут)"
+    },
+    {
+      "name": "Exhibitorlist.ru",
+      "url": "https://exhibitorlist.ru",
+      "country": "Россия",
+      "http_code": "000",
+      "reason": "Недоступен (таймаут)"
+    }
+  ],
+  "summary_by_country": {
+    "Узбекистан": {
+      "working": 4,
+      "failed": 3,
+      "best_sources": ["UzFood (uzfoodexpo.uz) — exhibition, quality A, relevance 10", "Yellow Pages Uzbekistan — catalog, quality B, relevance 6"]
+    },
+    "Казахстан": {
+      "working": 3,
+      "failed": 0,
+      "best_sources": ["stat.gov.kz — register, quality A, relevance 4", "Flagma.kz — catalog, quality B, relevance 5"]
+    },
+    "Азербайджан": {
+      "working": 1,
+      "failed": 2,
+      "best_sources": ["InterFood Azerbaijan — exhibition, quality A, relevance 10"]
+    },
+    "Армения": {
+      "working": 3,
+      "failed": 0,
+      "best_sources": ["Armenia.com — catalog, quality C, relevance 3", "Armeniagid.com — catalog, quality C, relevance 3"]
+    },
+    "Кыргызстан": {
+      "working": 0,
+      "failed": 1,
+      "best_sources": []
+    },
+    "Таджикистан": {
+      "working": 1,
+      "failed": 4,
+      "best_sources": ["Export.tj — catalog, quality B, relevance 7"]
+    },
+    "Туркменистан": {
+      "working": 0,
+      "failed": 3,
+      "best_sources": []
+    },
+    "Россия": {
+      "working": 1,
+      "failed": 2,
+      "best_sources": ["RussiaExpert — catalog, quality C, relevance 2"]
+    }
+  },
+  "top_food_sources": [
+    {"name": "UzFood (WorldFood Uzbekistan)", "url": "https://uzfoodexpo.uz/", "country": "Узбекистан", "type": "exhibition", "quality": "A", "food_relevance": 10},
+    {"name": "InterFood Azerbaijan", "url": "https://interfood.az/", "country": "Азербайджан", "type": "exhibition", "quality": "A", "food_relevance": 10},
+    {"name": "Export.tj", "url": "https://export.tj", "country": "Таджикистан", "type": "catalog", "quality": "B", "food_relevance": 7},
+    {"name": "Yellow Pages Узбекистан", "url": "https://www.yellowpages.uz/", "country": "Узбекистан", "type": "catalog", "quality": "B", "food_relevance": 6},
+    {"name": "Flagma Казахстан", "url": "https://flagma.kz", "country": "Казахстан", "type": "catalog", "quality": "B", "food_relevance": 5},
+    {"name": "stat.gov.kz", "url": "https://stat.gov.kz", "country": "Казахстан", "type": "register", "quality": "A", "food_relevance": 4}
+  ]
+}

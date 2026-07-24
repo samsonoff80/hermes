@@ -1,0 +1,116 @@
+{
+  "providers": [
+    {
+      "name": "openrouter",
+      "priority": 1,
+      "base_url": "https://openrouter.ai/api/v1",
+      "key_env": "OPENROUTER_API_KEY",
+      "models": [
+        "nvidia/nemotron-3-ultra-550b-a55b:free"
+      ],
+      "format": "openai",
+      "context_window": 1000000
+    },
+    {
+      "name": "openrouter",
+      "priority": 2,
+      "base_url": "https://openrouter.ai/api/v1",
+      "key_env": "OPENROUTER_API_KEY",
+      "models": [
+        "nvidia/nemotron-3-super-120b-a12b:free"
+      ],
+      "format": "openai",
+      "context_window": 262144
+    },
+    {
+      "name": "openrouter",
+      "priority": 3,
+      "base_url": "https://openrouter.ai/api/v1",
+      "key_env": "OPENROUTER_API_KEY",
+      "models": [
+        "cohere/north-mini-code:free"
+      ],
+      "format": "openai",
+      "context_window": 256000
+    },
+    {
+      "name": "openrouter",
+      "priority": 4,
+      "base_url": "https://openrouter.ai/api/v1",
+      "key_env": "OPENROUTER_API_KEY",
+      "models": [
+        "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
+      ],
+      "format": "openai",
+      "context_window": 256000
+    },
+    {
+      "name": "openrouter",
+      "priority": 5,
+      "base_url": "https://openrouter.ai/api/v1",
+      "key_env": "OPENROUTER_API_KEY",
+      "models": [
+        "openai/gpt-oss-20b:free"
+      ],
+      "format": "openai",
+      "context_window": 131072
+    },
+    {
+      "name": "sambanova",
+      "priority": 6,
+      "base_url": "https://api.sambanova.ai/v1",
+      "key_env": "SAMBANOVA_API_KEY",
+      "models": [
+        "DeepSeek-V3.2",
+        "Meta-Llama-3.3-70B-Instruct"
+      ],
+      "format": "openai",
+      "context_window": 128000
+    },
+    {
+      "name": "groq",
+      "priority": 7,
+      "base_url": "https://api.groq.com/openai/v1",
+      "key_env": "GROQ_API_KEY",
+      "models": [
+        "llama-3.3-70b-versatile"
+      ],
+      "format": "openai",
+      "context_window": 128000
+    },
+    {
+      "name": "mistral",
+      "priority": 8,
+      "base_url": "https://api.mistral.ai/v1",
+      "key_env": "MISTRAL_API_KEY",
+      "models": [
+        "mistral-large-latest"
+      ],
+      "format": "openai",
+      "context_window": 128000
+    },
+    {
+      "name": "github",
+      "priority": 9,
+      "base_url": "https://models.inference.ai.azure.com",
+      "key_env": "GITHUB_TOKEN",
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "format": "openai",
+      "context_window": 128000
+    },
+    {
+      "name": "cloudflare",
+      "priority": 10,
+      "base_url": "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run",
+      "key_env": "CLOUDFLARE_API_KEY",
+      "models": [
+        "@cf/meta/llama-3.2-3b-instruct"
+      ],
+      "format": "cloudflare",
+      "context_window": 4096
+    }
+  ],
+  "updated_at": "2026-07-06T16:00:02.313939"
+}

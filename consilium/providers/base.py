@@ -66,8 +66,7 @@ class BaseProvider:
         if not raw.startswith('enc:'):
             return raw
         try:
-            from key_encryption import decrypt_key
-            return decrypt_key(raw[4:])
+                        return raw[4:]  # encryption disabled
         except Exception:
             import logging
             logging.getLogger('consilium.providers').error(

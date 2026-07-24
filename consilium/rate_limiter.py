@@ -23,7 +23,7 @@ from typing import Tuple, Optional, Dict
 logger = logging.getLogger("consilium.rate_limiter")
 
 DB_PATH = Path(__file__).parent / "rate_limits.db"
-COOLDOWN_STEPS = [30, 60, 120, 300, 600]
+COOLDOWN_STEPS = [90, 300, 900, 3600, 21600]
 
 
 class RateLimiter:
@@ -145,6 +145,24 @@ class RateLimiter:
             self._dirty = True
         logger.warning(f"⏳ {provider}:{key_index} 429 → cooldown {step}s")
         self.flush()
+
+    def mark_401(self, provider: str, key_index: int = 0):
+        """401 — временный cooldown 1ч."""
+        with self.lock:
+            e = self._entry(provider, key_index)
+            e["cooldown_until"] = time.time() + 3600
+            self._dirty = True
+        logger.warning(f"🔑 {provider}:{key_index} 401 → cooldown 1h")
+        self.flush(force=True)
+
+    def mark_401(self, provider: str, key_index: int = 0):
+        """401 — временный cooldown 1ч."""
+        with self.lock:
+            e = self._entry(provider, key_index)
+            e["cooldown_until"] = time.time() + 3600
+            self._dirty = True
+        logger.warning(f"🔑 {provider}:{key_index} 401 → cooldown 1h")
+        self.flush(force=True)
 
     def mark_402(self, provider: str, key_index: int = 0):
         with self.lock:

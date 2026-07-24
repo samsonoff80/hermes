@@ -1,0 +1,95 @@
+[
+  {
+    "name": "No.1",
+    "source": "prodexpo_2026",
+    "parsed_at": "2026-06-17T15:02:22.388303",
+    "website": "www.exporating.ru",
+    "description": "Exhibition *Source: Russian National Exhibition Rating. See more at www.exporating.ru/en 28.09 – 01.10.2026"
+  },
+  {
+    "name": "www.agroprodmash-expo.ru/en",
+    "source": "prodexpo_2025",
+    "parsed_at": "2026-06-17T15:02:30.532562",
+    "website": "www.agroprodmash-expo.ru",
+    "description": "*Source: Russian National Exhibition Rating. See more at www.exporating.ru/en EQUIPMENT       TECHNOLOGY       INGREDIENTS       PACKAGING"
+  },
+  {
+    "name": "10–13.11.2025",
+    "source": "prodexpo_2025",
+    "parsed_at": "2026-06-17T15:02:30.687726",
+    "website": "www.chemistry-expo.ru",
+    "description": "Organised by www.chemistry-expo.ru/en 28th International"
+  },
+  {
+    "name": "МИСТРАЛЬ ТРЕЙДИНГ, Россия",
+    "source": "prodexpo_2024",
+    "parsed_at": "2026-06-17T15:02:40.815386",
+    "phone": "+7 (989) 154-2424",
+    "website": "https://ligaopt.com",
+    "country": "Россия",
+    "description": "МОРПЕХ, ТД, Россия МОЯ СЛАДКАЯ ПРОВИНЦИЯ, Россия НОРДИК НЬЮТРИШЕН, ООО, Россия"
+  },
+  {
+    "name": "NEVA CONFECTIONARY LTD., Russia",
+    "source": "prodexpo_2024",
+    "parsed_at": "2026-06-17T15:02:40.950007",
+    "phone": "+7 (989) 154-2424",
+    "website": "https://ligaopt.com",
+    "description": "NEVSKY KONDITER LLC, Russia NOVGOROD BERRY SPPSK, Russia NS BOMI, Serbia"
+  },
+  {
+    "name": "бульонные кубики",
+    "source": "prodexpo_2023",
+    "parsed_at": "2026-06-17T15:02:49.876159",
+    "website": "http://www.lordteam.ru",
+    "country": "Турция",
+    "description": "DARDANEL, Турция KENT BORINGER TM (SOYYIGIT GIDA SAN VE TIC AS), Турция LORD LLC"
+  },
+  {
+    "name": "приготовления, сухие завтраки",
+    "source": "prodexpo_2023",
+    "parsed_at": "2026-06-17T15:02:49.880078",
+    "website": "http://www.lordteam.ru",
+    "country": "Китай",
+    "description": "GANSU ZHONGSHIDA INTERNATIONAL TRADE CO. LTD, Китай LETI, Россия"
+  },
+  {
+    "name": "Россия, 107497, г. Москва, ул. Иркутская, д. 17, стр. 3",
+    "source": "prodexpo_2023",
+    "parsed_at": "2026-06-17T15:02:49.885011",
+    "website": "https://exim-pacific.ru",
+    "country": "Россия",
+    "description": "ЭкоНива, Россия ЭксИм Пасифик Россия"
+  },
+  {
+    "name": "из рыбы и морепродуктов",
+    "source": "prodexpo_2023",
+    "parsed_at": "2026-06-17T15:02:49.889052",
+    "website": "http://www.favorit-product.ru",
+    "country": "Россия",
+    "description": "ЗА РОДИНУ, ГРУППА КОМПАНИЙ, Россия НОРЕБО, Россия ПЕРВАЯ АСТРАХАНСКАЯ РЫБНАЯ КОМПАНИЯ, ООО, Россия"
+  },
+  {
+    "name": "упаковке",
+    "source": "prodexpo_2023",
+    "parsed_at": "2026-06-17T15:02:49.898923",
+    "website": "http://agrokomplex.ru",
+    "country": "Россия",
+    "description": "SMOKE MEAT, Россия ВЭЛЛФУД, Россия ГУРМАНИН PREMIUM FOOD, Россия"
+  },
+  {
+    "name": "дикоросы,салаты,  зелень",
+    "source": "prodexpo_2023",
+    "parsed_at": "2026-06-17T15:02:49.900751",
+    "website": "http://www.gipar.ru",
+    "country": "Китай",
+    "description": "19.1 Грибы CHINA BEST FOOD GROUP LIMITED, Китай"
+  },
+  {
+    "name": "Bldg. 3, 17, Irkutskaya Str., Moscow, 107497, Russia",
+    "source": "prodexpo_2023",
+    "parsed_at": "2026-06-17T15:02:49.933862",
+    "website": "https://mutefood.ru",
+    "description": "FITROO, Russia FITSNECK, Russia GARNEC LLC, Russia"
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "description": "Ротируемые API-ключи. Закончился — запроси новый в Telegram",
+  "keys": {
+    "SERPER_API_KEY": {
+      "status": "active",
+      "limit": "100 запросов/день",
+      "current": "fae4e324db2cf3d60acec833ea666860b4978c9d",
+      "updated": "2026-06-27"
+    },
+    "TAVILY_API_KEY": {
+      "status": "active",
+      "limit": "1000 запросов/месяц",
+      "current": "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"
+    },
+    "FELO_API_KEY": {
+      "status": "active",
+      "limit": "неизвестно",
+      "current": "fk-DQEN2jp4N06IFwsSVR7tTELONdakdOuJj2mw6msgltD5w1gW"
+    },
+    "FOODMARKETS": {
+      "status": "active",
+      "type": "account",
+      "login": "Fireglow",
+      "password": "HxIEiWye",
+      "url": "https://foodmarkets.ru",
+      "description": "Каталог продуктовых компаний: 16137 фирм, 523 города"
+    }
+  }
+}
