@@ -1,10 +1,6 @@
 __pycache__/
 *.pyc
 *.db
-*.db-wal
-*.db-shm
 .env
 provider_state.json
-*.old
-*.pre_*
-logs/*.log
+logs/
