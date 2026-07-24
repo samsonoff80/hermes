@@ -90,10 +90,43 @@ config.yaml, SOUL.md, HERMES_FULL_CONTEXT.md
 - Dashboard — веб-интерфейс на :8765
 - Alerting — уведомления в Telegram при сбоях
 
-### Статус
-- 18 файлов удалено (экономия ~1000 строк)
-- config.yaml: custom_providers + fallback_providers + credential_pool_strategies
-- 18 ключей в auth.json через hermes auth add
-- consilium_server.py компилируется без ошибок
-- v7.2 сохранена в отдельной ветке
-- Требуется тестирование с Hermes v0.19
+#
+## Статус (24.07.2026) — ФАКТЫ
+
+### Файлы Consilium (11 шт, все компилируются)
+consilium_server.py, model_registry.py, provider_stats.py,
+rate_limiter.py, fallback_manager.py, dashboard.py, filter_models.py,
+alerting.py, circuit_breaker.py, health_checker.py, router.py
+
+### Провайдеры (14 шт)
+openrouter (3 ключа), groq (3), mistral (3), github (3),
+sambanova (3), hf (2), cloudflare (3), deepinfra (3),
+aihorde (keyless), siliconflow, together, reka
+
+### config.yaml (Hermes v0.19)
+- provider: custom → 127.0.0.1:8765/v1
+- api_mode: chat_completions
+- api_key: sk-consilium
+- НЕТ credential_pool_strategies (один провайдер — Consilium)
+- НЕТ fallback_providers (один провайдер — Consilium)
+
+### Что делает Consilium (уникальные фичи)
+- System Prompt Filter (вырезает технические блоки Hermes)
+- Task Router (chat/code/search/analysis)
+- Model Registry (фильтр >=128K, исключает embedding/audio)
+- Ротация ключей (round_robin через rate_limiter.py)
+- Fallback цепочка (fallback_manager.py)
+- Usage Logger (SQLite)
+- Provider Stats (компактный)
+- Dashboard (веб-интерфейс)
+
+### Что делает Hermes (встроенные фичи)
+- Prompt caching (автоматически для Anthropic/OpenRouter)
+- Context compression (автоматически)
+- Memory (MEMORY.md + USER.md)
+- Skills system (SKILL.md)
+- Delegation (delegate_task)
+
+### Экономия
+- Код: ~1500 → ~700 строк (53% сокращение)
+- Удалено: update_all.py, key_encryption.py
