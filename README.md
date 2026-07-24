@@ -66,7 +66,6 @@ Hermes сам ротирует ключи через `credential_pool_strategies
 orchestrator → product-analyst → source-scout → parsing-engineer → parser (+ optimizer)
 
 ## Команды
-```bash
 systemctl --user restart hermes-consilium && systemctl --user restart hermes-agent
 curl -s http://127.0.0.1:8765/health
 curl -s http://127.0.0.1:8765/
