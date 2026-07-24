@@ -155,15 +155,6 @@ class RateLimiter:
         logger.warning(f"🔑 {provider}:{key_index} 401 → cooldown 1h")
         self.flush(force=True)
 
-    def mark_401(self, provider: str, key_index: int = 0):
-        """401 — временный cooldown 1ч."""
-        with self.lock:
-            e = self._entry(provider, key_index)
-            e["cooldown_until"] = time.time() + 3600
-            self._dirty = True
-        logger.warning(f"🔑 {provider}:{key_index} 401 → cooldown 1h")
-        self.flush(force=True)
-
     def mark_402(self, provider: str, key_index: int = 0):
         with self.lock:
             e = self._entry(provider, key_index)

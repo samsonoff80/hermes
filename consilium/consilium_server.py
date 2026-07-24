@@ -587,8 +587,6 @@ async def call_provider(provider: dict, messages: list, model: str, stream: bool
         code = e.response.status_code
         if code == 413:
             provider_stats.record_failure(provider["name"], "413", model)
-        elif code == 413:
-            provider_stats.record_failure(provider["name"], "413", model)
         elif code == 429:
             rate_limiter.mark_429(provider["name"], key_index)
             provider_stats.record_failure(provider["name"], "429", model)
@@ -991,8 +989,8 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
         try:
             _log_usage(target_provider["name"], target_model, None)
             circuit_breaker.record_success(target_provider["name"])
-            rate_limiter.mark_success(target_provider["name"], key_index)
-            rate_limiter.record_request(target_provider["name"], key_index, 0)
+            rate_limiter.mark_success(target_provider["name"], 0)
+            rate_limiter.record_request(target_provider["name"], 0, 0)
             provider_stats.record_success(target_provider["name"],
                                           time.time() - start_time, 0, target_model)
         except Exception as e:
@@ -1088,8 +1086,8 @@ async def chat_completions(request: Request, authorization: Optional[str] = Head
             logger.warning(f"📊 usage log failed: {e}")
         try:
             circuit_breaker.record_success(target_provider["name"])
-            rate_limiter.mark_success(target_provider["name"], key_index)
-            rate_limiter.record_request(target_provider["name"], key_index, 0)
+            rate_limiter.mark_success(target_provider["name"], 0)
+            rate_limiter.record_request(target_provider["name"], 0, 0)
             provider_stats.record_success(
                 target_provider["name"], time.time() - start_time,
                 usage.get("total_tokens", 0) if usage else 0, target_model)
